@@ -19,3 +19,9 @@
 [submodule "my_plugins/vim-sensible"]
 	path = my_plugins/vim-sensible
 	url = https://github.com/tpope/vim-sensible.git
+[submodule "my_plugins/indentpython.vim"]
+	path = my_plugins/indentpython.vim
+	url = https://github.com/vim-scripts/indentpython.vim.git
+[submodule "my_plugins/syntastic"]
+	path = my_plugins/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
