@@ -1,16 +1,7 @@
 colorscheme onedark
 " Map CtrlP shortcut
 let g:ctrlp_map = '<c-o>'
-
-" Python indentation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+set nu
 
 " Autoclose YCM completion window
 let g:ycm_autoclose_preview_window_after_completion=1
