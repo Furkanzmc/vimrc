@@ -1,0 +1,21 @@
+[submodule "my_plugins/ctrlp.vim"]
+	path = my_plugins/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "my_plugins/onedark.vim"]
+	path = my_plugins/onedark.vim
+	url = https://github.com/joshdick/onedark.vim.git
+[submodule "my_plugins/vim-polyglot"]
+	path = my_plugins/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot.git
+[submodule "my_plugins/YouCompleteMe"]
+	path = my_plugins/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "my_plugins/limelight.vim"]
+	path = my_plugins/limelight.vim
+	url = https://github.com/junegunn/limelight.vim.git
+[submodule "my_plugins/vim-qml"]
+	path = my_plugins/vim-qml
+	url = https://github.com/peterhoeg/vim-qml.git
+[submodule "my_plugins/vim-sensible"]
+	path = my_plugins/vim-sensible
+	url = https://github.com/tpope/vim-sensible.git
