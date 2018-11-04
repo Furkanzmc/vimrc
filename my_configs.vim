@@ -33,3 +33,6 @@ cmap GGHL GitGutterLineHighlightsToggle
 nnoremap <leader>d "_d
 xnoremap <leader>d "_d
 xnoremap <leader>p "_dP
+
+command Lcdc lcd %:p:h
+command Cdc cd %:p:h
