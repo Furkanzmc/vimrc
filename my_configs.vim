@@ -3,10 +3,15 @@ colorscheme onedark
 let g:ctrlp_map = '<c-p>'
 set nu
 
-" Autoclose YCM completion window
+" YCM
+" Autoclose completion window
 let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+map <leader>k :YcmCompleter GetDoc<cr>
 " Add shortcut for go to decleration
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>gd  :YcmCompleter GoToDeclaration<CR>
+map <leader>gt  :YcmCompleter GoTo<CR>
+map <leader>gr  :YcmCompleter GoToReferences<CR>
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 
