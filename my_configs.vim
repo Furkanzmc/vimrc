@@ -1,6 +1,6 @@
 colorscheme onedark
 " Map CtrlP shortcut
-let g:ctrlp_map = '<c-o>'
+let g:ctrlp_map = '<c-p>'
 set nu
 
 " Autoclose YCM completion window
@@ -22,3 +22,5 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 
 " Access system clipboard on macOS.
 set clipboard=unnamed
+" Hide the default show mode because I'm using lightline
+set noshowmode
