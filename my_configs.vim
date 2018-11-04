@@ -19,6 +19,13 @@ set gfn=Fira\ Code\ Retina:h12
 cmap GGT GitGutterToggle
 cmap GGHL GitGutterLineHighlightsToggle
 
+" ALE settings
+" Disabling highlighting
+let g:ale_set_highlights = 1
+
+" Only run linting when saving the file
+let g:ale_lint_on_enter = 1
+
 " Use these to delete a line without cutting it.
 nnoremap <leader>d "_d
 xnoremap <leader>d "_d

@@ -159,6 +159,7 @@ let g:go_fmt_command = "goimports"
 let g:ale_linters = {
 \   'javascript': ['jshint'],
 \   'python': ['flake8'],
+\   'qml': ['qmllint'],
 \   'go': ['go', 'golint', 'errcheck']
 \}
 
