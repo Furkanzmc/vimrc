@@ -24,3 +24,12 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 set clipboard=unnamed
 " Hide the default show mode because I'm using lightline
 set noshowmode
+set gfn=Fira\ Code\ Retina:h12
+
+cmap GGT GitGutterToggle
+cmap GGHL GitGutterLineHighlightsToggle
+
+" Use these to delete a line without cutting it.
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+xnoremap <leader>p "_dP
