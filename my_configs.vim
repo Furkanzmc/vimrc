@@ -19,7 +19,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 set clipboard=unnamed
 " Hide the default show mode because I'm using lightline
 set noshowmode
-set gfn=Fira\ Code\ Retina:h12
+set gfn=Hack\ Regular\ Retina:h12
 
 cmap GGT GitGutterToggle
 cmap GGHL GitGutterLineHighlightsToggle
