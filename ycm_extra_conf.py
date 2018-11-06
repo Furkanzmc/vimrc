@@ -43,9 +43,13 @@ def get_python_conf(**kwargs):
 
 def get_cpp_conf(**kwargs):
 
+    fh = open('/Users/Furkanzmc/Desktop/output.txt', 'w')
     current_folder_includes = [DIR_OF_THIS_SCRIPT, ]
     for subdir, dirs, files in os.walk(DIR_OF_THIS_SCRIPT):
-        current_folder_includes.append(os.path.join(subdir, dirs[0]))
+        if dirs:
+            current_folder_includes.append(os.path.join(subdir, dirs[0]))
+        else:
+            current_folder_includes.append(subdir)
 
     conf = {
         'flags': [
@@ -78,8 +82,14 @@ def get_cpp_conf(**kwargs):
             '-fPIC'
         ],
         'include_paths_relative_to_dir': current_folder_includes,
-        'override_filename': FindCorrespondingSourceFile(kwargs['filename'])
+        # 'override_filename': FindCorrespondingSourceFile(kwargs['filename'])
     }
+
+    for inc in current_folder_includes:
+        conf['flags'].append('-I' + inc)
+
+    fh.write(str(conf))
+    fh.close()
 
     return conf
 
