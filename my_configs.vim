@@ -12,6 +12,7 @@ map <leader>k :YcmCompleter GetDoc<cr>
 map <leader>gd  :YcmCompleter GoToDeclaration<CR>
 map <leader>gt  :YcmCompleter GoTo<CR>
 map <leader>gr  :YcmCompleter GoToReferences<CR>
+command YD YcmDiags
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 
@@ -45,3 +46,6 @@ map <leader>nc :NERDTreeFind<cr>
 
 " Enable project specific settings
 set exrc
+let g:ale_linters_explicit = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
