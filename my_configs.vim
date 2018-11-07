@@ -2,6 +2,8 @@ colorscheme onedark
 " Map CtrlP shortcut
 let g:ctrlp_map = '<c-p>'
 set nu
+set cursorcolumn
+set cursorline
 
 " YCM
 " Autoclose completion window
@@ -47,5 +49,10 @@ map <leader>nc :NERDTreeFind<cr>
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
 " Enable project specific settings
 set exrc
