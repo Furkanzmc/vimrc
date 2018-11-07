@@ -81,6 +81,9 @@ def get_cpp_conf(**kwargs):
     Set 'g:extend_isystem' to 1 to add the local include paths to the
     system include paths as well.
 
+    Set 'g:additional_include_paths' to extend the include paths.
+    Set 'g:qt_path' to add Qt support.
+
     Set those variables to 'g:ycm_extra_conf_vim_data'.
     """
 
