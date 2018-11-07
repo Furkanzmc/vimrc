@@ -44,8 +44,8 @@ command Cdc cd %:p:h
 " NERDtree
 map <leader>nc :NERDTreeFind<cr>
 
-" Enable project specific settings
-set exrc
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
+" Enable project specific settings
+set exrc

@@ -182,8 +182,8 @@ def Settings(**kwargs):
     if kwargs['language'] == 'cfamily':
         conf = get_cpp_conf(**kwargs)
 
-    fh = open('/Users/Furkanzmc/Desktop/debug.log', 'w')
-    fh.write(str(conf))
+    fh = open('/Users/uzumcuf/Desktop/debug.log', 'w')
+    fh.write(str(os.environ))
     fh.close()
 
     return conf
