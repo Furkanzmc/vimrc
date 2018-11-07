@@ -43,3 +43,5 @@ command Cdc cd %:p:h
 " NERDtree
 map <leader>nc :NERDTreeFind<cr>
 
+" Enable project specific settings
+set exrc
