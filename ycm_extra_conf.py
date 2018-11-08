@@ -3,11 +3,13 @@ Provides additional functionality for the custom ycm_extra_conf.py files.
 """
 
 import os
+import ycm_core
 
 
 DIR_OF_THIS_SCRIPT = os.path.abspath(os.path.dirname(__file__))
 SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
 PWD = os.environ['PWD']
+compilation_database_folder = ''
 
 
 def get_python_conf(**kwargs):
@@ -89,6 +91,8 @@ def get_cpp_conf(**kwargs):
     Qt's path should be to the kit directory (eg.
     ~/Qt/5.11.1/clang_64)
 
+    Set 'g:cpp_compilation_database_folder' to the directory of the json file.
+
     Set those variables to 'g:ycm_extra_conf_vim_data'.
     """
 
@@ -162,6 +166,17 @@ def get_cpp_conf(**kwargs):
                 frameworks.append(framework_path)
                 include_paths.append('%s/Headers' % (framework_path, ))
 
+        if 'g:cpp_compilation_database_folder' in client_data:
+            db_conf = get_flags_from_database(
+                client_data['g:cpp_compilation_database_folder'],
+                **kwargs
+            )
+            if 'flags' in db_conf:
+                conf['flags'] = db_conf['flags']
+
+            if 'include_paths_relative_to_dir' in db_conf:
+                conf['include_paths_relative_to_dir'] = db_conf['include_paths_relative_to_dir']
+
     for subdir, dirs, files in os.walk(dir_to_walk):
         if contains_headers(files):
             include_paths.append(subdir)
@@ -184,6 +199,22 @@ def get_cpp_conf(**kwargs):
         conf['override_filename'] = find_corresponding_source_file(kwargs['filename'])
 
     return conf
+
+
+def get_flags_from_database(database_folder, **kwargs):
+    if os.path.exists(database_folder) is False or 'filename' not in kwargs:
+        return {}
+
+    database = ycm_core.CompilationDatabase(database_folder)
+    compilation_info = database.GetCompilationInfoForFile(kwargs['filename'])
+    if not compilation_info.compiler_flags_:
+        return {}
+
+    final_flags = list(compilation_info.compiler_flags_)
+    return {
+        'flags': final_flags,
+        'include_paths_relative_to_dir': compilation_info.compiler_working_dir_
+    }
 
 
 def Settings(**kwargs):
