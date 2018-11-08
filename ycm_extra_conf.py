@@ -11,7 +11,10 @@ PWD = os.environ['PWD']
 
 
 def get_python_conf(**kwargs):
-    """Returns the interpreter path and import path."""
+    """Returns the interpreter path and import path.
+
+    Use 'g:ycm_python_sys_path' to add additional import paths.
+    """
     conf = {
         'interpreter_path': '',
         'sys_path': []
