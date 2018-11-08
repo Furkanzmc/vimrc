@@ -7,11 +7,7 @@ import os
 
 DIR_OF_THIS_SCRIPT = os.path.abspath(os.path.dirname(__file__))
 SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
-VIRTUAL_ENV_DIR = None
 PWD = os.environ['PWD']
-
-if 'VIRTUAL_ENV' in os.environ:
-    VIRTUAL_ENV_DIR = os.environ['VIRTUAL_ENV']
 
 
 def get_python_conf(**kwargs):
@@ -20,9 +16,11 @@ def get_python_conf(**kwargs):
         'interpreter_path': '',
         'sys_path': []
     }
-
+    VIRTUAL_ENV_DIR = None
     if os.path.exists('%s/.venv' % (PWD, )):
         VIRTUAL_ENV_DIR = '%s/.venv' % (PWD, )
+    elif 'VIRTUAL_ENV' in os.environ:
+        VIRTUAL_ENV_DIR = os.environ['VIRTUAL_ENV']
     else:
         print('VIRTUAL_ENV cannot be found.')
 
@@ -181,9 +179,5 @@ def Settings(**kwargs):
         conf = get_python_conf(**kwargs)
     if kwargs['language'] == 'cfamily':
         conf = get_cpp_conf(**kwargs)
-
-    fh = open('/Users/uzumcuf/Desktop/debug.log', 'w')
-    fh.write(str(os.environ))
-    fh.close()
 
     return conf
