@@ -82,8 +82,12 @@ def get_cpp_conf(**kwargs):
     Set 'g:extend_isystem' to 1 to add the local include paths to the
     system include paths as well.
 
-    Set 'g:additional_include_paths' to extend the include paths.
-    Set 'g:qt_path' to add Qt support.
+    Set 'g:cpp_include_paths' to extend the include paths.
+    Set 'g:cpp_frameworks' to extend the include paths (macOS Only).
+
+    Set 'g:cpp_qt_path' and 'g:cpp_qt_modules' to enable Qt support.
+    Qt's path should be to the kit directory (eg.
+    ~/Qt/5.11.1/clang_64)
 
     Set those variables to 'g:ycm_extra_conf_vim_data'.
     """
@@ -124,15 +128,7 @@ def get_cpp_conf(**kwargs):
         '/Library/Frameworks',
     ]
 
-    system_inc_paths = [
-        '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1',
-        '/usr/local/include',
-        '/usr/include',
-        '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include',
-        '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
-        '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers',
-        '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers',
-    ]
+    system_inc_paths = []
 
     include_paths = [
         '.',
@@ -151,6 +147,20 @@ def get_cpp_conf(**kwargs):
 
         if 'g:extend_isystem' in client_data:
             extend_isystem = client_data['g:extend_isystem']
+
+        if 'g:cpp_include_paths' in client_data:
+            include_paths.extend(client_data['g:cpp_include_paths'])
+
+        if 'g:cpp_frameworks' in client_data:
+            frameworks.extend(client_data['g:cpp_frameworks'])
+
+        if 'g:cpp_qt_path' in client_data and 'g:cpp_qt_modules' in client_data:
+            qt_path = client_data['g:cpp_qt_path']
+            qt_modules = client_data['g:cpp_qt_modules']
+            for module in qt_modules:
+                framework_path = '%s/lib/%s.framework' % (qt_path, module)
+                frameworks.append(framework_path)
+                include_paths.append('%s/Headers' % (framework_path, ))
 
     for subdir, dirs, files in os.walk(dir_to_walk):
         if contains_headers(files):
