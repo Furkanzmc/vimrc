@@ -8,7 +8,7 @@ set cursorline
 " YCM
 " Autoclose completion window
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_insertion=1
 map <leader>k :YcmCompleter GetDoc<cr>
 " Add shortcut for go to decleration
 map <leader>gd  :YcmCompleter GoToDeclaration<CR>
@@ -34,6 +34,8 @@ let g:ale_set_highlights = 1
 " Only run linting when saving the file
 let g:ale_lint_on_enter = 1
 
+" Keyboard Mappings
+"
 " Use these to delete a line without cutting it.
 nnoremap <leader>d "_d
 xnoremap <leader>d "_d
