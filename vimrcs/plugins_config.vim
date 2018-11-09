@@ -11,7 +11,6 @@
 let g:ale_completion_enabled = 0
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
 call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
 call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
 call pathogen#helptags()
@@ -45,7 +44,7 @@ nmap <c-n> <Plug>yankstack_substitute_newer_paste
 """"""""""""""""""""""""""""""
 " => CTRL-P
 """"""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'rc'
 
 let g:ctrlp_map = '<c-f>'
 map <leader>j :CtrlP<cr>

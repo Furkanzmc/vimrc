@@ -29,13 +29,11 @@ set guioptions-=L
 
 " Colorscheme
 set background=dark
-colorscheme peaksea
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>e :e! ~/.vim_runtime/my_configs.vim<cr>
 autocmd! bufwritepost ~/.vim_runtime/my_configs.vim source ~/.vim_runtime/my_configs.vim
 
 
@@ -118,7 +116,7 @@ if executable('ag')
 endif
 
 " When you press gv you Ack after the selected text
-vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+vnoremap <leader>gv :call VisualSelection('gv', '')<CR>
 
 " Open Ack and put the cursor in the right position
 map <leader>g :Ack 

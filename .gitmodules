@@ -22,7 +22,6 @@
 [submodule "my_plugins/indentpython.vim"]
 	path = my_plugins/indentpython.vim
 	url = https://github.com/vim-scripts/indentpython.vim.git
-
 [submodule "my_plugins/indentLine"]
 	path = my_plugins/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
