@@ -381,7 +381,4 @@ def Settings(**kwargs):
     if kwargs['language'] == 'cfamily':
         conf = get_cpp_conf(**kwargs)
 
-    fh = open('/Users/Furkanzmc/Desktop/ycm.log', 'w')
-    fh.write(str(conf))
-    fh.close()
     return conf
