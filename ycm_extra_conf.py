@@ -4,6 +4,7 @@ Provides additional functionality for the custom ycm_extra_conf.py files.
 
 import os
 import ycm_core
+from subprocess import call
 
 
 DIR_OF_THIS_SCRIPT = os.path.abspath(os.path.dirname(__file__))
@@ -161,8 +162,21 @@ def get_cpp_conf(**kwargs):
         if 'g:cpp_qt_path' in client_data and 'g:cpp_qt_modules' in client_data:
             qt_path = client_data['g:cpp_qt_path']
             qt_modules = client_data['g:cpp_qt_modules']
+            # Create symbolic links in the include directory for the modules because the header
+            # files use relative includes (e.g QtCore/qstring.h)
+            qt_top_include_path = '%s/include/' % (qt_path, )
+            include_paths.append(qt_top_include_path)
+
             for module in qt_modules:
                 framework_path = '%s/lib/%s.framework' % (qt_path, module)
+                if os.path.exists('%s/%s' % (qt_top_include_path, module)) is False:
+                    call([
+                        'ln',
+                        '-s',
+                        '%s/Headers' % (framework_path, ),
+                        '%s/%s' % (qt_top_include_path, module)
+                    ])
+
                 frameworks.append(framework_path)
                 include_paths.append('%s/Headers' % (framework_path, ))
 
@@ -178,8 +192,7 @@ def get_cpp_conf(**kwargs):
                 conf['include_paths_relative_to_dir'] = db_conf['include_paths_relative_to_dir']
 
     for subdir, dirs, files in os.walk(dir_to_walk):
-        if contains_headers(files):
-            include_paths.append(subdir)
+        include_paths.append(subdir)
 
     for path in system_inc_paths:
         conf['flags'].extend(['-isystem ', path])
@@ -197,6 +210,10 @@ def get_cpp_conf(**kwargs):
 
     if 'filename' in kwargs:
         conf['override_filename'] = find_corresponding_source_file(kwargs['filename'])
+
+    fh = open('/Users/Furkanzmc/Desktop/conf.log', 'w')
+    fh.write(str(conf))
+    fh.close()
 
     return conf
 
