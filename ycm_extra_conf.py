@@ -84,7 +84,7 @@ def get_compilation_info_for_file(database, filename):
             # Get info from the source files by replacing the extension.
             replacement_file = basename + extension
             if os.path.exists(replacement_file):
-                compilation_info = database.get_compilation_info_for_file(replacement_file)
+                compilation_info = database.GetCompilationInfoForFile(replacement_file)
                 if compilation_info.compiler_flags_:
                     return compilation_info
             # If that wasn't successful, try replacing possible header directory with possible source directories.
@@ -97,7 +97,7 @@ def get_compilation_info_for_file(database, filename):
                             return compilation_info
 
         return None
-    return database.get_compilation_info_for_file(filename)
+    return database.GetCompilationInfoForFile(filename)
 
 
 def find_nearest(path, target, build_folder=None):
@@ -151,58 +151,50 @@ def make_relative_paths_absolute_in_flags(flags, working_directory):
 
 
 def get_flags_for_clang_complete(root):
-    try:
-        clang_complete_path = find_nearest(root, '.clang_complete')
-        clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
-        return clang_complete_flags
-    except:
-        return None
+    clang_complete_path = find_nearest(root, '.clang_complete')
+    clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+    return clang_complete_flags
 
 
 def get_flags_for_inc(root):
-    try:
-        include_path = find_nearest(root, 'include')
-        flags = []
-        for dirroot, dirnames, filenames in os.walk(include_path):
-            for dir_path in dirnames:
-                real_path = os.path.join(dirroot, dir_path)
-                flags = flags + ["-I" + real_path]
-                return flags
-    except:
-        return None
+    include_path = find_nearest(root, 'include')
+    flags = []
+    for dirroot, dirnames, filenames in os.walk(include_path):
+        for dir_path in dirnames:
+            real_path = os.path.join(dirroot, dir_path)
+            flags = flags + ["-I" + real_path]
+            return flags
 
 
-def get_flags_from_cplilation_db(root, filename, **kwargs):
-    try:
-        folder = root
-        if kwargs['comp_commands_folder'] is not None:
-            folder = kwargs['comp_commands_folder']
-
+def get_flags_from_compilation_db(root, filename, **kwargs):
+    if kwargs['comp_commands_folder'] is not None:
+        compilation_db_path = os.path.join(kwargs['comp_commands_folder'], 'compile_commands.json')
+        compilation_db_dir = kwargs['comp_commands_folder']
+    else:
         # Last argument of next function is the name of the build folder for
         # out of source projects
-        compilation_db_path = find_nearest(folder, 'compile_commands.json', BUILD_DIRECTORY)
+        compilation_db_path = find_nearest(root, 'compile_commands.json', BUILD_DIRECTORY)
         compilation_db_dir = os.path.dirname(compilation_db_path)
-        logging.info("Set compilation database directory to " + compilation_db_dir)
-        compilation_db = ycm_core.CompilationDatabase(compilation_db_dir)
-        if not compilation_db:
-            logging.info("Compilation database file found but unable to load")
-            return None
-
-        compilation_info = get_compilation_info_for_file(compilation_db, filename)
-        if not compilation_info:
-            logging.info("No compilation info for " + filename + " in compilation database")
-            return None
-
-        return make_relative_paths_absolute_in_flags(
-            compilation_info.compiler_flags_,
-            compilation_info.compiler_working_dir_)
-    except:
+    logging.info("Set compilation database directory to " + compilation_db_dir)
+    compilation_db = ycm_core.CompilationDatabase(compilation_db_dir)
+    if not compilation_db:
+        logging.info("Compilation database file found but unable to load")
         return None
+
+    compilation_info = get_compilation_info_for_file(compilation_db, filename)
+    if not compilation_info:
+        logging.info("No compilation info for " + filename + " in compilation database")
+        return None
+
+    return make_relative_paths_absolute_in_flags(
+        compilation_info.compiler_flags_,
+        compilation_info.compiler_working_dir_
+    )
 
 
 def get_flags_for_file(filename, **kwargs):
     root = os.path.realpath(filename)
-    compilation_db_flags = get_flags_from_cplilation_db(root, filename, **kwargs)
+    compilation_db_flags = get_flags_from_compilation_db(root, filename, **kwargs)
     if compilation_db_flags:
         final_flags = compilation_db_flags
     else:
@@ -220,10 +212,7 @@ def get_flags_for_file(filename, **kwargs):
             if include_flags:
                 final_flags = final_flags + include_flags
 
-    return {
-        'flags': final_flags,
-        'do_cache': True
-    }
+    return final_flags
 
 
 def find_corresponding_source_file(filename):
@@ -335,9 +324,8 @@ def get_cpp_conf(**kwargs):
     if 'filename' in kwargs:
         conf['override_filename'] = find_corresponding_source_file(kwargs['filename'])
 
-    conf['flags'].extend(
-        get_flags_for_file(kwargs['filename'], comp_commands_folder=com_commands_folder)
-    )
+    cmp_flags = get_flags_for_file(kwargs['filename'], comp_commands_folder=com_commands_folder)
+    conf['flags'].extend(cmp_flags)
     return conf
 
 
