@@ -211,10 +211,6 @@ def get_cpp_conf(**kwargs):
     if 'filename' in kwargs:
         conf['override_filename'] = find_corresponding_source_file(kwargs['filename'])
 
-    fh = open('/Users/Furkanzmc/Desktop/conf.log', 'w')
-    fh.write(str(conf))
-    fh.close()
-
     return conf
 
 
