@@ -52,10 +52,9 @@ endtry
 " => Command mode related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Smart mappings on the command line
-cno $h e ~/
-cno $d e ~/Desktop/
-cno $j e ./
-cno $c e <C-\>eCurrentFileDir("e")<cr>
+cno $h ~/
+cno $d ~/Desktop/
+cno $c <C-\>eCurrentFileDir("")<cr>
 
 " $q is super useful when browsing on the command line
 " it deletes everything until the last slash 
