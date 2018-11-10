@@ -1,5 +1,27 @@
 """
 Provides additional functionality for the custom ycm_extra_conf.py files.
+
+`g:ycm_conf_search_for_nearest`: Default value is false. If set to true,
+`compile_commands.json` and `.clang_complete` files will be looked for
+in the nearst path.
+
+C++ Configuration:
+    Set 'g:include_search_dirs' variable in your .vimrc file to walk in
+    that directory to add include paths.
+
+    Set 'g:extend_isystem' to 1 to add the local include paths to the
+    system include paths as well.
+
+    Set 'g:cpp_include_paths' to extend the include paths.
+    Set 'g:cpp_frameworks' to extend the include paths (macOS Only).
+
+    Set 'g:cpp_qt_path' and 'g:cpp_qt_modules' to enable Qt support.
+    Qt's path should be to the kit directory (eg.
+    ~/Qt/5.11.1/clang_64)
+
+    Set 'g:cpp_compilation_database_folder' to the directory of the json file.
+
+    Set those variables to 'g:ycm_extra_conf_vim_data'.
 """
 
 import os
@@ -92,7 +114,7 @@ def get_compilation_info_for_file(database, filename):
                 for source_dir in SOURCE_DIRECTORIES:
                     src_file = replacement_file.replace(header_dir, source_dir)
                     if os.path.exists(src_file):
-                        compilation_info = database.get_compilation_info_for_file(src_file)
+                        compilation_info = database.GetCompilationInfoForFile(src_file)
                         if compilation_info.compiler_flags_:
                             return compilation_info
 
@@ -108,7 +130,7 @@ def find_nearest(path, target, build_folder=None):
 
     parent = os.path.dirname(os.path.abspath(path))
     if parent == path:
-        raise RuntimeError("Could not find " + target)
+        return ''
 
     if build_folder:
         candidate = os.path.join(parent, build_folder, target)
@@ -152,7 +174,10 @@ def make_relative_paths_absolute_in_flags(flags, working_directory):
 
 def get_flags_for_clang_complete(root):
     clang_complete_path = find_nearest(root, '.clang_complete')
-    clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+    clang_complete_flags = []
+    if os.path.exists(clang_complete_path):
+        clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+
     return clang_complete_flags
 
 
