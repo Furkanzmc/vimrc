@@ -85,3 +85,6 @@
 [submodule "builtin_plugins/tabline.vim"]
 	path = builtin_plugins/tabline.vim
 	url = https://github.com/mkitt/tabline.vim.git
+[submodule "builtin_plugins/ale"]
+	path = builtin_plugins/ale
+	url = https://github.com/w0rp/ale.git

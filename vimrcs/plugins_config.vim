@@ -16,6 +16,30 @@ call pathogen#infect(s:vim_runtime.'/python_plugins/{}')
 call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
 call pathogen#helptags()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Ale - Code Linting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+
+" Set this in your vimrc file to disabling highlighting
+let g:ale_set_highlights = 0
+
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+
+" We don't need live linting.
+let g:ale_lint_on_text_changed = 'never'
+
+let g:ale_linters = {
+\   'qml': ['qmllint'],
+\   'python': ['pylint'],
+\   'c++': ['clangtidy']
+\}
+
+let g:ale_linters_explicit = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ack searching and cope displaying
