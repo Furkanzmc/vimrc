@@ -38,6 +38,12 @@ map <leader>o :BufExplorer<cr>
 
 
 """"""""""""""""""""""""""""""
+" => vim-airline
+""""""""""""""""""""""""""""""
+" Hide the default show mode because I'm using lightline
+set noshowmode
+
+""""""""""""""""""""""""""""""
 " => MRU plugin
 """"""""""""""""""""""""""""""
 let MRU_Max_Entries = 400

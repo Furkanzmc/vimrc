@@ -76,3 +76,6 @@
 [submodule "python_plugins/vim-python-pep8-indent"]
 	path = python_plugins/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule "my_plugins/lldb.nvim"]
+	path = my_plugins/lldb.nvim
+	url = https://github.com/dbgx/lldb.nvim.git
