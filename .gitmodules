@@ -79,3 +79,6 @@
 [submodule "my_plugins/lldb.nvim"]
 	path = my_plugins/lldb.nvim
 	url = https://github.com/dbgx/lldb.nvim.git
+[submodule "my_plugins/YouCompleteMe"]
+	path = my_plugins/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
