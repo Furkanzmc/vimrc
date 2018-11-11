@@ -57,5 +57,3 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" Enable project specific settings
-set exrc
