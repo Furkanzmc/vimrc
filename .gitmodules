@@ -85,3 +85,6 @@
 [submodule "builtin_plugins/vim-cpp-enhanced-highlight"]
 	path = builtin_plugins/vim-cpp-enhanced-highlight
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "builtin_plugins/tabline.vim"]
+	path = builtin_plugins/tabline.vim
+	url = https://github.com/mkitt/tabline.vim.git
