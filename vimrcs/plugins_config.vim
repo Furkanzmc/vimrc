@@ -107,3 +107,9 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
+
+"""""""""""""""""""""""""""""""
+" => vim-cpp-enhanced-highlight
+"""""""""""""""""""""""""""""""
+
+let g:cpp_member_variable_highlight = 1
