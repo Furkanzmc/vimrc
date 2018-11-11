@@ -11,7 +11,7 @@
 " Set font according to system
 try
     if has("mac") || has("macunix")
-        set gfn=Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
+        set gfn=Hack:h12,Source\ Code\ Pro:h12,Menlo:h12
     elseif has("win16") || has("win32")
         set gfn=Consolas:h12,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
     elseif has("linux")
