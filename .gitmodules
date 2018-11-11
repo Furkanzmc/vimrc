@@ -1,9 +1,6 @@
 [submodule "my_plugins/ctrlp.vim"]
 	path = my_plugins/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
-[submodule "my_plugins/onedark.vim"]
-	path = my_plugins/onedark.vim
-	url = https://github.com/joshdick/onedark.vim.git
 [submodule "my_plugins/vim-polyglot"]
 	path = my_plugins/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot.git
@@ -25,3 +22,63 @@
 [submodule "my_plugins/indentLine"]
 	path = my_plugins/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule "builtin_plugins/ack.vim"]
+	path = builtin_plugins/ack.vim
+	url = https://github.com/mileszs/ack.vim.git
+[submodule "builtin_plugins/auto-pairs"]
+	path = builtin_plugins/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "builtin_plugins/bufexplorer"]
+	path = builtin_plugins/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer.git
+[submodule "builtin_plugins/ctrlp.vim"]
+	path = builtin_plugins/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "builtin_plugins/nerdtree"]
+	path = builtin_plugins/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "builtin_plugins/onedark.vim"]
+	path = builtin_plugins/onedark.vim
+	url = https://github.com/joshdick/onedark.vim.git
+[submodule "builtin_plugins/vim-commentary"]
+	path = builtin_plugins/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "builtin_plugins/vim-fugitive"]
+	path = builtin_plugins/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "builtin_plugins/vim-gitgutter"]
+	path = builtin_plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "builtin_plugins/vim-multiple-cursors"]
+	path = builtin_plugins/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "builtin_plugins/vim-surround"]
+	path = builtin_plugins/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "builtin_plugins/goyo.vim"]
+	path = builtin_plugins/goyo.vim
+	url = https://github.com/junegunn/goyo.vim.git
+[submodule "builtin_plugins/vim-zenroom2"]
+	path = builtin_plugins/vim-zenroom2
+	url = https://github.com/amix/vim-zenroom2.git
+[submodule "builtin_plugins/vim-airline"]
+	path = builtin_plugins/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "builtin_plugins/open_file_under_cursor.vim"]
+	path = builtin_plugins/open_file_under_cursor.vim
+	url = https://github.com/amix/open_file_under_cursor.vim.git
+[submodule "builtin_plugins/mru.vim"]
+	path = builtin_plugins/mru.vim
+	url = https://github.com/vim-scripts/mru.vim.git
+[submodule "builtin_plugins/tabular"]
+	path = builtin_plugins/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "builtin_plugins/vim-expand-region"]
+	path = builtin_plugins/vim-expand-region
+	url = https://github.com/terryma/vim-expand-region.git
+[submodule "builtin_plugins/vim-json"]
+	path = builtin_plugins/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "builtin_plugins/vim-cmake-syntax"]
+	path = builtin_plugins/vim-cmake-syntax
+	url = https://github.com/pboettch/vim-cmake-syntax.git

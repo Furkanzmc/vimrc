@@ -1,13 +1,15 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
-"       Amir Salihefendic — @amix3k
+"       Amir Salihefendic — @amix3k (Original Author)
+"       Furkan Uzumcu - @Furkanzmc
 "
 " Awesome_version:
 "       Get this config, nice color schemes and lots of plugins!
 "
 "       Install the awesome version from:
 "
-"           https://github.com/amix/vimrc
+"           https://github.com/amix/vimrc (Original Repo)
+"           https://github.com/furkanzmc/vimrc 
 "
 " Sections:
 "    -> General
@@ -44,12 +46,12 @@ set autoread
 " like <leader>w saves the current file
 let mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command WriteSudo w !sudo tee % > /dev/null
+
+" Enable project specific settings
+set exrc
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -64,11 +66,16 @@ set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
+set nu
+" These two options highligh the current row and column.
+set cursorcolumn
+set cursorline
+
 " Turn on the Wild menu
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,*.qmlc,*jsc
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
@@ -79,7 +86,7 @@ endif
 set ruler
 
 " Height of the command bar
-set cmdheight=2
+set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -139,7 +146,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 try
-    colorscheme desert
+    colorscheme onedark
 catch
 endtry
 
@@ -194,9 +201,8 @@ set wrap "Wrap lines
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
+" Visual mode pressing ~~*~~ or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 
@@ -251,6 +257,16 @@ try
   set stal=2
 catch
 endtry
+
+" Use these to delete a line without cutting it.
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+xnoremap <leader>p "_dP
+xnoremap <leader>c "_c
+
+" Mappings to [l]cd into the current file's directory.
+command Lcdc lcd %:p:h
+command Cdc cd %:p:h
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
