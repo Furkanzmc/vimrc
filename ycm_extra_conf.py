@@ -218,6 +218,7 @@ def get_flags_from_compilation_db(root, filename, **kwargs):
 
 
 def get_flags_for_file(filename, **kwargs):
+    final_flags = []
     root = os.path.realpath(filename)
     compilation_db_flags = get_flags_from_compilation_db(root, filename, **kwargs)
     if compilation_db_flags:
