@@ -4,3 +4,5 @@ au BufRead,BufNewFile *.h noremap <leader>gs :e `find %:h:r -name %:r.cpp`<CR>
 
 set foldmethod=indent
 
+" Shortcut for lldb.nvim
+nmap <leader>br <Plug>LLBreakSwitch
