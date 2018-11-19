@@ -88,3 +88,6 @@
 [submodule "builtin_plugins/ale"]
 	path = builtin_plugins/ale
 	url = https://github.com/w0rp/ale.git
+[submodule "my_plugins/tagbar"]
+	path = my_plugins/tagbar
+	url = https://github.com/majutsushi/tagbar.git

@@ -57,3 +57,5 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+" Tabbar Settings
+g:tagbar_show_linenumbers = 1
