@@ -91,3 +91,6 @@
 [submodule "my_plugins/tagbar"]
 	path = my_plugins/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "my_plugins/vim-clang-format"]
+	path = my_plugins/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format.git
