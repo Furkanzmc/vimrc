@@ -2,7 +2,7 @@ colorscheme onedark
 " Map CtrlP shortcut
 let g:ctrlp_map = '<c-p>'
 set nu
-set cursorcolumn
+set nocursorcolumn
 set cursorline
 
 " YCM
