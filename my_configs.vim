@@ -62,3 +62,6 @@ g:tagbar_show_linenumbers = 1
 
 " vim-clang-format Settings
 g:clang_format#detect_style_file = 1
+
+" open_file_under_cursor Settings
+nnoremap gn :call GotoFile("new")<CR>
