@@ -94,3 +94,6 @@
 [submodule "my_plugins/vim-clang-format"]
 	path = my_plugins/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
+[submodule "builtin_plugins/vim-gotham"]
+	path = builtin_plugins/vim-gotham
+	url = https://github.com/whatyouhide/vim-gotham.git

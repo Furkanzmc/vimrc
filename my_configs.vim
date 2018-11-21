@@ -1,4 +1,5 @@
-colorscheme onedark
+colorscheme gotham256
+let g:lightline = { 'colorscheme': 'gotham256' }
 " Map CtrlP shortcut
 let g:ctrlp_map = '<c-p>'
 set nu
