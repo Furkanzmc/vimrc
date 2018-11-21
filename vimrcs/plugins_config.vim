@@ -138,3 +138,8 @@ nnoremap <silent> <leader>d :GitGutterToggle<cr>
 """""""""""""""""""""""""""""""
 
 let g:cpp_member_variable_highlight = 1
+
+"""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""
+let g:ycm_enable_diagnostic_highlighting = 0
