@@ -32,6 +32,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable directory specific vim configuration
+source ~/.vim_runtime/vimrcs/localrc.vim
 " Sets how many lines of history VIM has to remember
 set history=500
 
