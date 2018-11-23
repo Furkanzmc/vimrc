@@ -4,9 +4,6 @@
 [submodule "my_plugins/vim-qml"]
 	path = my_plugins/vim-qml
 	url = https://github.com/peterhoeg/vim-qml.git
-[submodule "my_plugins/vim-sensible"]
-	path = my_plugins/vim-sensible
-	url = https://github.com/tpope/vim-sensible.git
 [submodule "my_plugins/indentLine"]
 	path = my_plugins/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
