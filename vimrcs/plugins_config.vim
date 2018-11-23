@@ -31,6 +31,8 @@ let g:airline#extensions#ale#enabled = 1
 " We don't need live linting.
 let g:ale_lint_on_text_changed = 'never'
 
+let g:ale_lint_on_enter = 1
+
 let g:ale_linters = {
 \   'qml': ['qmllint'],
 \   'python': ['pylint'],
@@ -64,7 +66,7 @@ map <leader>o :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 " => vim-airline
 """"""""""""""""""""""""""""""
-" Hide the default show mode because I'm using lightline
+" Hide the default show mode 
 set noshowmode
 
 """"""""""""""""""""""""""""""
@@ -131,7 +133,8 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 " => Git gutter (Git diff)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
-nnoremap <silent> <leader>d :GitGutterToggle<cr>
+cmap GGT GitGutterToggle
+cmap GGHL GitGutterLineHighlightsToggle
 
 """""""""""""""""""""""""""""""
 " => vim-cpp-enhanced-highlight

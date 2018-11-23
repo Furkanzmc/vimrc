@@ -32,14 +32,16 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable directory specific vim configuration
-source ~/.vim_runtime/vimrcs/localrc.vim
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
+
+" Access system clipboard on macOS.
+set clipboard=unnamed
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -70,7 +72,6 @@ source $VIMRUNTIME/menu.vim
 
 set nu
 " These two options highligh the current row and column.
-set cursorcolumn
 set cursorline
 
 " Turn on the Wild menu

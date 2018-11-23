@@ -102,9 +102,6 @@ inoremap $e ""<esc>i
 " When you press gv you Ack after the selected text
 vnoremap <leader>gv :call VisualSelection('gv', '')<CR>
 
-" Open Ack and put the cursor in the right position
-map <leader>g :Ack 
-
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
@@ -123,7 +120,6 @@ map <leader>cc :botright cope<cr>
 map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
