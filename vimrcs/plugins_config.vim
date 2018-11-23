@@ -8,6 +8,7 @@
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
+" Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
@@ -142,7 +143,3 @@ cmap GGHL GitGutterLineHighlightsToggle
 
 let g:cpp_member_variable_highlight = 1
 
-"""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""
-let g:ycm_enable_diagnostic_highlighting = 0
