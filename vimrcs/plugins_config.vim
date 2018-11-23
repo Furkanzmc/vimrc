@@ -57,10 +57,11 @@ endif
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
 """"""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp=0
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerFindActive=1
-let g:bufExplorerSortBy='name'
+let g:bufExplorerDefaultHelp = 0
+let g:bufExplorerShowRelativePath = 1
+let g:bufExplorerFindActive = 1
+let g:bufExplorerSortBy = 'name'
+
 map <leader>o :BufExplorer<cr>
 
 
@@ -69,6 +70,7 @@ map <leader>o :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 " Hide the default show mode 
 set noshowmode
+
 
 """"""""""""""""""""""""""""""
 " => MRU plugin
@@ -88,12 +90,6 @@ let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 
-""""""""""""""""""""""""""""""
-" => ZenCoding
-""""""""""""""""""""""""""""""
-" Enable all functions in all modes
-let g:user_zen_mode='a'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,6 +97,7 @@ let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize = 35
+
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
