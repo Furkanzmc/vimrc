@@ -6,3 +6,6 @@ set foldmethod=indent
 
 " Shortcut for lldb.nvim
 nmap <leader>br <Plug>LLBreakSwitch
+
+" Override the default comment string from vim-commentary
+setlocal commentstring=//%s
