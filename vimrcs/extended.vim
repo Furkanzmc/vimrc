@@ -74,6 +74,8 @@ map ½ $
 cmap ½ $
 imap ½ $
 
+" Sort the selected lines according to their lengths.
+command -range SortLength :call setline("'<", sort(getline("'<", "'>"), "CompareLength"))
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Parenthesis/bracket
@@ -125,6 +127,12 @@ map <leader>p :cp<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+func! CompareLength(a, b)
+    let x = strlen(a:a)
+    let y = strlen(a:b)
+    return (x == y) ? 0 : (x < y) ? -1 : 1
+endfunc 
+
 func! DeleteTillSlash()
     let g:cmd = getcmdline()
 
