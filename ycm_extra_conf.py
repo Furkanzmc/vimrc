@@ -106,15 +106,20 @@ def get_compilation_info_for_file(database, filename):
             # Get info from the source files by replacing the extension.
             replacement_file = basename + extension
             if os.path.exists(replacement_file):
-                compilation_info = database.GetCompilationInfoForFile(replacement_file)
+                compilation_info = database.GetCompilationInfoForFile(
+                    replacement_file
+                )
                 if compilation_info.compiler_flags_:
                     return compilation_info
-            # If that wasn't successful, try replacing possible header directory with possible source directories.
+            # If that wasn't successful, try replacing possible header
+            # directory with possible source directories.
             for header_dir in HEADER_DIRECTORIES:
                 for source_dir in SOURCE_DIRECTORIES:
                     src_file = replacement_file.replace(header_dir, source_dir)
                     if os.path.exists(src_file):
-                        compilation_info = database.GetCompilationInfoForFile(src_file)
+                        compilation_info = database.GetCompilationInfoForFile(
+                            src_file
+                        )
                         if compilation_info.compiler_flags_:
                             return compilation_info
 
@@ -135,7 +140,11 @@ def find_nearest(path, target, build_folder=None):
     if build_folder:
         candidate = os.path.join(parent, build_folder, target)
         if os.path.isfile(candidate) or os.path.isdir(candidate):
-            logging.info("Found nearest " + target + " in build folder at " + candidate)
+            logging.info(
+                'Found nearest %s in build folder at %s',
+                target,
+                candidate
+            )
             return candidate
 
     return find_nearest(parent, target, build_folder)
@@ -176,7 +185,10 @@ def get_flags_for_clang_complete(root):
     clang_complete_path = find_nearest(root, '.clang_complete')
     clang_complete_flags = []
     if os.path.exists(clang_complete_path):
-        clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+        clang_complete_flags = open(
+            clang_complete_path,
+            'r'
+        ).read().splitlines()
 
     return clang_complete_flags
 
@@ -193,13 +205,21 @@ def get_flags_for_inc(root):
 
 def get_flags_from_compilation_db(root, filename, **kwargs):
     if kwargs['comp_commands_folder'] is not None:
-        compilation_db_path = os.path.join(kwargs['comp_commands_folder'], 'compile_commands.json')
+        compilation_db_path = os.path.join(
+            kwargs['comp_commands_folder'],
+            'compile_commands.json'
+        )
         compilation_db_dir = kwargs['comp_commands_folder']
     else:
         # Last argument of next function is the name of the build folder for
         # out of source projects
-        compilation_db_path = find_nearest(root, 'compile_commands.json', BUILD_DIRECTORY)
+        compilation_db_path = find_nearest(
+            root,
+            'compile_commands.json',
+            BUILD_DIRECTORY
+        )
         compilation_db_dir = os.path.dirname(compilation_db_path)
+
     logging.info("Set compilation database directory to " + compilation_db_dir)
     compilation_db = ycm_core.CompilationDatabase(compilation_db_dir)
     if not compilation_db:
@@ -208,7 +228,10 @@ def get_flags_from_compilation_db(root, filename, **kwargs):
 
     compilation_info = get_compilation_info_for_file(compilation_db, filename)
     if not compilation_info:
-        logging.info("No compilation info for " + filename + " in compilation database")
+        logging.info(
+            'No compilation info for %s in compilation database',
+            filename
+        )
         return None
 
     return make_relative_paths_absolute_in_flags(
@@ -220,7 +243,11 @@ def get_flags_from_compilation_db(root, filename, **kwargs):
 def get_flags_for_file(filename, **kwargs):
     final_flags = []
     root = os.path.realpath(filename)
-    compilation_db_flags = get_flags_from_compilation_db(root, filename, **kwargs)
+    compilation_db_flags = get_flags_from_compilation_db(
+        root,
+        filename,
+        **kwargs
+    )
     if compilation_db_flags:
         final_flags = compilation_db_flags
     else:
@@ -308,8 +335,9 @@ def get_cpp_conf(**kwargs):
         if 'g:cpp_qt_path' in client_data and 'g:cpp_qt_modules' in client_data:
             qt_path = client_data['g:cpp_qt_path']
             qt_modules = client_data['g:cpp_qt_modules']
-            # Create symbolic links in the include directory for the modules because the header
-            # files use relative includes (e.g QtCore/qstring.h)
+            # Create symbolic links in the include directory for the modules
+            # because the header files use relative includes
+            # (e.g QtCore/qstring.h)
             qt_top_include_path = '%s/include/' % (qt_path, )
             include_paths.append(qt_top_include_path)
 
@@ -348,9 +376,14 @@ def get_cpp_conf(**kwargs):
         conf['include_paths_relative_to_dir'] = PWD
 
     if 'filename' in kwargs:
-        conf['override_filename'] = find_corresponding_source_file(kwargs['filename'])
+        conf['override_filename'] = find_corresponding_source_file(
+            kwargs['filename']
+        )
 
-    cmp_flags = get_flags_for_file(kwargs['filename'], comp_commands_folder=com_commands_folder)
+    cmp_flags = get_flags_for_file(
+        kwargs['filename'],
+        comp_commands_folder=com_commands_folder
+    )
     conf['flags'].extend(cmp_flags)
     return conf
 
