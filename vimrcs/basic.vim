@@ -32,6 +32,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" which commands trigger auto-unfold
+set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo,
+
 set complete-=i
 
 " Sets how many lines of history VIM has to remember
@@ -82,7 +85,7 @@ set wildignore=*.o,*~,*.pyc,*.qmlc,*jsc
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 "Always show current position
@@ -287,6 +290,9 @@ set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
 map 0 ^
+
+" Reselect text that was just pasted with ,v
+nnoremap <leader>v V`]
 
 " Press escape to exit terminal mode.
 tnoremap <Esc> <C-\><C-n>
