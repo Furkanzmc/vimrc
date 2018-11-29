@@ -1,8 +1,7 @@
-colorscheme gotham256
-let g:lightline = { 'colorscheme': 'gotham256' }
+colorscheme onedark
 
+set nofoldenable
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
-
 set gfn=Hack\ Regular\ Retina:h12
 
 " Keyboard Mappings
