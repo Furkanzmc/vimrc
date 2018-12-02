@@ -37,6 +37,10 @@ set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo,
 
 set complete-=i
 
+" Use the current tab for openning files from quickfix.
+" Otherwise it gets really annoying and each file is opened
+" in a different tab.
+set switchbuf=usetab
 " Sets how many lines of history VIM has to remember
 set history=500
 
