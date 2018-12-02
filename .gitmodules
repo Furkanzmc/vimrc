@@ -91,3 +91,6 @@
 [submodule "builtin_plugins/vim-gotham"]
 	path = builtin_plugins/vim-gotham
 	url = https://github.com/whatyouhide/vim-gotham.git
+[submodule "my_plugins/qmake-syntax-vim"]
+	path = my_plugins/qmake-syntax-vim
+	url = https://github.com/artoj/qmake-syntax-vim.git
