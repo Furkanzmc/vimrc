@@ -102,7 +102,8 @@ inoremap $e ""<esc>i
 " Use The Silver Searcher over grep, iff possible
 if executable('ag')
    " Use ag over grep
-   set grepprg=ag\ --nogroup
+   set grepprg=ag\ --vimgrep\ $* 
+   set grepformat=%f:%l:%c:%m
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
