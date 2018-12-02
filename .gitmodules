@@ -7,9 +7,6 @@
 [submodule "my_plugins/indentLine"]
 	path = my_plugins/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
-[submodule "builtin_plugins/ack.vim"]
-	path = builtin_plugins/ack.vim
-	url = https://github.com/mileszs/ack.vim.git
 [submodule "builtin_plugins/auto-pairs"]
 	path = builtin_plugins/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
