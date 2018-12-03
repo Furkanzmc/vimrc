@@ -94,3 +94,6 @@
 [submodule "my_plugins/qmake-syntax-vim"]
 	path = my_plugins/qmake-syntax-vim
 	url = https://github.com/artoj/qmake-syntax-vim.git
+[submodule "builtin_plugins/vim-yankstack"]
+	path = builtin_plugins/vim-yankstack
+	url = https://github.com/maxbrunsfeld/vim-yankstack.git
