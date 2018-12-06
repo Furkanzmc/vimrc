@@ -34,7 +34,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " which commands trigger auto-unfold
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo,
-
+set relativenumber
 set complete-=i
 
 " Use the current tab for openning files from quickfix.
@@ -125,6 +125,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=3
 
