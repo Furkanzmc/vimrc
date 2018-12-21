@@ -60,7 +60,9 @@ let mapleader = ","
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command WriteSudo w !sudo tee % > /dev/null
+if has("mac") || has("macunix") || has("linux")
+    command WriteSudo w !sudo tee % > /dev/null
+endif
 
 " Enable project specific settings
 set exrc
