@@ -94,3 +94,6 @@
 [submodule "my_plugins/qmake-syntax-vim"]
 	path = my_plugins/qmake-syntax-vim
 	url = https://github.com/artoj/qmake-syntax-vim.git
+[submodule "builtin_plugins/papercolor-theme"]
+	path = builtin_plugins/papercolor-theme
+	url = https://github.com/NLKNguyen/papercolor-theme.git
