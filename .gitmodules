@@ -19,9 +19,6 @@
 [submodule "builtin_plugins/nerdtree"]
 	path = builtin_plugins/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "builtin_plugins/onedark.vim"]
-	path = builtin_plugins/onedark.vim
-	url = https://github.com/joshdick/onedark.vim.git
 [submodule "builtin_plugins/vim-commentary"]
 	path = builtin_plugins/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -88,12 +85,9 @@
 [submodule "my_plugins/vim-clang-format"]
 	path = my_plugins/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
-[submodule "builtin_plugins/vim-gotham"]
-	path = builtin_plugins/vim-gotham
-	url = https://github.com/whatyouhide/vim-gotham.git
 [submodule "my_plugins/qmake-syntax-vim"]
 	path = my_plugins/qmake-syntax-vim
 	url = https://github.com/artoj/qmake-syntax-vim.git
-[submodule "builtin_plugins/papercolor-theme"]
-	path = builtin_plugins/papercolor-theme
-	url = https://github.com/NLKNguyen/papercolor-theme.git
+[submodule "builtin_plugins/vim-one"]
+	path = builtin_plugins/vim-one
+	url = https://github.com/rakr/vim-one.git

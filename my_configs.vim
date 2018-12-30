@@ -1,4 +1,7 @@
-colorscheme onedark
+colorscheme one
+set background=dark
+set termguicolors
+let g:airline_theme='one'
 
 set nofoldenable
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
