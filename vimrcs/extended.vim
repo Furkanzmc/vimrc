@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important: 
+" Important:
 "       This requries that you install https://github.com/amix/vimrc !
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -31,6 +31,19 @@ set guioptions-=L
 " Colorscheme
 set background=dark
 
+" Highlight trailing spaces.
+highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+match ExtraWhitespace /\s\+$/
+
+autocmd BufWinEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd InsertEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd InsertLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd BufWinLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
@@ -39,7 +52,7 @@ autocmd! bufwritepost ~/.vim_runtime/my_configs.vim source ~/.vim_runtime/my_con
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Turn persistent undo on 
+" => Turn persistent undo on
 "    means that you can undo even when you close a buffer/VIM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
@@ -58,7 +71,7 @@ cno $d ~/Desktop/
 cno $c <C-\>eCurrentFileDir("")<cr>
 
 " $q is super useful when browsing on the command line
-" it deletes everything until the last slash 
+" it deletes everything until the last slash
 cno $q <C-\>eDeleteTillSlash()<cr>
 
 " Bash like keys for the command line
@@ -102,7 +115,7 @@ inoremap $e ""<esc>i
 " Use The Silver Searcher over grep, iff possible
 if executable('ag')
    " Use ag over grep
-   set grepprg=ag\ --vimgrep\ $* 
+   set grepprg=ag\ --vimgrep\ $*
    set grepformat=%f:%l:%c:%m
 endif
 
@@ -141,7 +154,7 @@ func! CompareLength(a, b)
     let x = strlen(a:a)
     let y = strlen(a:b)
     return (x == y) ? 0 : (x < y) ? -1 : 1
-endfunc 
+endfunc
 
 func! DeleteTillSlash()
     let g:cmd = getcmdline()
@@ -158,7 +171,7 @@ func! DeleteTillSlash()
         else
             let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
         endif
-    endif   
+    endif
 
     return g:cmd_edited
 endfunc
