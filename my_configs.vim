@@ -44,6 +44,7 @@ map <leader>k :YcmCompleter GetDoc<cr>
 map <leader>gd  :YcmCompleter GoToDeclaration<CR>
 map <leader>gt  :YcmCompleter GoTo<CR>
 map <leader>gr  :YcmCompleter GoToReferences<CR>
+map <leader>ti  :YcmCompleter GetType<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
