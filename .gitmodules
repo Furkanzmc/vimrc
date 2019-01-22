@@ -13,9 +13,6 @@
 [submodule "builtin_plugins/bufexplorer"]
 	path = builtin_plugins/bufexplorer
 	url = https://github.com/jlanzarotta/bufexplorer.git
-[submodule "builtin_plugins/ctrlp.vim"]
-	path = builtin_plugins/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
 [submodule "builtin_plugins/nerdtree"]
 	path = builtin_plugins/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
@@ -91,3 +88,9 @@
 [submodule "builtin_plugins/vim-one"]
 	path = builtin_plugins/vim-one
 	url = https://github.com/rakr/vim-one.git
+[submodule "builtin_plugins/fzf.vim"]
+	path = builtin_plugins/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "builtin_plugins/fzf"]
+	path = builtin_plugins/fzf
+	url = https://github.com/junegunn/fzf.git
