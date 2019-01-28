@@ -140,10 +140,8 @@ cmap GGHL GitGutterLineHighlightsToggle
 
 let g:cpp_member_variable_highlight = 1
 
-"""""""""""""""""""""""""""""""
-" => vim-yankstack
-"""""""""""""""""""""""""""""""
 
-let g:yankstack_map_keys = 0
-nmap <leader>py <Plug>yankstack_substitute_older_paste
-nmap <leader>ny <Plug>yankstack_substitute_newer_paste
+""""""""""""""""""""""""""""""
+" => fzf plugin
+""""""""""""""""""""""""""""""
+map <c-p> :Files<cr>
