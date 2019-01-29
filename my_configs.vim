@@ -5,7 +5,14 @@ let g:airline_theme='one'
 
 set nofoldenable
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
-set gfn=Hack\ Regular\ Retina:h12
+
+try
+    if has("win16") || has("win32")
+        set shell=powershell
+        set shellcmdflag=-command
+    endif
+catch
+endtry
 
 " Keyboard Mappings
 " Use these to delete a line without cutting it.
