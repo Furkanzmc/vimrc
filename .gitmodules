@@ -40,9 +40,6 @@
 [submodule "builtin_plugins/vim-airline"]
 	path = builtin_plugins/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
-[submodule "builtin_plugins/open_file_under_cursor.vim"]
-	path = builtin_plugins/open_file_under_cursor.vim
-	url = https://github.com/amix/open_file_under_cursor.vim.git
 [submodule "builtin_plugins/mru.vim"]
 	path = builtin_plugins/mru.vim
 	url = https://github.com/vim-scripts/mru.vim.git
