@@ -17,6 +17,9 @@ call pathogen#infect(s:vim_runtime.'/python_plugins/{}')
 call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
 call pathogen#helptags()
 
+let ofuc_path = s:vim_runtime.'/builtin_plugins/open_file_under_cursor.vim'
+exec 'source ' . ofuc_path
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale - Code Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -145,3 +148,5 @@ let g:cpp_member_variable_highlight = 1
 " => fzf plugin
 """"""""""""""""""""""""""""""
 map <c-p> :Files<cr>
+map <c-b> :Buffers<cr>
+map <c-a> :Ag<cr>
