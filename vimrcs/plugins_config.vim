@@ -56,41 +56,11 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
 
-
-""""""""""""""""""""""""""""""
-" => bufExplorer plugin
-""""""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp = 0
-let g:bufExplorerShowRelativePath = 1
-let g:bufExplorerFindActive = 1
-let g:bufExplorerSortBy = 'name'
-
-map <leader>o :BufExplorer<cr>
-
-
 """"""""""""""""""""""""""""""
 " => vim-airline
 """"""""""""""""""""""""""""""
-" Hide the default show mode 
+" Hide the default show mode
 set noshowmode
-
-
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-
-
-
-""""""""""""""""""""""""""""""
-" => CTRL-P
-""""""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,17 +95,10 @@ let g:multi_cursor_quit_key            = '<Esc>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => surround.vim config
-" Annotate strings with gettext 
+" Annotate strings with gettext
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 vmap Si S(i_<esc>f)
 au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git gutter (Git diff)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gitgutter_enabled=0
-cmap GGT GitGutterToggle
-cmap GGHL GitGutterLineHighlightsToggle
 
 """""""""""""""""""""""""""""""
 " => vim-cpp-enhanced-highlight
@@ -147,6 +110,8 @@ let g:cpp_member_variable_highlight = 1
 """"""""""""""""""""""""""""""
 " => fzf plugin
 """"""""""""""""""""""""""""""
+
 map <c-p> :Files<cr>
 map <leader>o :Buffers<cr>
 map <leader>a :Ag<cr>
+map <leader>f :History<CR>

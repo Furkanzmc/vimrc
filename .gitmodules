@@ -19,33 +19,18 @@
 [submodule "builtin_plugins/vim-fugitive"]
 	path = builtin_plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "builtin_plugins/vim-gitgutter"]
-	path = builtin_plugins/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "builtin_plugins/vim-multiple-cursors"]
 	path = builtin_plugins/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
 [submodule "builtin_plugins/vim-surround"]
 	path = builtin_plugins/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "builtin_plugins/goyo.vim"]
-	path = builtin_plugins/goyo.vim
-	url = https://github.com/junegunn/goyo.vim.git
-[submodule "builtin_plugins/vim-zenroom2"]
-	path = builtin_plugins/vim-zenroom2
-	url = https://github.com/amix/vim-zenroom2.git
 [submodule "builtin_plugins/vim-airline"]
 	path = builtin_plugins/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
-[submodule "builtin_plugins/mru.vim"]
-	path = builtin_plugins/mru.vim
-	url = https://github.com/vim-scripts/mru.vim.git
 [submodule "builtin_plugins/tabular"]
 	path = builtin_plugins/tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule "builtin_plugins/vim-expand-region"]
-	path = builtin_plugins/vim-expand-region
-	url = https://github.com/terryma/vim-expand-region.git
 [submodule "builtin_plugins/vim-json"]
 	path = builtin_plugins/vim-json
 	url = https://github.com/elzr/vim-json.git
@@ -55,9 +40,6 @@
 [submodule "python_plugins/vim-python-pep8-indent"]
 	path = python_plugins/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
-[submodule "my_plugins/lldb.nvim"]
-	path = my_plugins/lldb.nvim
-	url = https://github.com/dbgx/lldb.nvim.git
 [submodule "my_plugins/YouCompleteMe"]
 	path = my_plugins/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
