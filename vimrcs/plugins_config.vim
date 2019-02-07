@@ -148,5 +148,5 @@ let g:cpp_member_variable_highlight = 1
 " => fzf plugin
 """"""""""""""""""""""""""""""
 map <c-p> :Files<cr>
-map <c-b> :Buffers<cr>
-map <c-a> :Ag<cr>
+map <leader>o :Buffers<cr>
+map <leader>a :Ag<cr>

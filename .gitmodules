@@ -10,9 +10,6 @@
 [submodule "builtin_plugins/auto-pairs"]
 	path = builtin_plugins/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
-[submodule "builtin_plugins/bufexplorer"]
-	path = builtin_plugins/bufexplorer
-	url = https://github.com/jlanzarotta/bufexplorer.git
 [submodule "builtin_plugins/nerdtree"]
 	path = builtin_plugins/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
