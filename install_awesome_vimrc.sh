@@ -11,12 +11,12 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 source ~/.vim_runtime/vimrcs/extended.vim
 
 try
-source ~/.vim_runtime/my_configs.vim
+source ~/.vim_runtime/vimrcs/my_configs.vim
 catch
 endtry' > ~/.vimrc
 
 mkdir -p ~/.vim/ftplugin
-cp -f ~/.vim_runtime/python.vim ~/.vim/ftplugin/python.vim
-cp -f ~/.vim_runtime/cpp.vim ~/.vim/ftplugin/cpp.vim
+cp -f ~/.vim_runtime/vimrcs/python.vim ~/.vim/ftplugin/python.vim
+cp -f ~/.vim_runtime/vimrcs/cpp.vim ~/.vim/ftplugin/cpp.vim
 
 echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
