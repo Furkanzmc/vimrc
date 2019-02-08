@@ -88,7 +88,7 @@ cmap ½ $
 imap ½ $
 
 " Sort the selected lines according to their lengths.
-command -range SortLength :call setline("'<", sort(getline("'<", "'>"), "CompareLength"))
+command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "CompareLength"))
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Parenthesis/bracket
@@ -196,3 +196,34 @@ endfunction
 function! ReplaceInCurrentDir(from, to)
    execute ':args `ag -l -Q '. a:from .' ./` | argdo %s/'. a:from .'/'. a:to .'/g'
 endfunction
+
+" Buffer related code from https://stackoverflow.com/a/4867969
+function! GetBufferList()
+    return filter(range(1,bufnr('$')), 'buflisted(v:val)')
+endfunction
+
+function! GetMatchingBuffers(pattern)
+    return filter(GetBufferList(), 'bufname(v:val) =~ a:pattern')
+endfunction
+
+function! WipeMatchingBuffers(pattern)
+    let l:matchList = GetMatchingBuffers(a:pattern)
+
+    let l:count = len(l:matchList)
+    if l:count < 1
+        echo 'No buffers found matching pattern ' . a:pattern
+        return
+    endif
+
+    if l:count == 1
+        let l:suffix = ''
+    else
+        let l:suffix = 's'
+    endif
+
+    exec 'bw ' . join(l:matchList, ' ')
+
+    echo 'Wiped ' . l:count . ' buffer' . l:suffix . '.'
+endfunction
+
+command! -nargs=1 BDeletes call WipeMatchingBuffers('<args>')
