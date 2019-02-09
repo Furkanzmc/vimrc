@@ -113,9 +113,9 @@ inoremap $e ""<esc>i
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use The Silver Searcher over grep, iff possible
-if executable('ag')
-   " Use ag over grep
-   set grepprg=ag\ --vimgrep\ $*
+if executable('rg')
+   " Use rg over grep
+   set grepprg=rg\ --vimgrep\ $*
    set grepformat=%f:%l:%c:%m
 endif
 
@@ -194,7 +194,7 @@ function! GetVisualSelection()
 endfunction
 
 function! ReplaceInCurrentDir(from, to)
-   execute ':args `ag -l -Q '. a:from .' ./` | argdo %s/'. a:from .'/'. a:to .'/g'
+   execute ':args `rg -l -F '. a:from .' ./` | argdo %s/'. a:from .'/'. a:to .'/g'
 endfunction
 
 " Buffer related code from https://stackoverflow.com/a/4867969

@@ -113,5 +113,5 @@ let g:cpp_member_variable_highlight = 1
 
 map <c-p> :Files<cr>
 map <leader>o :Buffers<cr>
-map <leader>a :Ag<cr>
+map <leader>a :Rg<cr>
 map <leader>f :History<CR>
