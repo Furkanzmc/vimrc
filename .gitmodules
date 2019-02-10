@@ -37,9 +37,6 @@
 [submodule "builtin_plugins/vim-cmake-syntax"]
 	path = builtin_plugins/vim-cmake-syntax
 	url = https://github.com/pboettch/vim-cmake-syntax.git
-[submodule "python_plugins/vim-python-pep8-indent"]
-	path = python_plugins/vim-python-pep8-indent
-	url = https://github.com/Vimjas/vim-python-pep8-indent.git
 [submodule "my_plugins/YouCompleteMe"]
 	path = my_plugins/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
