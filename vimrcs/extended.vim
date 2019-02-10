@@ -207,7 +207,11 @@ function! GetMatchingBuffers(pattern)
 endfunction
 
 function! WipeMatchingBuffers(pattern)
-    let l:matchList = GetMatchingBuffers(a:pattern)
+    if a:pattern == "*"
+        let l:matchList = GetBufferList()
+    else
+        let l:matchList = GetMatchingBuffers(a:pattern)
+    endif
 
     let l:count = len(l:matchList)
     if l:count < 1
@@ -226,4 +230,23 @@ function! WipeMatchingBuffers(pattern)
     echo 'Wiped ' . l:count . ' buffer' . l:suffix . '.'
 endfunction
 
-command! -nargs=1 BDeletes call WipeMatchingBuffers('<args>')
+command! -nargs=1 Bdeletes call WipeMatchingBuffers('<args>')
+
+" Delete all hidden buffers
+" From https://github.com/zenbro/dotfiles/blob/master/.nvimrc
+command! Bdhidden call DeleteHiddenBuffers()
+function! DeleteHiddenBuffers()
+    let tpbl = []
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    let l:matchList = filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+    let l:count = len(l:matchList)
+    for buf in l:matchList
+        silent execute 'bwipeout' buf
+    endfor
+
+    if l:count > 0
+        echo 'Closed ' . l:count . ' hidden buffers.'
+    else
+        echo 'No hidden buffer present.'
+    endif
+endfunction

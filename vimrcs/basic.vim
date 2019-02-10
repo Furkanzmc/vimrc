@@ -63,6 +63,18 @@ endif
 " Enable project specific settings
 set exrc
 
+function! TerminalInSplit(split)
+  if a:split == 'vertical'
+      botright vsplit
+  else
+      botright split
+  endif
+
+  execute 'terminal'
+endfunction
+
+command! Vterm call TerminalInSplit('vertical')
+command! Hterm call TerminalInSplit('horizontal')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
