@@ -34,7 +34,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " which commands trigger auto-unfold
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo,
-set relativenumber
 set complete-=i
 
 " Sets how many lines of history VIM has to remember
@@ -89,6 +88,7 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
 set nu
+set relativenumber
 set cursorline
 
 " Turn on the Wild menu
@@ -149,10 +149,6 @@ set tm=300
 if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
-
-
-" Add a bit extra margin to the left
-set foldcolumn=1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
