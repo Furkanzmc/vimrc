@@ -1,8 +1,13 @@
-colorscheme one
-set background=dark
-set termguicolors
-let g:airline_theme='one'
+if strftime('%H') >= 7 && strftime('%H') < 15
+  set background=light
+  let g:airline_theme='cosmic_latte_light'
+else
+  set background=dark
+  let g:airline_theme='cosmic_latte_dark'
+endif
+colorscheme cosmic_latte
 
+set termguicolors
 set nofoldenable
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 
