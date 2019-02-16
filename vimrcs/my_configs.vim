@@ -57,6 +57,7 @@ map <leader>gd  :YcmCompleter GoToDeclaration<CR>
 map <leader>gt  :YcmCompleter GoTo<CR>
 map <leader>gr  :YcmCompleter GoToReferences<CR>
 map <leader>ti  :YcmCompleter GetType<CR>
+map <leader>ds  :YcmShowDetailedDiagnostic<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
