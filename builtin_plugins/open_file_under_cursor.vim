@@ -1,4 +1,4 @@
-" Code initial code belongs to Rudy Wortel
+" Initial code belongs to Rudy Wortel
 
 function! s:GrepOutput()
     "C:/Studio/main/Jamrules.jam:134: dummy text "this/is/a/file:123: parse this!
@@ -69,17 +69,37 @@ function! s:MSVCStack()
 	return status
 endfunction
 
-function! s:SchemeError()
-	let status = 0
-	cre = re.compile("^Scheme error in file '([^']*)' on line '([^']*)")
-	let matchList = matchlist(s:fileLine, "Scheme error in file '\([^']*\)' on line '\([0-9]*\).*")
+" ----- Emulate 'gf' but recognize :line format -----
+" Code from: https://github.com/amix/open_file_under_cursor.vim
+function! s:GotoLocalFile()
+    let curword = expand("<cfile>")
+    if (strlen(curword) == 0)
+        return
+    endif
+    let matchstart = match(curword, ':\d\+$')
+    if matchstart > 0
+        let pos = '+' . strpart(curword, matchstart+1)
+        let fname = strpart(curword, 0, matchstart)
+    else
+        let pos = ""
+        let fname = curword
+    endif
 
-	if len(matchList)
-		let s:cmd = "edit +" . matchList[2] . " " . matchList[1]
-		let status = 1
-	endif
+    " check exists file.
+    if filereadable(fname)
+        let fullname = fname
+    else
+        " try find file with prefix by working directory
+        let fullname = getcwd() . '/' . fname
+        if !filereadable(fullname)
+            " the last try, using current directory based on file opened.
+            let fullname = expand('%:h') . '/' . fname
+        endif
+    endif
 
-	return status
+    " Use 'find' so path is searched like 'gf' would
+    let s:cmd ='find ' . pos . ' ' . fname
+    return 1
 endfunction
 
 let s:parsers = [
@@ -88,7 +108,7 @@ let s:parsers = [
 	\ function("s:GrepOutput"),
 	\ function("s:IncludeStatement"),
 	\ function("s:MSVCStack"),
-	\ function("s:SchemeError"),
+	\ function("s:GotoLocalFile"),
 	\ ]
 
 function! GoToFile()
@@ -96,7 +116,11 @@ function! GoToFile()
 	let processed = 0
 	for P in s:parsers
 		if P()
-			exec s:cmd
+            try
+			    exec s:cmd
+            catch
+                echo "Cannot find file."
+            endtry
 			let processed = 1
 			break
 		endif
