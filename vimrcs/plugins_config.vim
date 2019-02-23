@@ -10,6 +10,15 @@
 """"""""""""""""""""""""""""""
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
+let g:pathogen_disabled = []
+
+if has('gui_running') && !has('unix')
+    call add(g:pathogen_disabled, 'ale')
+    call add(g:pathogen_disabled, 'vim-fugitive')
+    call add(g:pathogen_disabled, 'vim-one')
+    call add(g:pathogen_disabled, 'vim-clang-format')
+    call add(g:pathogen_disabled, 'YouCompleteMe')
+endif
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
 call pathogen#infect(s:vim_runtime.'/builtin_plugins/{}')
