@@ -76,3 +76,6 @@
 [submodule "builtin_plugins/vim-python-pep8-indent"]
 	path = builtin_plugins/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule "builtin_plugins/vim-markdown"]
+	path = builtin_plugins/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
