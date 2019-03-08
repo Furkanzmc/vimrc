@@ -73,3 +73,6 @@
 [submodule "builtin_plugins/cosmic_latte"]
 	path = builtin_plugins/cosmic_latte
 	url = https://github.com/nightsense/cosmic_latte.git
+[submodule "builtin_plugins/vim-python-pep8-indent"]
+	path = builtin_plugins/vim-python-pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent.git
