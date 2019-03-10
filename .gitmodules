@@ -79,3 +79,6 @@
 [submodule "builtin_plugins/vim-markdown"]
 	path = builtin_plugins/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
+[submodule "builtin_plugins/goyo.vim"]
+	path = builtin_plugins/goyo.vim
+	url = https://github.com/junegunn/goyo.vim.git
