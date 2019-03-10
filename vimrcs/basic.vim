@@ -33,7 +33,7 @@
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " which commands trigger auto-unfold
-set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo,
+set foldopen=block,hor,jump,mark,percent,quickfix,search,tag
 set complete-=i
 
 " Sets how many lines of history VIM has to remember
