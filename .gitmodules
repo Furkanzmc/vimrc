@@ -10,9 +10,6 @@
 [submodule "builtin_plugins/auto-pairs"]
 	path = builtin_plugins/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
-[submodule "builtin_plugins/nerdtree"]
-	path = builtin_plugins/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "builtin_plugins/vim-commentary"]
 	path = builtin_plugins/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -85,3 +82,6 @@
 [submodule "builtin_plugins/ultisnips"]
 	path = builtin_plugins/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
+[submodule "builtin_plugins/vim-vinegar"]
+	path = builtin_plugins/vim-vinegar
+	url = https://github.com/tpope/vim-vinegar.git
