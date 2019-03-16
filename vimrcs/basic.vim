@@ -91,7 +91,6 @@ source $VIMRUNTIME/menu.vim
 
 set nu
 set relativenumber
-set cursorline
 
 " Turn on the Wild menu
 set wildmenu

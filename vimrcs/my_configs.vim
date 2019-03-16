@@ -1,10 +1,5 @@
-if strftime('%H') >= 7 && strftime('%H') < 15
-  set background=light
-  let g:airline_theme='cosmic_latte_light'
-else
-  set background=dark
-  let g:airline_theme='cosmic_latte_dark'
-endif
+set background=dark
+let g:airline_theme='cosmic_latte_dark'
 colorscheme cosmic_latte
 
 set termguicolors

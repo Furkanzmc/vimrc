@@ -49,14 +49,15 @@ let g:ale_lint_on_enter = 1
 let g:ale_linters = {
 \   'qml': ['qmllint'],
 \   'python': ['pylint'],
-\   'c++': ['clangtidy']
+\   'c++': ['clang-tidy']
 \}
 
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_lint_delay = 500
-
+let g:ale_sign_error = '!!'
+let g:ale_sign_warning = '--'
 
 """"""""""""""""""""""""""""""
 " => vim-airline
@@ -116,30 +117,127 @@ let g:tagbar_show_linenumbers = 1
 """"""""""""""""""""""""""""""
 let g:clang_format#detect_style_file = 1
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Autoclose completion window
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/ycm_extra_conf.py'
-
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_auto_trigger = 0
-map <leader>k :YcmCompleter GetDoc<cr>
-
-" Add shortcut for go to decleration
-map <leader>gd  :YcmCompleter GoToDeclaration<CR>
-map <leader>gt  :YcmCompleter GoTo<CR>
-map <leader>gr  :YcmCompleter GoToReferences<CR>
-map <leader>ti  :YcmCompleter GetType<CR>
-map <leader>ds  :YcmShowDetailedDiagnostic<CR>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 map <leader>tb  :Tagbar<CR>
 map <leader>tbs  :TagbarShowTag<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => coc.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call coc#config("coc.preferences", {
+            \ "timeout": 1000,
+            \ "signatureHelpTarget": "float",
+            \ }
+            \)
+call coc#config("languageserver", {
+            \   "clangd": {
+            \       "command": "clangd",
+            \       "rootPatterns": [
+            \           "compile_flags.txt",
+            \           "compile_commands.json",
+            \           ".nvimrc",
+            \           ".git/",
+            \           ".hg/"
+            \       ],
+            \       "filetypes": [
+            \           "c",
+            \           "cpp",
+            \           "objc",
+            \           "objcpp"
+            \       ]
+            \   },
+            \   "ccls": {
+            \       "command": "ccls",
+            \       "filetypes": ["c", "cpp", "objc", "objcpp"],
+            \       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            \       "initializationOptions": {
+            \           "cache": {
+            \               "directory": "/tmp/ccls"
+            \           }
+            \       }
+            \   }
+            \})
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
