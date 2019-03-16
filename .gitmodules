@@ -76,9 +76,6 @@
 [submodule "builtin_plugins/goyo.vim"]
 	path = builtin_plugins/goyo.vim
 	url = https://github.com/junegunn/goyo.vim.git
-[submodule "builtin_plugins/ultisnips"]
-	path = builtin_plugins/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
 [submodule "builtin_plugins/vim-vinegar"]
 	path = builtin_plugins/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar.git
