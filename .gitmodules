@@ -34,9 +34,6 @@
 [submodule "builtin_plugins/vim-cmake-syntax"]
 	path = builtin_plugins/vim-cmake-syntax
 	url = https://github.com/pboettch/vim-cmake-syntax.git
-[submodule "my_plugins/YouCompleteMe"]
-	path = my_plugins/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule "builtin_plugins/vim-cpp-enhanced-highlight"]
 	path = builtin_plugins/vim-cpp-enhanced-highlight
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
@@ -85,3 +82,9 @@
 [submodule "builtin_plugins/vim-vinegar"]
 	path = builtin_plugins/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar.git
+[submodule "builtin_plugins/coc.nvim"]
+	path = builtin_plugins/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "builtin_plugins/coc-pyls"]
+	path = builtin_plugins/coc-pyls
+	url = https://github.com/neoclide/coc-pyls.git
