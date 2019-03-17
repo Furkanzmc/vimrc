@@ -22,7 +22,6 @@ function! JavaScriptFold()
     setl foldtext=FoldText()
 endfunction
 
-
 """"""""""""""""""""""""""""""
 " => Shell section
 """"""""""""""""""""""""""""""
@@ -33,3 +32,15 @@ if exists('$TMUX')
         set term=screen-256color
     endif
 endif
+
+""""""""""""""""""""""""""""""
+" => Markdown section
+""""""""""""""""""""""""""""""
+function! RegisterSyntaxGroups()
+    call SyntaxRange#Include('```qml', '```', 'qml', 'NonText')
+    call SyntaxRange#Include('```css', '```', 'css', 'NonText')
+    call SyntaxRange#Include('```html', '```', 'html', 'NonText')
+    call SyntaxRange#Include('```cpp', '```', 'cpp', 'NonText')
+endfunction
+
+au FileType markdown call RegisterSyntaxGroups()

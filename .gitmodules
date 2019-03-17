@@ -46,9 +46,6 @@
 [submodule "my_plugins/tagbar"]
 	path = my_plugins/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "my_plugins/vim-clang-format"]
-	path = my_plugins/vim-clang-format
-	url = https://github.com/rhysd/vim-clang-format.git
 [submodule "my_plugins/qmake-syntax-vim"]
 	path = my_plugins/qmake-syntax-vim
 	url = https://github.com/artoj/qmake-syntax-vim.git
@@ -70,9 +67,6 @@
 [submodule "builtin_plugins/vim-python-pep8-indent"]
 	path = builtin_plugins/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
-[submodule "builtin_plugins/vim-markdown"]
-	path = builtin_plugins/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "builtin_plugins/goyo.vim"]
 	path = builtin_plugins/goyo.vim
 	url = https://github.com/junegunn/goyo.vim.git
@@ -85,3 +79,9 @@
 [submodule "builtin_plugins/coc-pyls"]
 	path = builtin_plugins/coc-pyls
 	url = https://github.com/neoclide/coc-pyls.git
+[submodule "builtin_plugins/vim-markdown-folding"]
+	path = builtin_plugins/vim-markdown-folding
+	url = https://github.com/masukomi/vim-markdown-folding.git
+[submodule "my_plugins/SyntaxRange"]
+	path = my_plugins/SyntaxRange
+	url = https://github.com/vim-scripts/SyntaxRange.git

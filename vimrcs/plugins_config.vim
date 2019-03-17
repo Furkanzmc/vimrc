@@ -4,13 +4,15 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
 let g:pathogen_disabled = []
+" Disable markdown support for polyglot because it messes up with syntax
+" highlighting.
+let g:polyglot_disabled = ['markdown']
 
 if has('gui_running') && !has('unix')
     call add(g:pathogen_disabled, 'ale')
