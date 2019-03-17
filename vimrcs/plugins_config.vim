@@ -19,7 +19,6 @@ if has('gui_running') && !has('unix')
     call add(g:pathogen_disabled, 'vim-fugitive')
     call add(g:pathogen_disabled, 'vim-one')
     call add(g:pathogen_disabled, 'vim-clang-format')
-    call add(g:pathogen_disabled, 'YouCompleteMe')
 endif
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
@@ -46,7 +45,9 @@ let g:airline#extensions#ale#enabled = 1
 " We don't need live linting.
 let g:ale_lint_on_text_changed = 'never'
 
-let g:ale_lint_on_enter = 1
+" Use the virtual text to show errors. Coc.nvim redirects the errors to
+" ale, so this is useful.
+let g:ale_virtualtext_cursor = 1
 
 let g:ale_linters = {
 \   'qml': ['qmllint'],
@@ -60,6 +61,11 @@ let g:ale_set_quickfix = 1
 let g:ale_lint_delay = 500
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '--'
+let g:ale_lint_on_enter = 1
+
+let g:ale_virtualtext_prefix = "-> "
+
+nmap <leader>ge  <Plug>(ale_detail)
 
 """"""""""""""""""""""""""""""
 " => vim-airline
@@ -131,38 +137,46 @@ map <leader>tbs  :TagbarShowTag<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call coc#config("coc.preferences", {
-            \ "timeout": 1000,
-            \ "signatureHelpTarget": "float",
+            \   "timeout": 1000,
+            \   "diagnostic.displayByAle": 1,
+            \   "diagnostic.enableMessage": "never",
             \ }
             \)
-call coc#config("languageserver", {
-            \   "clangd": {
-            \       "command": "clangd",
-            \       "rootPatterns": [
-            \           "compile_flags.txt",
-            \           "compile_commands.json",
-            \           ".nvimrc",
-            \           ".git/",
-            \           ".hg/"
-            \       ],
-            \       "filetypes": [
-            \           "c",
-            \           "cpp",
-            \           "objc",
-            \           "objcpp"
-            \       ]
-            \   },
-            \   "ccls": {
-            \       "command": "ccls",
-            \       "filetypes": ["c", "cpp", "objc", "objcpp"],
-            \       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-            \       "initializationOptions": {
-            \           "cache": {
-            \               "directory": "/tmp/ccls"
-            \           }
-            \       }
-            \   }
-            \})
+if executable('clangd')
+    call coc#config("languageserver", {
+                \   "clangd": {
+                \       "command": "clangd",
+                \       "rootPatterns": [
+                \           "compile_flags.txt",
+                \           "compile_commands.json",
+                \           ".nvimrc",
+                \           ".git/",
+                \           ".hg/"
+                \       ],
+                \       "filetypes": [
+                \           "c",
+                \           "cpp",
+                \           "objc",
+                \           "objcpp"
+                \       ]
+                \   }
+                \})
+elseif executable('ccls')
+    call coc#config("languageserver", {
+                \   "ccls": {
+                \       "command": "ccls",
+                \       "filetypes": ["c", "cpp", "objc", "objcpp"],
+                \       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+                \       "initializationOptions": {
+                \           "cache": {
+                \               "directory": "/tmp/ccls"
+                \           }
+                \       }
+                \   }
+                \})
+else
+    echo "Both ccls and clangd do not exist."
+endif
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
