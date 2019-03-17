@@ -85,3 +85,6 @@
 [submodule "my_plugins/SyntaxRange"]
 	path = my_plugins/SyntaxRange
 	url = https://github.com/vim-scripts/SyntaxRange.git
+[submodule "builtin_plugins/asyncrun.vim"]
+	path = builtin_plugins/asyncrun.vim
+	url = https://github.com/skywind3000/asyncrun.vim.git
