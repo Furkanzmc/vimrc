@@ -190,7 +190,7 @@ function! GetVisualSelection()
 
     let lines[-1] = lines[-1][: column_end - 1]
     let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+    return lines
 endfunction
 
 function! ReplaceInCurrentDir(from, to)

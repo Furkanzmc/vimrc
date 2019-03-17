@@ -35,6 +35,8 @@
 " which commands trigger auto-unfold
 set foldopen=block,hor,jump,mark,percent,quickfix,search,tag
 set complete-=i
+set termguicolors
+set nofoldenable
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -74,6 +76,13 @@ endfunction
 
 command! Vterm call TerminalInSplit('vertical')
 command! Hterm call TerminalInSplit('horizontal')
+
+" Keyboard Mappings
+" Use these to delete a line without cutting it.
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+xnoremap <leader>p "_dP
+xnoremap <leader>c "_c
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
