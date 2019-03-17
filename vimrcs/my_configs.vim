@@ -15,3 +15,7 @@ xnoremap <leader>c "_c
 
 command! Lcdc lcd %:p:h
 command! Cdc cd %:p:h
+
+if executable('qmlscene')
+    command! RunQML !qmlscene %
+endif
