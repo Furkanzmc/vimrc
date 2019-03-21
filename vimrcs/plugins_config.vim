@@ -199,6 +199,9 @@ endfunction
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+" Took from here: https://coderwall.com/p/cl6cpq/vim-ctrl-space-omni-keyword-completion
+" Required to make Ctr+Space work on VimR.
+imap <C-@> <C-Space>
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
