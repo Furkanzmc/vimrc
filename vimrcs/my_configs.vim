@@ -4,9 +4,6 @@ colorscheme cosmic_latte
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.qmlc,*.jsc,*/libs/*
 
-command! Lcdc lcd %:p:h
-command! Cdc cd %:p:h
-
 if executable('qmlscene')
     command! RunQML AsyncRun qmlscene %
     command! -range RunSelectedQML :call RunSelectedQMLCode()

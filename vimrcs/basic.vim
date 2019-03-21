@@ -239,20 +239,16 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+map <leader>j <C-W>j
+map <leader>k <C-W>k
+map <leader>h <C-W>h
+map <leader>l <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
 
 " Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-" Navigate between buffers
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+map <leader>ba :Bdeletes *<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -260,6 +256,7 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext
+
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
