@@ -55,11 +55,8 @@ set autoread
 " like <leader>w saves the current file
 let mapleader = ' '
 let maplocalleader = ' '
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-if has("mac") || has("macunix") || has("linux")
-    command WriteSudo w !sudo tee % > /dev/null
-endif
+
+autocmd TermOpen * setlocal scrollback=-1
 
 " Enable project specific settings
 set exrc

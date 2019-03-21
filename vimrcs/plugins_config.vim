@@ -14,13 +14,6 @@ let g:pathogen_disabled = []
 " highlighting.
 let g:polyglot_disabled = ['markdown']
 
-if has('gui_running') && !has('unix')
-    call add(g:pathogen_disabled, 'ale')
-    call add(g:pathogen_disabled, 'vim-fugitive')
-    call add(g:pathogen_disabled, 'vim-one')
-    call add(g:pathogen_disabled, 'vim-clang-format')
-endif
-
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
 call pathogen#infect(s:vim_runtime.'/builtin_plugins/{}')
 call pathogen#infect(s:vim_runtime.'/python_plugins/{}')
@@ -146,6 +139,7 @@ call coc#config("coc.preferences", {
             \   "timeout": 1000,
             \   "diagnostic.displayByAle": 1,
             \   "diagnostic.enableMessage": "never",
+            \   "suggest.autoTrigger": "none"
             \ }
             \)
 if executable('clangd')
