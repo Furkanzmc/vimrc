@@ -56,7 +56,12 @@ set autoread
 let mapleader = ' '
 let maplocalleader = ' '
 
-autocmd TermOpen * setlocal scrollback=-1
+autocmd TermOpen * call SetUpTerminal()
+
+function! SetUpTerminal()
+    setlocal scrollback=-1
+    setlocal nowrap
+endfunction
 
 " Enable project specific settings
 set exrc
