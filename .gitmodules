@@ -85,3 +85,6 @@
 [submodule "builtin_plugins/asyncrun.vim"]
 	path = builtin_plugins/asyncrun.vim
 	url = https://github.com/skywind3000/asyncrun.vim.git
+[submodule "builtin_plugins/ultisnips"]
+	path = builtin_plugins/ultisnips
+	url = https://github.com/SirVer/ultisnips.git

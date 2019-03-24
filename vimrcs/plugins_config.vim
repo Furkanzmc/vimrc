@@ -13,6 +13,7 @@ let g:pathogen_disabled = []
 " Disable markdown support for polyglot because it messes up with syntax
 " highlighting.
 let g:polyglot_disabled = ['markdown']
+let g:surround_no_mappings = 1
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
 call pathogen#infect(s:vim_runtime.'/builtin_plugins/{}')
@@ -260,3 +261,10 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
+
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+
+let g:UltiSnipsEnableSnipMate = 0
+let g:UltiSnipsSnippetDirectories = [$HOME . "/.vim_runtime/default_snippets"]
