@@ -108,11 +108,13 @@ inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
 
+vmap <leader>s :call VisualSelection('search', '')<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Use The Silver Searcher over grep, iff possible
+" Use ripgrep over grep, if possible
 if executable('rg')
    " Use rg over grep
    set grepprg=rg\ --vimgrep\ $*
@@ -122,10 +124,6 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General abbreviations
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" When you press gv you Ack after the selected text
-vnoremap <leader>gv :call VisualSelection('gv', '')<CR>
 
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -189,15 +187,16 @@ func! CurrentFileDir(cmd)
     return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
 
+" Code taken from here: https://stackoverflow.com/a/6271254
 function! GetVisualSelection()
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]
     let lines = getline(line_start, line_end)
     if len(lines) == 0
-        return ''
+        return lines
     endif
 
-    let lines[-1] = lines[-1][: column_end - 1]
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
     return lines
 endfunction

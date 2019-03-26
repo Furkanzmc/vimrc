@@ -103,7 +103,7 @@ let g:cpp_member_variable_highlight = 1
 
 map <c-p> :Files<cr>
 map <leader>o :Buffers<cr>
-map <leader>s :Rg<cr>
+nmap <leader>s :Rg<cr>
 map <leader>f :History<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
