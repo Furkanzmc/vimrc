@@ -16,9 +16,6 @@
 [submodule "builtin_plugins/vim-fugitive"]
 	path = builtin_plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "builtin_plugins/vim-multiple-cursors"]
-	path = builtin_plugins/vim-multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
 [submodule "builtin_plugins/vim-surround"]
 	path = builtin_plugins/vim-surround
 	url = https://github.com/tpope/vim-surround.git
