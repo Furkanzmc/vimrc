@@ -394,8 +394,8 @@ function! <SID>BufcloseCloseIt()
     endif
 endfunction
 
-function! CmdLine(str)
-    call feedkeys(":" . a:str)
+function! CmdLine(mode, str)
+    call feedkeys(a:mode . a:str)
 endfunction
 
 function! VisualSelection(direction, extra_filter) range
@@ -406,9 +406,9 @@ function! VisualSelection(direction, extra_filter) range
     let l:pattern = substitute(l:pattern, "\n$", "", "")
 
     if a:direction == 'search'
-        call CmdLine('/'. l:pattern)
+        call CmdLine('/', l:pattern)
     elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
+        call CmdLine(':', "%s" . '/'. l:pattern . '/')
     endif
 
     let @/ = l:pattern
