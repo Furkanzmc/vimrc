@@ -25,6 +25,12 @@ let ofuc_path = s:vim_runtime.'/builtin_plugins/open_file_under_cursor.vim'
 exec 'source ' . ofuc_path
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Auto-Pairs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:AutoPairsShortcutToggle = ''
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale - Code Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Only run linters named in ale_linters settings.
