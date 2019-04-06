@@ -56,12 +56,14 @@ set autoread
 let mapleader = ' '
 let maplocalleader = ' '
 
-autocmd TermOpen * call SetUpTerminal()
+if has("nvim")
+    autocmd TermOpen * call SetUpTerminal()
 
-function! SetUpTerminal()
-    setlocal scrollback=-1
-    setlocal nowrap
-endfunction
+    function! SetUpTerminal()
+        setlocal scrollback=-1
+        setlocal nowrap
+    endfunction
+endif
 
 " Enable project specific settings
 set exrc
@@ -92,7 +94,10 @@ xnoremap <leader>c "_c
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-set diffopt=vertical,filler,internal
+set diffopt=vertical,filler
+if has("nvim")
+    set diffopt+=internal
+endif
 
 " Avoid garbled characters in Chinese language windows OS
 let $LANG='en'
