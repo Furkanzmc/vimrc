@@ -70,9 +70,6 @@
 [submodule "builtin_plugins/coc.nvim"]
 	path = builtin_plugins/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
-[submodule "builtin_plugins/coc-pyls"]
-	path = builtin_plugins/coc-pyls
-	url = https://github.com/neoclide/coc-pyls.git
 [submodule "builtin_plugins/vim-markdown-folding"]
 	path = builtin_plugins/vim-markdown-folding
 	url = https://github.com/masukomi/vim-markdown-folding.git
