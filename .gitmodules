@@ -7,9 +7,6 @@
 [submodule "my_plugins/indentLine"]
 	path = my_plugins/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
-[submodule "builtin_plugins/auto-pairs"]
-	path = builtin_plugins/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs.git
 [submodule "builtin_plugins/vim-commentary"]
 	path = builtin_plugins/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -82,3 +79,6 @@
 [submodule "builtin_plugins/ultisnips"]
 	path = builtin_plugins/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
+[submodule "builtin_plugins/pear-tree"]
+	path = builtin_plugins/pear-tree
+	url = https://github.com/tmsvg/pear-tree.git
