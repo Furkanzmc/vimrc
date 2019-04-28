@@ -16,7 +16,7 @@ catch
 endtry' > ~/.vimrc
 
 mkdir -p ~/.vim/ftplugin
-cp -f ~/.vim_runtime/vimrcs/python.vim ~/.vim/ftplugin/python.vim
-cp -f ~/.vim_runtime/vimrcs/cpp.vim ~/.vim/ftplugin/cpp.vim
+ln -sf ~/.vim_runtime/vimrcs/python.vim ~/.vim/ftplugin/
+ln -sf ~/.vim_runtime/vimrcs/cpp.vim ~/.vim/ftplugin/
 
 echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
