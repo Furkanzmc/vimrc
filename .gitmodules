@@ -82,3 +82,6 @@
 [submodule "builtin_plugins/pear-tree"]
 	path = builtin_plugins/pear-tree
 	url = https://github.com/tmsvg/pear-tree.git
+[submodule "my_plugins/nvim-gdb"]
+	path = my_plugins/nvim-gdb
+	url = https://github.com/sakhnik/nvim-gdb.git
