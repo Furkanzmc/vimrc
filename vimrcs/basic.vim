@@ -41,6 +41,9 @@ set nofoldenable
 " Sets how many lines of history VIM has to remember
 set history=500
 
+" Show an arrow with a space for line breaks.
+set showbreak=↳\ 
+
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
