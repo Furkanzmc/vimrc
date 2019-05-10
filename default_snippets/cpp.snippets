@@ -29,6 +29,18 @@ for (${1:type} ${2:var} = 0; $2 < ${3:count}; ${4:++$2}) {
 }
 endsnippet
 
+snippet clog "std::clog << "
+std::clog << ${1:type} << '\n';
+endsnippet
+
+snippet cerr "std::cerr << "
+std::cerr << ${1:type} << '\n';
+endsnippet
+
+snippet cout "std::cout << "
+std::cout << ${1:type} << '\n';
+endsnippet
+
 snippet eli "else if .. (eli)"
 else if (${1:/* condition */}) {
 	${VISUAL}$0
