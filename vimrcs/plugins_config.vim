@@ -9,11 +9,10 @@
 """"""""""""""""""""""""""""""
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ["indentLine"]
 " Disable markdown support for polyglot because it messes up with syntax
 " highlighting.
 let g:polyglot_disabled = ['markdown']
-let g:surround_no_mappings = 1
 
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
 call pathogen#infect(s:vim_runtime.'/builtin_plugins/{}')
@@ -88,13 +87,6 @@ let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => surround.vim config
-" Annotate strings with gettext
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vmap Si S(i_<esc>f)
-au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 
 """""""""""""""""""""""""""""""
 " => vim-cpp-enhanced-highlight
