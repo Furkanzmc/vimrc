@@ -4,9 +4,6 @@
 [submodule "my_plugins/vim-qml"]
 	path = my_plugins/vim-qml
 	url = https://github.com/peterhoeg/vim-qml.git
-[submodule "my_plugins/indentLine"]
-	path = my_plugins/indentLine
-	url = https://github.com/Yggdroot/indentLine.git
 [submodule "builtin_plugins/vim-commentary"]
 	path = builtin_plugins/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -16,9 +13,6 @@
 [submodule "builtin_plugins/vim-surround"]
 	path = builtin_plugins/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "builtin_plugins/vim-airline"]
-	path = builtin_plugins/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
 [submodule "builtin_plugins/vim-json"]
 	path = builtin_plugins/vim-json
 	url = https://github.com/elzr/vim-json.git

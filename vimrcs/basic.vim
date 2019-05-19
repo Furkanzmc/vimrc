@@ -305,8 +305,26 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Always show the status line
 set laststatus=2
 
-" Format the status line
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+function! StatuslineGit()
+  let l:branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+" Initial config from: https://shapeshed.com/vim-statuslines/
+set statusline=
+set statusline+=%#PmenuSel# " Set color
+set statusline+=\ %f " File name.
+set statusline+=%#Comment# " Set color
+set statusline+=\ %y " Filetype
+set statusline+=\ %r " Readonly buffer
+set statusline+=%m " Modified indicator
+set statusline+=%#Normal# " Set color
+set statusline+=%= " Switch to the right
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " File encoding
+set statusline+=\[%{&fileformat}\] " File type
+set statusline+=\ %p%% " Cursor position percentage
+set statusline+=\ %l:%c " Line and column number
+set statusline+=\ 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

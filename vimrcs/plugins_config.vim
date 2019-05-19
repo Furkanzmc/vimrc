@@ -9,7 +9,8 @@
 """"""""""""""""""""""""""""""
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
-let g:pathogen_disabled = ["indentLine"]
+let g:pathogen_disabled = []
+
 " Disable markdown support for polyglot because it messes up with syntax
 " highlighting.
 let g:polyglot_disabled = ['markdown']
@@ -38,9 +39,6 @@ let g:ale_linters_explicit = 1
 " Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 0
 
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
-
 " We don't need live linting.
 let g:ale_lint_on_text_changed = 'never'
 
@@ -66,28 +64,6 @@ let g:ale_virtualtext_prefix = "-> "
 
 nmap <leader>ge  <Plug>(ale_detail)
 
-""""""""""""""""""""""""""""""
-" => vim-airline
-""""""""""""""""""""""""""""""
-" Hide the default show mode
-set noshowmode
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-multiple-cursors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:multi_cursor_use_default_mapping = 0
-
-" Default mapping
-let g:multi_cursor_start_word_key      = '<C-s>'
-let g:multi_cursor_select_all_word_key = '<A-s>'
-let g:multi_cursor_start_key           = 'g<C-s>'
-let g:multi_cursor_select_all_key      = 'g<A-s>'
-let g:multi_cursor_next_key            = '<C-s>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-
-
 """""""""""""""""""""""""""""""
 " => vim-cpp-enhanced-highlight
 """""""""""""""""""""""""""""""
@@ -105,21 +81,11 @@ nmap <leader>s :Rg<cr>
 map <leader>f :History<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
-
-""""""""""""""""""""""""""""""
-" => Tabbar plugin
-""""""""""""""""""""""""""""""
-let g:tagbar_show_linenumbers = 1
-
-
-""""""""""""""""""""""""""""""
-" => vim-clang-format plugin
-""""""""""""""""""""""""""""""
-let g:clang_format#detect_style_file = 1
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:tagbar_show_linenumbers = 1
 
 map <leader>tb  :Tagbar<CR>
 map <leader>tbs  :TagbarShowTag<CR>
