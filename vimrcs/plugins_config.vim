@@ -44,7 +44,7 @@ let g:ale_lint_on_text_changed = 'never'
 
 " Use the virtual text to show errors. Coc.nvim redirects the errors to
 " ale, so this is useful.
-let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_cursor = 0
 
 let g:ale_linters = {
 \   'qml': ['qmllint'],
@@ -104,7 +104,8 @@ call coc#config("coc.preferences", {
             \   "timeout": 1000,
             \   "diagnostic.displayByAle": 1,
             \   "diagnostic.enableMessage": "never",
-            \   "suggest.autoTrigger": "none"
+            \   "suggest.autoTrigger": "none",
+            \   "python.linting.pylintArgs": ["--load-plugins pylint_django"]
             \ }
             \)
 if executable('clangd')
