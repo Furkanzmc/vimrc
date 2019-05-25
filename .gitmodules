@@ -34,9 +34,6 @@
 [submodule "my_plugins/qmake-syntax-vim"]
 	path = my_plugins/qmake-syntax-vim
 	url = https://github.com/artoj/qmake-syntax-vim.git
-[submodule "builtin_plugins/vim-one"]
-	path = builtin_plugins/vim-one
-	url = https://github.com/rakr/vim-one.git
 [submodule "builtin_plugins/fzf.vim"]
 	path = builtin_plugins/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
