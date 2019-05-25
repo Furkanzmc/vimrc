@@ -301,31 +301,67 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 """"""""""""""""""""""""""""""
 " => Status line
+" Initial config from: https://jip.dev/posts/a-simpler-vim-statusline/
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
 
-function! StatuslineGit()
-  let l:branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+" this function just outputs the content colored by the
+" supplied colorgroup number, e.g. num = 2 -> User2
+" it only colors the input if the window is the currently
+" focused one
+function! ConfigureStatusline(winnum)
+    function! Color(active, activeColor, inactiveColor)
+        if a:active
+            return '%#' . a:activeColor . '#'
+        else
+            return '%#' . a:inactiveColor . '#'
+        endif
+    endfunction
+
+    let active = a:winnum == winnr()
+
+    let stat = ''
+    let stat .= Color(active, 'Error', 'ErrorMsg')
+    let stat .= '%h' " Help sign
+    let stat .= '%w' " Preview sign
+    let stat .= Color(active, 'StatusLine', 'StatusLineNC')
+    let stat .= ' %f' " Filename
+    let stat .= Color(active, 'Identifier', 'Comment')
+    let stat .= '%r' " Readonly sign
+    let stat .= Color(active, 'SpecialChar', 'Comment')
+    let stat .= "%{&modified ? ' +' : ''}" " Modified sign
+    let stat .= '%=' " Switch to right side
+    let stat .= Color(active, 'Visual', 'Comment')
+
+    " Enable Git branch only for gui.
+    " FIXME: This probably won't work on Windows.
+    let l:term_program = $TERM_PROGRAM
+    if exists('*fugitive#head') && strlen(term_program) == 0
+        let head = fugitive#head()
+        if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
+            call fugitive#detect(getcwd())
+            let head = fugitive#head()
+        endif
+
+        if !empty(head)
+            let stat .= ' ʯ ' . head . ' '
+        endif
+    endif
+
+    return stat
 endfunction
 
-" Initial config from: https://shapeshed.com/vim-statuslines/
-set statusline=
-set statusline+=%#PmenuSel# " Set color
-set statusline+=\ %f " File name.
-set statusline+=%#Comment# " Set color
-set statusline+=\ %y " Filetype
-set statusline+=\ %r " Readonly buffer
-set statusline+=%m " Modified indicator
-set statusline+=%#Normal# " Set color
-set statusline+=%= " Switch to the right
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " File encoding
-set statusline+=\[%{&fileformat}\] " File type
-set statusline+=\ %p%% " Cursor position percentage
-set statusline+=\ %l:%c " Line and column number
-set statusline+=\ 
+function! s:RefreshStatus()
+    for nr in range(1, winnr('$'))
+        call setwinvar(nr, '&statusline', '%!ConfigureStatusline(' . nr . ')')
+    endfor
+endfunction
 
+augroup Status
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
