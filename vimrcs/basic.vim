@@ -329,6 +329,9 @@ function! ConfigureStatusline(winnum)
     let stat .= ' %f' " Filename
     let stat .= Color(active, 'Identifier', 'Comment')
     let stat .= '%r' " Readonly sign
+    if &spell
+        let stat .= ' ☰'
+    endif
     let stat .= Color(active, 'SpecialChar', 'Comment')
     let stat .= "%{&modified ? ' +' : ''}" " Modified sign
     let stat .= '%=' " Switch to right side
