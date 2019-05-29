@@ -11,6 +11,9 @@
 let g:ale_completion_enabled = 0
 let g:pathogen_disabled = []
 
+" Disable netrw in favor of vim-dirvish
+let loaded_netrwPlugin = 1
+
 " Disable markdown support for polyglot because it messes up with syntax
 " highlighting.
 let g:polyglot_disabled = ['markdown']

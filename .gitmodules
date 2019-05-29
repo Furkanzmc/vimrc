@@ -52,9 +52,6 @@
 [submodule "builtin_plugins/goyo.vim"]
 	path = builtin_plugins/goyo.vim
 	url = https://github.com/junegunn/goyo.vim.git
-[submodule "builtin_plugins/vim-vinegar"]
-	path = builtin_plugins/vim-vinegar
-	url = https://github.com/tpope/vim-vinegar.git
 [submodule "builtin_plugins/coc.nvim"]
 	path = builtin_plugins/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
@@ -76,3 +73,6 @@
 [submodule "my_plugins/nvim-gdb"]
 	path = my_plugins/nvim-gdb
 	url = https://github.com/sakhnik/nvim-gdb.git
+[submodule "builtin_plugins/vim-dirvish"]
+	path = builtin_plugins/vim-dirvish
+	url = https://github.com/justinmk/vim-dirvish.git
