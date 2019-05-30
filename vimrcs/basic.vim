@@ -471,3 +471,9 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
+function! SetIndentSize(size)
+    let &tabstop = a:size
+    let &softtabstop = a:size
+    let &shiftwidth = a:size
+endfunction
