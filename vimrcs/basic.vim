@@ -340,7 +340,7 @@ function! ConfigureStatusline(winnum)
     " Enable Git branch only for gui.
     " FIXME: This probably won't work on Windows.
     let l:term_program = $TERM_PROGRAM
-    if exists('*fugitive#head') && strlen(term_program) == 0
+    if active && exists('*fugitive#head') && strlen(term_program) == 0
         let head = fugitive#head()
         if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
             call fugitive#detect(getcwd())
