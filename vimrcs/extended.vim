@@ -92,6 +92,8 @@ command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "Compar
 
 vmap <leader>s :call VisualSelection('search', '')<CR>
 
+command! ShowTime :echo strftime("%b %d %a %I:%M %p")
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
