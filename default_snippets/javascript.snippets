@@ -1,0 +1,23 @@
+snippet log "console.log"
+console.log(${VISUAL}$0)
+endsnippet
+
+snippet error "console.error"
+console.error(${VISUAL}$0)
+endsnippet
+
+snippet assert "console.assert"
+console.assert(${1:cond}, "${2:msg}")
+endsnippet
+
+snippet for "for loop (for)"
+for (var ${1:var} = 0; $2 < ${2:count}; ${3:++$2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet stringify "JSON.stringify"
+JSON.stringify(${1:obj})
+endsnippet
+
+# vim:ft=snippets:
