@@ -320,6 +320,13 @@ function! ConfigureStatusline(winnum)
     endfunction
 
     let active = a:winnum == winnr()
+    let bufName = bufname("%")
+
+    if has("win32")
+        let isFugitiveBuffer = match(bufName, "fugitive:\\") == 0
+    else
+        let isFugitiveBuffer = match(bufName, "fugitive://") == 0
+    endif
 
     let stat = ''
     let stat .= Color(active, 'Error', 'ErrorMsg')
@@ -327,6 +334,12 @@ function! ConfigureStatusline(winnum)
     let stat .= '%w' " Preview sign
     let stat .= Color(active, 'StatusLine', 'StatusLineNC')
     let stat .= ' %f' " Filename
+
+    if (isFugitiveBuffer)
+        let stat .= Color(active, 'Identifier', 'Comment')
+        let stat .= ' [git]'
+    endif
+
     let stat .= Color(active, 'Identifier', 'Comment')
     let stat .= '%r' " Readonly sign
     if &spell
