@@ -20,18 +20,16 @@
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
 "    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
+"    -> Mappings
+"    -> Autocmd
 "    -> Misc
-"    -> Helper functions
-"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " which commands trigger auto-unfold
 set foldopen=block,hor,jump,mark,percent,quickfix,search,tag
 set complete-=i
@@ -91,9 +89,26 @@ xnoremap <leader>d "_d
 xnoremap <leader>p "_dP
 xnoremap <leader>c "_c
 
+" Use ripgrep over grep, if possible
+if executable('rg')
+   " Use rg over grep
+   set grepprg=rg\ --vimgrep\ $*
+   set grepformat=%f:%l:%c:%m
+endif
+
+try
+    " Means that you can undo even when you close a buffer/VIM
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set background=dark
+
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -170,9 +185,17 @@ if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
 
+" Disable scrollbars (real hackers don't use scrollbars for navigation!)
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Enable syntax highlighting
 syntax enable
 
@@ -203,6 +226,7 @@ set ffs=unix,dos,mac
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
@@ -212,6 +236,7 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Use spaces instead of tabs
 set expandtab
 
@@ -233,6 +258,7 @@ set si "Smart indent
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
+
 " Visual mode pressing ~~*~~ or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
@@ -271,10 +297,6 @@ nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
 " Specify the behavior when switching between buffers
 try
   " Use the current tab for openning files from quickfix.
@@ -303,6 +325,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " => Status line
 " Initial config from: https://jip.dev/posts/a-simpler-vim-statusline/
 """"""""""""""""""""""""""""""
+
 " Always show the status line
 set laststatus=2
 
@@ -320,25 +343,21 @@ function! ConfigureStatusline(winnum)
     endfunction
 
     let active = a:winnum == winnr()
-    let bufName = bufname("%")
-
-    if has("win32")
-        let isFugitiveBuffer = match(bufName, "fugitive:\\") == 0
-    else
-        let isFugitiveBuffer = match(bufName, "fugitive://") == 0
-    endif
 
     let stat = ''
     let stat .= Color(active, 'Error', 'ErrorMsg')
     let stat .= '%h' " Help sign
     let stat .= '%w' " Preview sign
     let stat .= Color(active, 'StatusLine', 'StatusLineNC')
-    let stat .= ' %f' " Filename
+    let stat .= " %{IsFugitiveBuffer(expand('%')) ? expand('%:t') : expand('%')}" " Filename
 
-    if (isFugitiveBuffer)
-        let stat .= Color(active, 'Identifier', 'Comment')
-        let stat .= ' [git]'
-    endif
+    let stat .= Color(1, 'Type', 'Type')
+    let bufferGitTag = " %{"
+    let bufferGitTag .= "&diff && IsFugitiveBuffer(expand('%')) ? '[head]' : "
+    let bufferGitTag .= "(&diff && !IsFugitiveBuffer(expand('%')) ? '[local]' : '')"
+    let bufferGitTag .= "}"
+
+    let stat .= bufferGitTag
 
     let stat .= Color(active, 'Identifier', 'Comment')
     let stat .= '%r' " Readonly sign
@@ -350,10 +369,11 @@ function! ConfigureStatusline(winnum)
     let stat .= '%=' " Switch to right side
     let stat .= Color(active, 'Visual', 'Comment')
 
-    " Enable Git branch only for gui.
-    " FIXME: This probably won't work on Windows.
-    let l:term_program = $TERM_PROGRAM
-    if active && exists('*fugitive#head') && strlen(term_program) == 0
+    " iTerm shows the git branch in the status bar with bas/zsh but not with
+    " pwsh.
+    let is_iterm = matchstr($TERM_PROGRAM, 'iTerm') != ''
+    let is_pwsh = matchstr($SHELL, 'pwsh') != ''
+    if active && exists('*fugitive#head') && (!is_iterm || is_pwsh)
         let head = fugitive#head()
         if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
             call fugitive#detect(getcwd())
@@ -380,8 +400,9 @@ augroup Status
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
+" => Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
@@ -404,89 +425,73 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 
-" Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+map <leader>nn :Lexplore .<cr>
+map <leader>nf :Lexplore %:h<cr>
+
+" When you press <leader>r you can search and replace the selected text
+vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+
+" Do :help cope if you are unsure what cope is. It's super useful!
+"
+" When you search with Ack, display your results in cope by doing:
+"   <leader>cc
+"
+" To go to the next search result do:
+"   <leader>n
+"
+" To go to the previous search results do:
+"   <leader>p
+"
+map <leader>cc :botright cope<cr>
+map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+" $q is super useful when browsing on the command line
+" it deletes everything until the last slash
+cnoremap $q <C-\>eDeleteTillSlash()<cr>
+
+" Sort the selected lines according to their lengths.
+command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "CompareLength"))
+
+vmap <leader>s :call VisualSelection('search', '')<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Autocmd
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("autocmd")
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
+" Highlight trailing spaces.
+highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+match ExtraWhitespace /\s\+$/
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+autocmd BufWinEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd InsertEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd InsertLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+autocmd BufWinLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
 
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-map <leader>nn :Lexplore .<cr>
-map <leader>nf :Lexplore %:h<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! ShowTime :echo strftime("%b %d %a %I:%M %p")
 
 " Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
+command! Bclose :call BufcloseCloseIt()
 
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
-
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
-
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
-endfunction
-
-function! CmdLine(mode, str)
-    call feedkeys(a:mode . a:str)
-endfunction
-
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'search'
-        call CmdLine('/', l:pattern)
-    elseif a:direction == 'replace'
-        call CmdLine(':', "%s" . '/'. l:pattern . '/')
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
-function! SetIndentSize(size)
-    let &tabstop = a:size
-    let &softtabstop = a:size
-    let &shiftwidth = a:size
-endfunction
+command! -nargs=1 Bdeletes :call WipeMatchingBuffers('<args>')
+command! Bdhidden :call DeleteHiddenBuffers()

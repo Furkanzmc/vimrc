@@ -5,11 +5,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""
-" => Load pathogen paths
+" => Load Plugins
 """"""""""""""""""""""""""""""
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
-let g:pathogen_disabled = []
 
 " Disable netrw in favor of vim-dirvish
 let loaded_netrwPlugin = 1
@@ -18,24 +17,46 @@ let loaded_netrwPlugin = 1
 " highlighting.
 let g:polyglot_disabled = ['markdown']
 
-let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/builtin_plugins/{}')
-call pathogen#infect(s:vim_runtime.'/python_plugins/{}')
-call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
-call pathogen#helptags()
+set rtp+=~/.vim/bundle/Vundle.vim
 
-let ofuc_path = s:vim_runtime.'/builtin_plugins/open_file_under_cursor.vim'
-exec 'source ' . ofuc_path
+call vundle#begin()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Auto-Pairs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'sheerun/vim-polyglot'
+Plugin 'peterhoeg/vim-qml'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'pboettch/vim-cmake-syntax'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'mkitt/tabline.vim'
+Plugin 'w0rp/ale'
+Plugin 'majutsushi/tagbar'
+Plugin 'artoj/qmake-syntax-vim'
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
+Plugin 'freitass/todo.txt-vim'
+Plugin 'nightsense/cosmic_latte'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'junegunn/goyo.vim'
+Plugin 'neoclide/coc.nvim'
+Plugin 'masukomi/vim-markdown-folding'
+Plugin 'vim-scripts/SyntaxRange'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'tmsvg/pear-tree'
+Plugin 'sakhnik/nvim-gdb'
+Plugin 'justinmk/vim-dirvish'
 
-let g:AutoPairsShortcutToggle = ''
+call vundle#end()
+
+let g:vim_runtime = expand('<sfile>:p:h')."/.."
+
+colorscheme cosmic_latte
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale - Code Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Only run linters named in ale_linters settings.
 let g:ale_linters_explicit = 1
 
@@ -218,18 +239,6 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UltiSnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -239,4 +248,4 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
 let g:UltiSnipsEnableSnipMate = 0
-let g:UltiSnipsSnippetDirectories = [$HOME . "/.vim_runtime/default_snippets"]
+let g:UltiSnipsSnippetDirectories = [g:vim_runtime.'/default_snippets']
