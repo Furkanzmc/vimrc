@@ -19,6 +19,9 @@ let g:polyglot_disabled = ['markdown']
 
 set rtp+=~/.vim/bundle/Vundle.vim
 
+set nocompatible
+filetype off
+
 call vundle#begin()
 
 Plugin 'sheerun/vim-polyglot'
@@ -48,6 +51,8 @@ Plugin 'sakhnik/nvim-gdb'
 Plugin 'justinmk/vim-dirvish'
 
 call vundle#end()
+
+filetype plugin indent on
 
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
 
