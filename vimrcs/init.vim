@@ -488,7 +488,7 @@ autocmd BufWinLeave * call clearmatches()
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command! ShowTime :echo strftime("%b %d %a %I:%M %p")
+command! Date :echo strftime("%b %d %a %I:%M %p")
 
 " Don't close window, when deleting a buffer
 command! Bclose :call BufcloseCloseIt()
