@@ -68,12 +68,10 @@ let g:ale_linters_explicit = 1
 " Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 0
 
-" We don't need live linting.
-let g:ale_lint_on_text_changed = 'never'
-
 " Use the virtual text to show errors. Coc.nvim redirects the errors to
-" ale, so this is useful.
+" ale, so this is useful. But distracting so I only enable it for live coding.
 let g:ale_virtualtext_cursor = 0
+let g:ale_virtualtext_prefix = "-> "
 
 let g:ale_linters = {
 \   'qml': ['qmllint'],
@@ -84,12 +82,13 @@ let g:ale_linters = {
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
-let g:ale_lint_delay = 500
+let g:ale_lint_delay = 1000
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '--'
-let g:ale_lint_on_enter = 1
 
-let g:ale_virtualtext_prefix = "-> "
+" We don't need live linting.
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
 
 nmap <leader>ge  <Plug>(ale_detail)
 
@@ -134,7 +133,11 @@ call coc#config("coc.preferences", {
             \   "diagnostic.displayByAle": 1,
             \   "diagnostic.enableMessage": "never",
             \   "suggest.autoTrigger": "none",
-            \   "python.linting.pylintArgs": ["--load-plugins pylint_django"]
+            \   "suggest.enablePreview": 1,
+            \   "python.linting.pylintArgs": ["--load-plugins pylint_django"],
+            \   "python.venvFolders": [".venv", ".pyenv"],
+            \   "python.jediEnabled": 0,
+            \   "python.linting.enabled": 0
             \ }
             \)
 if executable('clangd')
@@ -253,4 +256,4 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
 let g:UltiSnipsEnableSnipMate = 0
-let g:UltiSnipsSnippetDirectories = [g:vim_runtime.'/default_snippets']
+let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
