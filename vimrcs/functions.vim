@@ -299,3 +299,8 @@ endfunction
 
 " Override vim commands 'gf', '^Wf', '^W^F'
 nnoremap gf :call GoToFile()<CR>
+
+" Code from: https://vi.stackexchange.com/a/14313
+func! GetModifiedBufferCount()
+    return len(filter(getbufinfo(), 'v:val.changed == 1'))
+endfunc

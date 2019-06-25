@@ -366,6 +366,14 @@ function! ConfigureStatusline(winnum)
     endif
     let stat .= Color(active, 'SpecialChar', 'Comment')
     let stat .= "%{&modified ? ' +' : ''}" " Modified sign
+
+    if (active)
+        let modifiedBufferCount = GetModifiedBufferCount()
+        if (modifiedBufferCount > 0)
+            let stat .= ' [✎ ' . modifiedBufferCount . ']'
+        endif
+    endif
+
     let stat .= '%=' " Switch to right side
     let stat .= Color(active, 'Visual', 'Comment')
 
