@@ -41,7 +41,6 @@ Plugin 'freitass/todo.txt-vim'
 Plugin 'nightsense/cosmic_latte'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'junegunn/goyo.vim'
-Plugin 'neoclide/coc.nvim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'vim-scripts/SyntaxRange'
 Plugin 'skywind3000/asyncrun.vim'
@@ -49,6 +48,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'tmsvg/pear-tree'
 Plugin 'sakhnik/nvim-gdb'
 Plugin 'justinmk/vim-dirvish'
+
+Plugin 'autozimu/LanguageClient-neovim'
+Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()
 
@@ -75,8 +77,6 @@ let g:ale_virtualtext_prefix = "-> "
 
 let g:ale_linters = {
 \   'qml': ['qmllint'],
-\   'python': ['pylint'],
-\   'c++': ['clang-tidy']
 \}
 
 let g:ale_linters_explicit = 1
@@ -109,6 +109,7 @@ nmap <leader>s :Rg<cr>
 map <leader>f :History<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -118,63 +119,19 @@ let g:tagbar_show_linenumbers = 1
 map <leader>tb  :Tagbar<CR>
 map <leader>tbs  :TagbarShowTag<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => asyncrun
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => coc.vim
+" => Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call coc#config("coc.preferences", {
-            \   "timeout": 1000,
-            \   "diagnostic.displayByAle": 1,
-            \   "diagnostic.enableMessage": "never",
-            \   "suggest.autoTrigger": "none",
-            \   "suggest.enablePreview": 1,
-            \   "python.linting.pylintArgs": ["--load-plugins pylint_django"],
-            \   "python.venvFolders": [".venv", ".pyenv"],
-            \   "python.jediEnabled": 0,
-            \   "python.linting.enabled": 0
-            \ }
-            \)
-if executable('clangd')
-    call coc#config("languageserver", {
-                \   "clangd": {
-                \       "command": "clangd",
-                \       "rootPatterns": [
-                \           "compile_flags.txt",
-                \           "compile_commands.json",
-                \           ".nvimrc",
-                \           ".git/",
-                \           ".hg/"
-                \       ],
-                \       "filetypes": [
-                \           "c",
-                \           "cpp",
-                \           "objc",
-                \           "objcpp"
-                \       ]
-                \   }
-                \})
-elseif executable('ccls')
-    call coc#config("languageserver", {
-                \   "ccls": {
-                \       "command": "ccls",
-                \       "filetypes": ["c", "cpp", "objc", "objcpp"],
-                \       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-                \       "initializationOptions": {
-                \           "cache": {
-                \               "directory": "/tmp/ccls"
-                \           }
-                \       }
-                \   }
-                \})
-else
-    echo "Both ccls and clangd do not exist."
-endif
+let g:deoplete#enable_at_startup = 1
+" Pass a dictionary to set multiple options
+call deoplete#custom#option({
+\   'auto_complete_delay': 100,
+\   'smart_case': v:false,
+\   'auto_complete': v:false,
+\   'max_list': 100
+\ })
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -182,70 +139,60 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+if len($CCLS_PATH) == 0
+    echo "CCLS_PATH is not expored."
+endif
+
+if len($PYLS_PATH) == 0
+    echo "PYLS_PATH is not expored."
+endif
+
+let g:LanguageClient_serverCommands = {
+    \ 'cpp': [$CCLS_PATH],
+    \ 'python': [$PYLS_PATH],
+    \ }
+
+function SetLSPShortcuts()
+    nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+    command! Format :call LanguageClient#textDocument_formatting()<CR>
+
+    nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+    nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+    nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+
+    nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+
+    nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+    nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
+    nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
+    nnoremap <leader>le :call LanguageClient#explainErrorAtPoint()<CR>
+endfunction()
+
+let g:LanguageClient_diagnosticsList = "Location"
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,python call SetLSPShortcuts()
+augroup ENk
+
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+
+let g:LanguageClient_selectionUI = "fzf"
+let g:LanguageClient_useVirtualText = 0
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? deoplete#refresh() :
       \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+      \ deoplete#mappings#manual_complete()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> for trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-" Took from here: https://coderwall.com/p/cl6cpq/vim-ctrl-space-omni-keyword-completion
-" Required to make Ctr+Space work on VimR.
-imap <C-@> <C-Space>
-
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gy <Plug>(coc-type-definition)
-nmap <leader>gi <Plug>(coc-implementation)
-nmap <leader>gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UltiSnips
