@@ -77,6 +77,8 @@ let g:ale_virtualtext_prefix = "-> "
 
 let g:ale_linters = {
 \   'qml': ['qmllint'],
+\   'python': ['pylint'],
+\   'cpp': ['ccls'],
 \}
 
 let g:ale_linters_explicit = 1
@@ -124,10 +126,14 @@ map <leader>tbs  :TagbarShowTag<CR>
 " => Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
+augroup Doplete
+    autocmd!
+    autocmd FileType c,cpp,python call deoplete#enable()
+augroup END
+
 " Pass a dictionary to set multiple options
 call deoplete#custom#option({
-\   'auto_complete_delay': 100,
 \   'smart_case': v:false,
 \   'auto_complete': v:false,
 \   'max_list': 100
@@ -148,6 +154,7 @@ if len($PYLS_PATH) == 0
 endif
 
 let g:LanguageClient_serverCommands = {
+    \ 'c': [$CCLS_PATH],
     \ 'cpp': [$CCLS_PATH],
     \ 'python': [$PYLS_PATH],
     \ }
@@ -167,14 +174,14 @@ function SetLSPShortcuts()
     nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
     nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
-    nnoremap <leader>le :call LanguageClient#explainErrorAtPoint()<CR>
 endfunction()
 
 let g:LanguageClient_diagnosticsList = "Location"
+let g:LanguageClient_diagnosticsEnable = 0
 augroup LSP
   autocmd!
   autocmd FileType cpp,c,python call SetLSPShortcuts()
-augroup ENk
+augroup END
 
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
