@@ -25,7 +25,6 @@ filetype off
 call vundle#begin()
 
 Plugin 'sheerun/vim-polyglot'
-Plugin 'peterhoeg/vim-qml'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -129,7 +128,7 @@ map <leader>tbs  :TagbarShowTag<CR>
 let g:deoplete#enable_at_startup = 0
 augroup Doplete
     autocmd!
-    autocmd FileType c,cpp,python call deoplete#enable()
+    autocmd FileType * call deoplete#enable()
 augroup END
 
 " Pass a dictionary to set multiple options
