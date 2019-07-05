@@ -75,10 +75,10 @@ let g:ale_virtualtext_cursor = 0
 let g:ale_virtualtext_prefix = "-> "
 
 let g:ale_linters = {
-\   'qml': ['qmllint'],
-\   'python': ['pylint'],
-\   'cpp': ['ccls'],
-\}
+            \   'qml': ['qmllint'],
+            \   'python': ['pylint'],
+            \   'cpp': ['ccls'],
+            \}
 
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
@@ -129,14 +129,18 @@ let g:deoplete#enable_at_startup = 0
 augroup Doplete
     autocmd!
     autocmd FileType * call deoplete#enable()
+    " Enable auto complete only when the menu is visible. Otherwise it's just
+    " annoying.
+    autocmd TextChangedP * call deoplete#custom#option('auto_complete', 1)
+    autocmd CompleteDone * call deoplete#custom#option('auto_complete', 0)
 augroup END
 
 " Pass a dictionary to set multiple options
 call deoplete#custom#option({
-\   'smart_case': v:false,
-\   'auto_complete': v:false,
-\   'max_list': 100
-\ })
+            \   'smart_case': v:false,
+            \   'auto_complete': v:false,
+            \   'max_list': 100
+            \ })
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -144,21 +148,13 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-if len($CCLS_PATH) == 0
-    echo "CCLS_PATH is not expored."
-endif
-
-if len($PYLS_PATH) == 0
-    echo "PYLS_PATH is not expored."
-endif
-
 let g:LanguageClient_serverCommands = {
-    \ 'c': [$CCLS_PATH],
-    \ 'cpp': [$CCLS_PATH],
-    \ 'python': [$PYLS_PATH],
-    \ }
+            \ 'c': ['ccls'],
+            \ 'cpp': ['ccls'],
+            \ 'python': ['pyls'],
+            \ }
 
-function SetLSPShortcuts()
+function! SetLSPShortcuts()
     nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
     command! Format :call LanguageClient#textDocument_formatting()<CR>
@@ -178,26 +174,27 @@ endfunction()
 let g:LanguageClient_diagnosticsList = "Location"
 let g:LanguageClient_diagnosticsEnable = 0
 augroup LSP
-  autocmd!
-  autocmd FileType cpp,c,python call SetLSPShortcuts()
+    autocmd!
+    autocmd FileType cpp,c,python call SetLSPShortcuts()
 augroup END
 
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
 let g:LanguageClient_selectionUI = "fzf"
+let g:LanguageClient_completionPreferTextEdit = 1
 let g:LanguageClient_useVirtualText = 0
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? deoplete#refresh() :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#mappings#manual_complete()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ deoplete#mappings#manual_complete()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

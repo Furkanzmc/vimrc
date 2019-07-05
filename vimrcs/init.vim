@@ -36,6 +36,8 @@ set complete-=i
 set termguicolors
 set nofoldenable
 
+set completeopt-=preview
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
