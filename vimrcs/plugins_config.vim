@@ -181,7 +181,7 @@ augroup END
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
 let g:LanguageClient_selectionUI = "fzf"
-let g:LanguageClient_completionPreferTextEdit = 1
+let g:LanguageClient_completionPreferTextEdit = 0
 let g:LanguageClient_useVirtualText = 0
 
 " Use tab for trigger completion with characters ahead and navigate.
