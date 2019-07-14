@@ -1,6 +1,4 @@
-" TODO: Check if the files exist.
-
-set foldmethod=indent
+setlocal foldmethod=indent
 
 " Override the default comment string from vim-commentary
 setlocal commentstring=//%s
