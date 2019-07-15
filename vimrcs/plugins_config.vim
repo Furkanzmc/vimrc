@@ -74,10 +74,19 @@ let g:ale_set_highlights = 0
 let g:ale_virtualtext_cursor = 0
 let g:ale_virtualtext_prefix = "-> "
 
+let availableCppLinter = ''
+if executable('ccls')
+    let availableCppLinter = 'ccls'
+elseif executable('cquery')
+    let availableCppLinter = 'cquery'
+elseif executable('clangd')
+    let availableCppLinter = 'clangd'
+endif
+
 let g:ale_linters = {
             \   'qml': ['qmllint'],
             \   'python': ['pylint'],
-            \   'cpp': ['ccls'],
+            \   'cpp': [availableCppLinter],
             \}
 
 let g:ale_linters_explicit = 1
@@ -149,8 +158,8 @@ set shortmess+=c
 set signcolumn=yes
 
 let g:LanguageClient_serverCommands = {
-            \ 'c': ['ccls'],
-            \ 'cpp': ['ccls'],
+            \ 'c': [availableCppLinter],
+            \ 'cpp': [availableCppLinter],
             \ 'python': ['pyls'],
             \ }
 
