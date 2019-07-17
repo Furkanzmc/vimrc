@@ -1,10 +1,3 @@
-call JavaScriptFold()
-setl fen
-setl nocindent
-
-imap <c-t> $log();<esc>hi
-imap <c-a> alert();<esc>hi
-
 function! JavaScriptFold()
     setl foldmethod=syntax
     setl foldlevelstart=1
@@ -15,4 +8,11 @@ function! JavaScriptFold()
     endfunction
     setl foldtext=FoldText()
 endfunction
+
+call JavaScriptFold()
+setl fen
+setl nocindent
+
+imap <c-t> $log();<esc>hi
+imap <c-a> alert();<esc>hi
 
