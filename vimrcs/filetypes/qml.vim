@@ -15,3 +15,4 @@ if executable('qmlscene')
 endif
 
 setlocal foldmethod=indent
+nmap <leader>dh :call SearchDocs()<CR>

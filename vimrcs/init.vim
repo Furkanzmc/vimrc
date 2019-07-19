@@ -505,3 +505,5 @@ command! Bclose :call BufcloseCloseIt()
 
 command! -nargs=1 Bdeletes :call WipeMatchingBuffers('<args>')
 command! Bdhidden :call DeleteHiddenBuffers()
+
+command! -nargs=1 Search :call SearchDocs(<f-args>)

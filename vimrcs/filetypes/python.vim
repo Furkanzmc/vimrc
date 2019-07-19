@@ -14,3 +14,4 @@ setlocal expandtab
 setlocal autoindent
 setlocal foldmethod=indent
 
+nmap <leader>dh :call SearchDocs()<CR>

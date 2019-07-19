@@ -14,3 +14,4 @@ function! SwapSourceHeader()
 endfunction
 
 nnoremap <leader>gg :call SwapSourceHeader()<CR>
+nmap <leader>dh :call SearchDocs()<CR>

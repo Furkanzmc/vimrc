@@ -304,3 +304,32 @@ nnoremap gf :call GoToFile()<CR>
 func! GetModifiedBufferCount()
     return len(filter(getbufinfo(), 'v:val.changed == 1'))
 endfunc
+
+function! SearchDocs(...)
+    let wordUnderCursor = a:0 > 0 ? a:1 : expand('<cword>')
+    let extension = &filetype
+    if (extension == 'qml')
+        let helpLink = 'doc.qt.io'
+    elseif (extension == 'vim')
+        execute 'help ' . wordUnderCursor
+        return
+    elseif (extension == 'cpp')
+        let helpLink = match(wordUnderCursor, 'Q') == 0 ? 'doc.qt.io' : 'en.cppreference.com'
+    elseif (extension == 'python')
+        let helpLink = 'docs.python.org/3/'
+    else
+        let helpLink = ''
+    endif
+
+    if (len(helpLink) > 0)
+        let searchLink = 'https://duckduckgo.com/?q=\' . wordUnderCursor .  ' site:' . helpLink
+    else
+        let searchLink = 'https://duckduckgo.com/?q=' . wordUnderCursor
+    endif
+
+    if has('win32')
+        call execute('!explorer "' . searchLink . '"')
+    else
+        call execute('!open "' . searchLink . '"')
+    endif
+endfunction
