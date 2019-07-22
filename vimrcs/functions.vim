@@ -307,15 +307,18 @@ endfunc
 
 function! SearchDocs(...)
     let wordUnderCursor = a:0 > 0 ? a:1 : expand('<cword>')
-    let extension = &filetype
-    if (extension == 'qml')
+    let filetype = &filetype
+    if (filetype == 'qml')
         let helpLink = 'doc.qt.io'
-    elseif (extension == 'vim')
+        " Add QML suffix to improve the search. Sometimes we may hit reults
+        " for C++ class with the same name.
+        let wordUnderCursor .= ' QML'
+    elseif (filetype == 'vim')
         execute 'help ' . wordUnderCursor
         return
-    elseif (extension == 'cpp')
+    elseif (filetype == 'cpp')
         let helpLink = match(wordUnderCursor, 'Q') == 0 ? 'doc.qt.io' : 'en.cppreference.com'
-    elseif (extension == 'python')
+    elseif (filetype == 'python')
         let helpLink = 'docs.python.org/3/'
     else
         let helpLink = ''
