@@ -9,6 +9,9 @@ if executable('qmlscene')
         let lines = GetVisualSelection()
         let tempfile = tempname() . '.qml'
         call insert(lines, "import QtQuick 2.10")
+        call insert(lines, "import QtQuick.Controls 2.3")
+        call insert(lines, "import QtQuick.Layouts 1.3")
+        call insert(lines, "import QtQuick.Window 2.3")
         call writefile(lines, tempfile)
         execute 'AsyncRun qmlscene ' . shellescape(tempfile)
     endfunction
