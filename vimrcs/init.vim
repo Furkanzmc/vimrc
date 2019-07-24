@@ -38,6 +38,9 @@ set nofoldenable
 
 set completeopt-=preview
 
+" Reduces the number of lines that are above the curser when I do zt.
+set scrolloff=3
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
