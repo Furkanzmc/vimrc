@@ -8,6 +8,8 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 
 ' > ~/.vimrc
 
+git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+
 mkdir -p ~/.vim/ftplugin
 
 foreach ($file in Get-ChildItem -Path "~/.vim_runtime/vimrcs/filetypes/") {

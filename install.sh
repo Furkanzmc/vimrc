@@ -14,4 +14,6 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 mkdir -p ~/.vim/ftplugin
 ln -sf ~/.vim_runtime/vimrcs/* ~/.vim/ftplugin/
 
+git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+
 echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"

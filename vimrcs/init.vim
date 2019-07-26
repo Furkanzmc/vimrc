@@ -36,6 +36,8 @@ set complete-=i
 set termguicolors
 set nofoldenable
 
+set colorcolumn=81
+
 set completeopt-=preview
 
 " Reduces the number of lines that are above the curser when I do zt.

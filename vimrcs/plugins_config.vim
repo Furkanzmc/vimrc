@@ -18,42 +18,45 @@ let loaded_netrwPlugin = 1
 let g:polyglot_disabled = ['markdown']
 
 set rtp+=~/.vim/bundle/Vundle.vim
-
-set nocompatible
-filetype off
-
-call vundle#begin()
-
-Plugin 'sheerun/vim-polyglot'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'mkitt/tabline.vim'
-Plugin 'w0rp/ale'
-Plugin 'majutsushi/tagbar'
-Plugin 'junegunn/fzf.vim'
-Plugin 'junegunn/fzf'
-Plugin 'freitass/todo.txt-vim'
-Plugin 'nightsense/cosmic_latte'
-Plugin 'Vimjas/vim-python-pep8-indent'
-Plugin 'junegunn/goyo.vim'
-Plugin 'masukomi/vim-markdown-folding'
-Plugin 'vim-scripts/SyntaxRange'
-Plugin 'skywind3000/asyncrun.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'tmsvg/pear-tree'
-Plugin 'sakhnik/nvim-gdb'
-Plugin 'justinmk/vim-dirvish'
-
-Plugin 'autozimu/LanguageClient-neovim'
-Plugin 'Shougo/deoplete.nvim'
-
-call vundle#end()
-
-filetype plugin indent on
-
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
+
+function! PackInit()
+    packadd minpac
+    call minpac#init()
+
+    call minpac#add('sheerun/vim-polyglot')
+    call minpac#add('tpope/vim-commentary')
+    call minpac#add('tpope/vim-fugitive')
+    call minpac#add('tpope/vim-surround')
+    call minpac#add('octol/vim-cpp-enhanced-highlight')
+    call minpac#add('mkitt/tabline.vim')
+    call minpac#add('w0rp/ale')
+    call minpac#add('majutsushi/tagbar')
+    call minpac#add('junegunn/fzf.vim')
+    call minpac#add('junegunn/fzf')
+    call minpac#add('freitass/todo.txt-vim')
+    call minpac#add('nightsense/cosmic_latte')
+    call minpac#add('Vimjas/vim-python-pep8-indent')
+    call minpac#add('junegunn/goyo.vim')
+    call minpac#add('masukomi/vim-markdown-folding')
+    call minpac#add('vim-scripts/SyntaxRange')
+    call minpac#add('skywind3000/asyncrun.vim')
+    call minpac#add('SirVer/ultisnips')
+    call minpac#add('tmsvg/pear-tree')
+    call minpac#add('sakhnik/nvim-gdb')
+    call minpac#add('justinmk/vim-dirvish')
+
+    call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
+    call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
+endfunction
+
+if exists('*minpac#init')
+    call PackInit()
+endif
+
+command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
+    command! PackClean  call PackInit() | call minpac#clean()
+command! PackStatus call PackInit() | call minpac#status()
 
 colorscheme cosmic_latte
 
@@ -143,7 +146,7 @@ augroup Doplete
 augroup END
 
 " Pass a dictionary to set multiple options
-call deoplete#custom#option({
+autocmd VimEnter * call deoplete#custom#option({
             \   'smart_case': v:false,
             \   'auto_complete': v:false,
             \   'max_list': 100
