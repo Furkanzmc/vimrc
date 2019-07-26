@@ -2,6 +2,7 @@ inoremap <c-s> <esc>Ion<esc>l~A: {<CR>}<ESC>O
 inoremap <c-d> <esc>Ion<esc>l~AChanged: {<CR>}<ESC>O
 
 if executable('qmlscene')
+    setlocal makeprg=qmlscene\ \%
     command! RunQML :execute 'AsyncRun qmlscene %'
     command! -range RunQMLSelected :call RunSelectedQMLCode()
 

@@ -214,3 +214,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
 let g:UltiSnipsEnableSnipMate = 0
 let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => asyncrun.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
