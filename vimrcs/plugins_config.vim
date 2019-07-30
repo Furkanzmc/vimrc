@@ -17,7 +17,6 @@ let loaded_netrwPlugin = 1
 " highlighting.
 let g:polyglot_disabled = ['markdown']
 
-set rtp+=~/.vim/bundle/Vundle.vim
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
 
 function! PackInit()
