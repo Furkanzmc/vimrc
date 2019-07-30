@@ -320,6 +320,8 @@ function! SearchDocs(...)
         let helpLink = match(wordUnderCursor, 'Q') == 0 ? 'doc.qt.io' : 'en.cppreference.com'
     elseif (filetype == 'python')
         let helpLink = 'docs.python.org/3/'
+    elseif (filetype == 'javascript')
+        let helpLink = 'developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'
     else
         let helpLink = ''
     endif
