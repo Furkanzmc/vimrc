@@ -187,8 +187,6 @@ augroup LSP
     autocmd FileType cpp,c,python call SetLSPShortcuts()
 augroup END
 
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-
 let g:LanguageClient_selectionUI = "fzf"
 let g:LanguageClient_completionPreferTextEdit = 0
 let g:LanguageClient_useVirtualText = 0

@@ -13,5 +13,7 @@ setlocal textwidth=100
 setlocal expandtab
 setlocal autoindent
 setlocal foldmethod=indent
+setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+
 
 nmap <leader>dh :call SearchDocs()<CR>

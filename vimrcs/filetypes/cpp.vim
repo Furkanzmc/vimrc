@@ -15,3 +15,5 @@ endfunction
 
 nnoremap <leader>gg :call SwapSourceHeader()<CR>
 nmap <leader>dh :call SearchDocs()<CR>
+
+setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
