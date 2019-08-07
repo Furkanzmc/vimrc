@@ -42,7 +42,9 @@ function! PackInit()
     call minpac#add('skywind3000/asyncrun.vim')
     call minpac#add('SirVer/ultisnips')
     call minpac#add('tmsvg/pear-tree')
-    call minpac#add('sakhnik/nvim-gdb')
+    if has('win32') == 0
+        call minpac#add('sakhnik/nvim-gdb')
+    endif
     call minpac#add('justinmk/vim-dirvish')
 
     call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
@@ -54,7 +56,7 @@ if exists('*minpac#init')
 endif
 
 command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
-    command! PackClean  call PackInit() | call minpac#clean()
+command! PackClean  call PackInit() | call minpac#clean()
 command! PackStatus call PackInit() | call minpac#status()
 
 colorscheme cosmic_latte
