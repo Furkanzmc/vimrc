@@ -192,6 +192,7 @@ augroup END
 let g:LanguageClient_selectionUI = "fzf"
 let g:LanguageClient_completionPreferTextEdit = 0
 let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_virtualTextPrefix = '>'
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
