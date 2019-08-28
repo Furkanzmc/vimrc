@@ -28,7 +28,6 @@ function! PackInit()
     call minpac#add('tpope/vim-fugitive')
     call minpac#add('tpope/vim-surround')
     call minpac#add('octol/vim-cpp-enhanced-highlight')
-    call minpac#add('mkitt/tabline.vim')
     call minpac#add('w0rp/ale')
     call minpac#add('majutsushi/tagbar')
     call minpac#add('junegunn/fzf.vim')
@@ -42,6 +41,8 @@ function! PackInit()
     call minpac#add('skywind3000/asyncrun.vim')
     call minpac#add('SirVer/ultisnips')
     call minpac#add('tmsvg/pear-tree')
+    " This takes care of the tab line setting, so I no longer need tabline.vim.
+    call minpac#add('gcmt/taboo.vim')
     if has('win32') == 0
         call minpac#add('sakhnik/nvim-gdb')
     endif
@@ -224,3 +225,10 @@ let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Taboo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" This is required to save the tab names with the session.
+set sessionoptions+=globals
