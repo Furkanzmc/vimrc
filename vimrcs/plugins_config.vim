@@ -191,7 +191,6 @@ augroup LSP
 augroup END
 
 let g:LanguageClient_selectionUI = "fzf"
-let g:LanguageClient_completionPreferTextEdit = 0
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_virtualTextPrefix = '>'
 
@@ -225,10 +224,3 @@ let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Taboo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" This is required to save the tab names with the session.
-set sessionoptions+=globals
