@@ -96,6 +96,9 @@ xnoremap <leader>d "_d
 xnoremap <leader>p "_dP
 xnoremap <leader>c "_c
 
+map <leader>qn :next<CR>
+map <leader>qp :previous<CR>
+
 " Use ripgrep over grep, if possible
 if executable('rg')
    " Use rg over grep
