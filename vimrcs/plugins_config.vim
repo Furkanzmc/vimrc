@@ -274,22 +274,15 @@ function! InitCoc()
                 \ coc#refresh()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    " Use <c-space> for trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
-
     " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
     " Coc only does snippet and additional edit on confirm.
     inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-    " Use `[c` and `]c` for navigate diagnostics
-    nmap <silent> [c <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
     " Remap keys for gotos
-    nmap <leader>gd <Plug>(coc-definition)
-    nmap <leader>gy <Plug>(coc-type-definition)
-    nmap <leader>gi <Plug>(coc-implementation)
-    nmap <leader>gr <Plug>(coc-references)
+    nmap <leader>ld <Plug>(coc-definition)
+    nmap <leader>lt <Plug>(coc-type-definition)
+    nmap <leader>li <Plug>(coc-implementation)
+    nmap <leader>lr <Plug>(coc-references)
 
     " Use K for show documentation in preview window
     nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -307,7 +300,6 @@ function! InitCoc()
 
     " Remap for format selected region
     vmap <leader>f  <Plug>(coc-format-selected)
-    nmap <leader>f  <Plug>(coc-format-selected)
 
     augroup mygroup
       autocmd!
@@ -316,9 +308,6 @@ function! InitCoc()
       " Update signature help on jump placeholder
       autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     augroup end
-
-    " Fix autofix problem of current line
-    nmap <leader>qf  <Plug>(coc-fix-current)
 
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
