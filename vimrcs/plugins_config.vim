@@ -176,10 +176,10 @@ function! InitDeoplete()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 endfunction
 
-function! InitLanguageClient()
+function! InitLanguageClient(availableCppLinter)
     let g:LanguageClient_serverCommands = {
-                \ 'c': [availableCppLinter],
-                \ 'cpp': [availableCppLinter],
+                \ 'c': [a:availableCppLinter],
+                \ 'cpp': [a:availableCppLinter],
                 \ 'python': ['pyls'],
                 \ }
 
@@ -313,17 +313,17 @@ function! InitCoc()
     command! -nargs=0 Format :call CocAction('format')
 endfunction
 
-function! InitCompletion()
+function! InitCompletion(linter)
     let l:disableCoc = $VIMRC_NO_COC
     if l:disableCoc == 1
-        call InitLanguageClient()
+        call InitLanguageClient(a:linter)
         call InitDeoplete()
     else
         call InitCoc()
     endif
 endfunction
 
-autocmd VimEnter * call InitCompletion()
+autocmd VimEnter * call InitCompletion(availableCppLinter)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UltiSnips
