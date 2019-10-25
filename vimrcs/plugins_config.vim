@@ -48,12 +48,12 @@ function! PackInit()
     endif
     call minpac#add('justinmk/vim-dirvish')
 
-    let l:disableCoc = $VIMRC_NO_COC
-    if l:disableCoc == 1
+    let l:enableCoc = $VIMRC_ENABLE_COC
+    if l:enableCoc == 1
+        call minpac#add('neoclide/coc.nvim')
+    else
         call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
         call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
-    else
-        call minpac#add('neoclide/coc.nvim')
     endif
 
 endfunction
@@ -314,12 +314,12 @@ function! InitCoc()
 endfunction
 
 function! InitCompletion(linter)
-    let l:disableCoc = $VIMRC_NO_COC
-    if l:disableCoc == 1
+    let l:enableCoc = $VIMRC_ENABLE_COC
+    if l:enableCoc == 1
+        call InitCoc()
+    else
         call InitLanguageClient(a:linter)
         call InitDeoplete()
-    else
-        call InitCoc()
     endif
 endfunction
 
