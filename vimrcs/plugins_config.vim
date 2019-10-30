@@ -122,10 +122,10 @@ let g:cpp_member_variable_highlight = 1
 " => fzf plugin
 """"""""""""""""""""""""""""""
 
-map <c-p> :Files<cr>
-map <leader>o :Buffers<cr>
+map <leader>o :Files<cr>
+map <leader>b :Buffers<cr>
 nmap <leader>s :Rg<cr>
-map <leader>f :History<CR>
+map <leader>h :History<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 
