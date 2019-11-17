@@ -39,9 +39,9 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 
 function! SetIndentSize(size)
-    let &tabstop = a:size
-    let &softtabstop = a:size
-    let &shiftwidth = a:size
+    let &l:tabstop = a:size
+    let &l:softtabstop = a:size
+    let &l:shiftwidth = a:size
 endfunction
 
 func! CompareLength(a, b)
