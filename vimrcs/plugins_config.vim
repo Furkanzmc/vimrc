@@ -187,6 +187,9 @@ function! InitLanguageClient(availableCppLinter)
         nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
         nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
         command! Format :call LanguageClient#textDocument_formatting()<CR>
+        command! RFormat :call LanguageClient#textDocument_rangeFormatting()<CR>
+        vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
+        nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
         nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
         nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
