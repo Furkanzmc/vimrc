@@ -344,3 +344,30 @@ function! CheckBackSpace() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+let g:vimrc_review_base_branch = ""
+function! StartReview(...)
+    let l:baseBranch = ""
+    if (strlen(g:vimrc_review_base_branch) > 0)
+        let l:baseBranch = g:vimrc_review_base_branch
+    else
+        if (a:0 == 0)
+            echoerr "Base branch is required."
+            return
+        endif
+
+        let l:baseBranch = a:1
+        let g:vimrc_review_base_branch = a:1
+    endif
+
+    echom l:baseBranch
+    execute 'args `git diff --name-only ' . l:baseBranch . '`'
+endfunction
+
+function! ReviewDiff()
+    if (strlen(g:vimrc_review_base_branch) == 0)
+        echoerr "Start a review using StartReview()"
+        return
+    endif
+
+    execute 'Gdiff ' . g:vimrc_review_base_branch
+endfunction

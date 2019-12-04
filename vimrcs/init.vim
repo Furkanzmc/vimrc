@@ -494,3 +494,6 @@ command! -nargs=1 Bdeletes :call WipeMatchingBuffers('<args>')
 command! Bdhidden :call DeleteHiddenBuffers()
 
 command! -nargs=1 Search :call SearchDocs(<f-args>)
+
+command! -nargs=? StartReview :call StartReview(<f-args>)
+command! ReviewDiff :call ReviewDiff()
