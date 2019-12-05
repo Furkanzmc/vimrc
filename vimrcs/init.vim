@@ -40,6 +40,9 @@ set colorcolumn=81
 
 set completeopt-=preview
 
+set splitbelow
+set splitright
+
 " Reduces the number of lines that are above the curser when I do zt.
 set scrolloff=3
 
