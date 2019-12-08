@@ -15,5 +15,8 @@ setlocal autoindent
 setlocal foldmethod=indent
 setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
-
 nmap <leader>dh :call SearchDocs()<CR>
+
+if executable("black")
+    autocmd BufRead *.py command! Black :!black --line-length=80 %
+endif
