@@ -56,6 +56,11 @@ function! PackInit()
         call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
     endif
 
+    let l:enableRust = $VIMRC_RUST_ENABLED
+    if l:enableRust == 1
+        call minpac#add('rust-lang/rust.vim')
+    endif
+
 endfunction
 
 if exists('*minpac#init')
