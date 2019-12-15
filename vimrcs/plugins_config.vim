@@ -48,13 +48,8 @@ function! PackInit()
     endif
     call minpac#add('justinmk/vim-dirvish')
 
-    let l:enableCoc = $VIMRC_ENABLE_COC
-    if l:enableCoc == 1
-        call minpac#add('neoclide/coc.nvim')
-    else
-        call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
-        call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
-    endif
+    call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
+    call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
 
     let l:enableRust = $VIMRC_RUST_ENABLED
     if l:enableRust == 1
@@ -83,8 +78,8 @@ let g:ale_linters_explicit = 1
 " Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 0
 
-" Use the virtual text to show errors. Coc.nvim redirects the errors to
-" ale, so this is useful. But distracting so I only enable it for live coding.
+" Use the virtual text to show errors. Distracting so I only enable it for live
+" coding.
 let g:ale_virtualtext_cursor = 0
 let g:ale_virtualtext_prefix = "-> "
 
@@ -188,147 +183,35 @@ function! InitLanguageClient(availableCppLinter)
                 \ 'python': ['pyls'],
                 \ }
 
-    function! SetLSPShortcuts()
-        nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-        nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-        command! Format :call LanguageClient#textDocument_formatting()<CR>
-        command! RFormat :call LanguageClient#textDocument_rangeFormatting()<CR>
-        vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
-        nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
+    nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+    command! Format :call LanguageClient#textDocument_formatting()<CR>
+    command! RFormat :call LanguageClient#textDocument_rangeFormatting()<CR>
+    vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
+    nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
-        nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-        nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-        nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+    nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+    nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+    nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
 
-        nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-        nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+    nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
 
-        nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
-        nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
-        nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
-    endfunction()
+    nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+    nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
+    nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
 
     let g:LanguageClient_diagnosticsList = "Location"
     let g:LanguageClient_diagnosticsEnable = 0
-    augroup LSP
-        autocmd!
-        autocmd FileType cpp,c,python call SetLSPShortcuts()
-    augroup END
 
     let g:LanguageClient_selectionUI = "fzf"
     let g:LanguageClient_useVirtualText = 0
     let g:LanguageClient_virtualTextPrefix = '>'
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => coc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! InitCoc()
-    call coc#config("coc.preferences", {
-                \   "timeout": 1000,
-                \   "diagnostic.displayByAle": 1,
-                \   "diagnostic.enableMessage": "never",
-                \   "suggest.autoTrigger": "none",
-                \   "suggest.enablePreview": 1,
-                \   "python.linting.pylintArgs": ["--load-plugins pylint_django"],
-                \   "python.venvFolders": [".venv", ".pyenv"],
-                \   "python.jediEnabled": 0,
-                \   "python.linting.enabled": 0
-                \ }
-                \)
-    if executable('clangd')
-        call coc#config("languageserver", {
-                    \   "clangd": {
-                    \       "command": "clangd",
-                    \       "rootPatterns": [
-                    \           "compile_flags.txt",
-                    \           "compile_commands.json",
-                    \           ".nvimrc",
-                    \           ".git/",
-                    \           ".hg/"
-                    \       ],
-                    \       "filetypes": [
-                    \           "c",
-                    \           "cpp",
-                    \           "objc",
-                    \           "objcpp"
-                    \       ]
-                    \   }
-                    \})
-    elseif executable('ccls')
-        call coc#config("languageserver", {
-                    \   "ccls": {
-                    \       "command": "ccls",
-                    \       "filetypes": ["c", "cpp", "objc", "objcpp"],
-                    \       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-                    \       "initializationOptions": {
-                    \           "cache": {
-                    \               "directory": "/tmp/ccls"
-                    \           }
-                    \       }
-                    \   }
-                    \})
-    else
-        echo "Both ccls and clangd do not exist."
-    endif
-
-    " Use tab for trigger completion with characters ahead and navigate.
-    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other
-    " plugin.
-    inoremap <silent><expr> <Tab>
-                \ pumvisible() ? "\<C-n>" :
-                \ CheckBackSpace() ? "\<Tab>" :
-                \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-    " Coc only does snippet and additional edit on confirm.
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-    " Remap keys for gotos
-    nmap <leader>ld <Plug>(coc-definition)
-    nmap <leader>lt <Plug>(coc-type-definition)
-    nmap <leader>li <Plug>(coc-implementation)
-    nmap <leader>lr <Plug>(coc-references)
-
-    " Use K for show documentation in preview window
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    function! s:show_documentation()
-      if &filetype == 'vim'
-        execute 'h '.expand('<cword>')
-      else
-        call CocAction('doHover')
-      endif
-    endfunction
-
-    " Remap for rename current word
-    nmap <leader>rn <Plug>(coc-rename)
-
-    " Remap for format selected region
-    vmap <leader>f  <Plug>(coc-format-selected)
-
-    augroup mygroup
-      autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    augroup end
-
-    " Use `:Format` for format current buffer
-    command! -nargs=0 Format :call CocAction('format')
-endfunction
-
 function! InitCompletion(linter)
-    let l:enableCoc = $VIMRC_ENABLE_COC
-    if l:enableCoc == 1
-        call InitCoc()
-    else
-        call InitLanguageClient(a:linter)
-        call InitDeoplete()
-    endif
+    call InitLanguageClient(a:linter)
+    call InitDeoplete()
 endfunction
 
 autocmd VimEnter * call InitCompletion(availableCppLinter)
