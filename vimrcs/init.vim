@@ -500,3 +500,5 @@ command! -nargs=1 Search :call SearchDocs(<f-args>)
 
 command! -nargs=? StartReview :call StartReview(<f-args>)
 command! ReviewDiff :call ReviewDiff()
+
+command! ClearQuickFix :call setqflist([])
