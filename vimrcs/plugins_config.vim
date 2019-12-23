@@ -75,9 +75,6 @@ colorscheme cosmic_latte
 " Only run linters named in ale_linters settings.
 let g:ale_linters_explicit = 1
 
-" Set this in your vimrc file to disabling highlighting
-let g:ale_set_highlights = 0
-
 " Use the virtual text to show errors. Distracting so I only enable it for live
 " coding.
 let g:ale_virtualtext_cursor = 0
@@ -94,12 +91,9 @@ endif
 
 let g:ale_linters = {
             \   'qml': ['qmllint'],
-            \   'python': ['pylint'],
-            \   'cpp': [availableCppLinter],
             \}
 
-let g:ale_linters_explicit = 1
-let g:ale_set_loclist = 0
+let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_lint_delay = 1000
 let g:ale_sign_error = '!!'
@@ -128,7 +122,6 @@ nmap <leader>s :Rg<cr>
 map <leader>h :History<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -148,73 +141,60 @@ set signcolumn=yes
 " => Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! InitDeoplete()
-    let g:deoplete#enable_at_startup = 0
-    augroup Doplete
-        autocmd!
-        autocmd FileType * call deoplete#enable()
-        " Enable auto complete only when the menu is visible. Otherwise it's just
-        " annoying.
-        autocmd TextChangedP * call deoplete#custom#option('auto_complete', 1)
-        autocmd CompleteDone * call deoplete#custom#option('auto_complete', 0)
-    augroup END
+let g:deoplete#enable_at_startup = 1
+augroup Doplete
+    autocmd!
+    " Enable auto complete only when the menu is visible. Otherwise it's just
+    " annoying.
+    autocmd TextChangedP * call deoplete#custom#option('auto_complete', v:true)
+    autocmd CompleteDone * call deoplete#custom#option('auto_complete', v:false)
+augroup END
 
-    " Pass a dictionary to set multiple options
-    autocmd VimEnter * call deoplete#custom#option({
-                \   'smart_case': v:false,
-                \   'auto_complete': v:false,
-                \   'max_list': 100
-                \ })
+" Pass a dictionary to set multiple options
+autocmd VimEnter * call deoplete#custom#option({
+            \   'smart_case': v:false,
+            \   'auto_complete': v:false,
+            \   'max_list': 100
+            \ })
 
-    " Use tab for trigger completion with characters ahead and navigate.
-    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other
-    " plugin.
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ CheckBackSpace() ? "\<TAB>" :
-                \ deoplete#manual_complete()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-endfunction
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other
+" plugin.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ CheckBackSpace() ? "\<TAB>" :
+            \ deoplete#manual_complete()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><c-f> pumvisible() ? deoplete#manual_complete() : "\<C-f>"
 
-function! InitLanguageClient(availableCppLinter)
-    let g:LanguageClient_serverCommands = {
-                \ 'c': [a:availableCppLinter],
-                \ 'cpp': [a:availableCppLinter],
-                \ 'python': ['pyls'],
-                \ }
+let g:LanguageClient_serverCommands = {
+            \ 'c': [availableCppLinter],
+            \ 'cpp': [availableCppLinter],
+            \ 'python': ['pyls'],
+            \ }
 
-    nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-    command! Format :call LanguageClient#textDocument_formatting()<CR>
-    command! RFormat :call LanguageClient#textDocument_rangeFormatting()<CR>
-    vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
-    nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
+nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+command! Format :call LanguageClient#textDocument_formatting()<CR>
+command! RFormat :call LanguageClient#textDocument_rangeFormatting()<CR>
+vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
+nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
-    nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-    nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-    nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
 
-    nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
 
-    nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
-    nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
-    nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
+nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+nnoremap <leader>lh :call LanguageClient_textDocument_documentHighlight()<CR>
+nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
 
-    let g:LanguageClient_diagnosticsList = "Location"
-    let g:LanguageClient_diagnosticsEnable = 0
-
-    let g:LanguageClient_selectionUI = "fzf"
-    let g:LanguageClient_useVirtualText = 0
-    let g:LanguageClient_virtualTextPrefix = '>'
-endfunction
-
-function! InitCompletion(linter)
-    call InitLanguageClient(a:linter)
-    call InitDeoplete()
-endfunction
-
-autocmd VimEnter * call InitCompletion(availableCppLinter)
+let g:LanguageClient_diagnosticsList = "Location"
+let g:LanguageClient_selectionUI = "fzf"
+let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_virtualTextPrefix = '>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UltiSnips
