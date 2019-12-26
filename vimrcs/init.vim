@@ -210,10 +210,7 @@ set guioptions-=L
 " Enable syntax highlighting
 syntax enable
 
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+autocmd VimEnter * colorscheme cosmic_latte
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -382,11 +379,7 @@ function! ConfigureStatusline(winnum)
     let stat .= '%=' " Switch to right side
     let stat .= Color(active, 'Visual', 'Comment')
 
-    " iTerm shows the git branch in the status bar with bas/zsh but not with
-    " pwsh.
-    let is_iterm = matchstr($TERM_PROGRAM, 'iTerm') != ''
-    let is_pwsh = matchstr($SHELL, 'pwsh') != ''
-    if active && exists('*fugitive#head') && (!is_iterm || is_pwsh)
+    if active && exists('*fugitive#head')
         let head = fugitive#head()
         if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
             call fugitive#detect(getcwd())

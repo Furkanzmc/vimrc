@@ -7,6 +7,7 @@
 """"""""""""""""""""""""""""""
 " => Load Plugins
 """"""""""""""""""""""""""""""
+
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
 
@@ -18,6 +19,8 @@ let loaded_netrwPlugin = 1
 let g:polyglot_disabled = ['markdown']
 
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
+let g:vimrc_rust_enabled = $VIMRC_RUST_ENABLED
+let g:vimrc_snippet_enabled = $VIMRC_RUST_ENABLED
 
 function! PackInit()
     packadd minpac
@@ -26,36 +29,43 @@ function! PackInit()
     call minpac#add('sheerun/vim-polyglot')
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-fugitive')
+
     call minpac#add('tpope/vim-surround')
     call minpac#add('octol/vim-cpp-enhanced-highlight')
     call minpac#add('w0rp/ale')
+
     call minpac#add('majutsushi/tagbar')
     call minpac#add('junegunn/fzf.vim')
     call minpac#add('junegunn/fzf')
+
     call minpac#add('freitass/todo.txt-vim')
     call minpac#add('nightsense/cosmic_latte')
     call minpac#add('Vimjas/vim-python-pep8-indent')
+
     call minpac#add('junegunn/goyo.vim')
     call minpac#add('masukomi/vim-markdown-folding')
     call minpac#add('vim-scripts/SyntaxRange')
+
     call minpac#add('skywind3000/asyncrun.vim')
-    call minpac#add('SirVer/ultisnips')
     call minpac#add('tmsvg/pear-tree')
     " This takes care of the tab line setting, so I no longer need tabline.vim.
     call minpac#add('gcmt/taboo.vim')
-    if has('win32') == 0
-        call minpac#add('sakhnik/nvim-gdb')
-    endif
-    call minpac#add('justinmk/vim-dirvish')
 
+    call minpac#add('justinmk/vim-dirvish')
     call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
     call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
 
-    let l:enableRust = $VIMRC_RUST_ENABLED
-    if l:enableRust == 1
-        call minpac#add('rust-lang/rust.vim')
+    if g:vimrc_snippet_enabled
+        call minpac#add('SirVer/ultisnips')
     endif
 
+    if has('win32') == 0
+        call minpac#add('sakhnik/nvim-gdb')
+    endif
+
+    if g:vimrc_rust_enabled
+        call minpac#add('rust-lang/rust.vim')
+    endif
 endfunction
 
 if exists('*minpac#init')
@@ -65,8 +75,6 @@ endif
 command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  call PackInit() | call minpac#clean()
 command! PackStatus call PackInit() | call minpac#status()
-
-colorscheme cosmic_latte
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale - Code Linting
@@ -79,15 +87,6 @@ let g:ale_linters_explicit = 1
 " coding.
 let g:ale_virtualtext_cursor = 0
 let g:ale_virtualtext_prefix = "-> "
-
-let availableCppLinter = ''
-if executable('ccls')
-    let availableCppLinter = 'ccls'
-elseif executable('cquery')
-    let availableCppLinter = 'cquery'
-elseif executable('clangd')
-    let availableCppLinter = 'clangd'
-endif
 
 let g:ale_linters = {
             \   'qml': ['qmllint'],
@@ -167,11 +166,49 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr><c-f> pumvisible() ? deoplete#manual_complete() : "\<C-f>"
 
-let g:LanguageClient_serverCommands = {
-            \ 'c': [availableCppLinter],
-            \ 'cpp': [availableCppLinter],
-            \ 'python': ['pyls'],
-            \ }
+let g:vimrc_cpp_linters = []
+let g:vimrc_python_linters = []
+let g:vimrc_rust_linters = []
+
+if executable('ccls')
+    let g:vimrc_cpp_linters = ["ccls"]
+elseif executable('cquery')
+    let g:vimrc_cpp_linters = ["cquery"]
+elseif executable('clangd')
+    let g:vimrc_cpp_linters = ["clangd"]
+else
+    echomsg "No C++ linter is found."
+endif
+
+if executable('pyls')
+    let g:vimrc_python_linters = ["pyls"]
+else
+    echomsg "No Python language server is found."
+endif
+
+if g:vimrc_rust_enabled
+    if executable("rls")
+        let g:vimrc_rust_linters = ["rls"]
+    elseif executable("rustup")
+        let g:vimrc_rust_linters = ["rustup", "run", "stable", "rls"]
+    else
+        echomsg "No Rust language server is found."
+    endif
+endif
+
+let g:LanguageClient_serverCommands = {}
+if len(g:vimrc_cpp_linters) > 0
+    let g:LanguageClient_serverCommands["c"] = g:vimrc_cpp_linters
+    let g:LanguageClient_serverCommands["cpp"] = g:vimrc_cpp_linters
+endif
+
+if len(g:vimrc_python_linters) > 0
+    let g:LanguageClient_serverCommands["python"] = g:vimrc_python_linters
+endif
+
+if len(g:vimrc_rust_linters) > 0
+    let g:LanguageClient_serverCommands["rust"] = g:vimrc_rust_linters
+endif
 
 nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
 nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
@@ -200,13 +237,14 @@ let g:LanguageClient_virtualTextPrefix = '>'
 " => UltiSnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:UltiSnipsExpandTrigger="<c-l>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+if g:vimrc_snippet_enabled
+    let g:UltiSnipsExpandTrigger="<c-l>"
+    let g:UltiSnipsJumpForwardTrigger="<c-k>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 
-let g:UltiSnipsEnableSnipMate = 0
-let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
-
+    let g:UltiSnipsEnableSnipMate = 0
+    let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => asyncrun.vim
