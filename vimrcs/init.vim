@@ -99,8 +99,10 @@ xnoremap <leader>d "_d
 xnoremap <leader>p "_dP
 xnoremap <leader>c "_c
 
-map <leader>qn :next<CR>
-map <leader>qp :previous<CR>
+nnoremap <leader>qn :next<CR>
+nnoremap <leader>qp :previous<CR>
+nnoremap <leader>ln :lnext<CR>
+nnoremap <leader>lp :lprevious<CR>
 
 " Use ripgrep over grep, if possible
 if executable('rg')
