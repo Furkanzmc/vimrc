@@ -24,6 +24,17 @@ Just do following:
 * Remove `~/.vim_runtime`
 * Remove any lines that reference `.vim_runtime` in your `~/.vimrc`
 
+## Configuring with Environment Variables
+
+For easy manipulation of some configurations, the following environment variables
+are used:
+
+- `VIMRC_RUST_ENABLED`: Enables Rust support. Defaults to `0`.
+- `VIMRC_SNIPPET_ENABLED`: Enables Ultisnip plugin. Defaults to `0`.
+- `VIMRC_USE_VIRTUAL_TEXT`: Enables virtual text for LanguageClient-neovim.
+  Defaults to `0`.
+- `VIMRC_BACKGROUND`: Changes `background`. Defaults to `dark`.
+
 ## Screenshots
 
 ![screenshot1](https://drive.google.com/uc?export=download&id=1cIzNgh8WE0CMBB2gNDv34xNhXt1gc2fS)

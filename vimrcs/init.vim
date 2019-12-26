@@ -120,7 +120,13 @@ endtry
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set background=dark
+if $VIMRC_BACKGROUND == "dark"
+    set background=dark
+elseif $VIMRC_BACKGROUND == "light"
+    set background=light
+else
+    set background=dark
+endif
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
