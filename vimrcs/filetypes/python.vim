@@ -20,5 +20,14 @@ nmap <leader>dh :call SearchDocs()<CR>
 set wildignore+=*.pyc,__pycache__
 
 if executable("black")
-    autocmd BufRead *.py command! Black :!black --line-length=80 %
+    function! ExecuteBlack()
+        if getbufvar(bufnr(), "&modified") == 1
+            echohl WarningMsg
+            echo "Cannot run black on unsaved buffer."
+            echohl None
+        else
+            execute "!black --line-length=80 %"
+        endif
+    endfunction
+    autocmd BufRead *.py command! Black :call ExecuteBlack()
 endif
