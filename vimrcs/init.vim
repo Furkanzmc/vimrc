@@ -462,6 +462,8 @@ command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "Compar
 
 vmap <leader>s :call VisualSelection('search', '')<CR>
 
+nmap <leader>p :echo "Line: " . line('.') . ", Column: " . col('.')<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmd
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
