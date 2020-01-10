@@ -464,13 +464,32 @@ vmap <leader>s :call VisualSelection('search', '')<CR>
 
 nmap <leader>p :echo "Line: " . line('.') . ", Column: " . col('.')<CR>
 
+" Toggles the quickfix window.
+function! ToggleQuickFix()
+    let tpbl = []
+    call extend(tpbl, tabpagebuflist(tabpagenr()))
+
+    let l:quickFixOpen = v:false
+    for idx in tpbl
+        if getbufvar(idx, "&buftype", "ERROR") == "quickfix"
+            let l:quickFixOpen = v:true
+            break
+        endif
+    endfor
+
+    if l:quickFixOpen
+        cclose
+    else
+        copen
+    endif
+endfunction
+nmap <leader>qt :call ToggleQuickFix()<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmd
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
+autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 
 " Highlight trailing spaces.
 highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
