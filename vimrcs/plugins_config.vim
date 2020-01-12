@@ -21,6 +21,11 @@ let g:polyglot_disabled = ['markdown']
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
 let g:vimrc_rust_enabled = $VIMRC_RUST_ENABLED
 let g:vimrc_snippet_enabled = $VIMRC_SNIPPET_ENABLED
+if !empty($VIMRC_USE_VIRTUAL_TEXT)
+    let g:vimrc_use_virtual_text = $VIMRC_USE_VIRTUAL_TEXT
+else
+    let g:vimrc_use_virtual_text = "No"
+endif
 
 function! PackInit()
     packadd minpac
@@ -231,9 +236,9 @@ nnoremap <leader>lc :call LanguageClient#clearDocumentHighlight()<CR>
 
 let g:LanguageClient_diagnosticsList = "Location"
 let g:LanguageClient_selectionUI = "fzf"
-let g:LanguageClient_useVirtualText = $VIMRC_USE_VIRTUAL_TEXT
+let g:LanguageClient_useVirtualText = g:vimrc_use_virtual_text
 
-let g:LanguageClient_virtualTextPrefix = '>'
+" let g:LanguageClient_virtualTextPrefix = '>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UltiSnips

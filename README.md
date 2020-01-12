@@ -32,7 +32,7 @@ are used:
 - `VIMRC_RUST_ENABLED`: Enables Rust support. Defaults to `0`.
 - `VIMRC_SNIPPET_ENABLED`: Enables Ultisnip plugin. Defaults to `0`.
 - `VIMRC_USE_VIRTUAL_TEXT`: Enables virtual text for LanguageClient-neovim.
-  Defaults to `0`.
+  Defaults to `No`.
 - `VIMRC_BACKGROUND`: Changes `background`. Defaults to `dark`.
 
 ## Screenshots
