@@ -51,8 +51,6 @@ set history=500
 
 " Show an arrow with a space for line breaks.
 set showbreak=↳\ 
-set list
-set listchars=tab:↠\ 
 
 " Enable filetype plugins
 filetype plugin on
@@ -493,20 +491,33 @@ nmap <leader>qt :call ToggleQuickFix()<CR>
 
 autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 
-" Highlight trailing spaces.
-highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
-match ExtraWhitespace /\s\+$/
+" Code from https://www.vim.org/scripts/script.php?script_id=443
+if !exists("g:vimrc_loaded_spacehi")
+    let g:vimrc_loaded_spacehi = v:true
 
-autocmd BufWinEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
-autocmd InsertEnter * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
-autocmd InsertLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
-autocmd BufWinLeave * highlight ExtraWhitespace ctermbg=196 guibg='#EB5A2D'
+    if !exists("g:spacehi_tabcolor")
+        let g:spacehi_tabcolor = "ctermbg=137 cterm=undercurl"
+        let g:spacehi_tabcolor = g:spacehi_tabcolor . " guifg=#b28761 guibg=#202a31 gui=undercurl"
+    endif
 
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+    if !exists("g:spacehi_spacecolor")
+        let g:spacehi_spacecolor = "ctermbg=196"
+        let g:spacehi_spacecolor = g:spacehi_spacecolor . " guibg='#EB5A2D'"
+    endif
 
+    function! s:SpaceHi()
+        syntax match spacehiTab /\t/ containedin=ALL
+        execute("highlight spacehiTab " . g:spacehi_tabcolor)
+
+        syntax match spacehiTrailingSpace /\s\+$/ containedin=ALL
+        execute("highlight spacehiTrailingSpace " . g:spacehi_spacecolor)
+    endfunction
+
+    autocmd BufWinEnter * call s:SpaceHi()
+    autocmd InsertEnter * call s:SpaceHi()
+    autocmd InsertLeave * call s:SpaceHi()
+    autocmd BufWinLeave * call s:SpaceHi()
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
