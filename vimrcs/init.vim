@@ -51,6 +51,8 @@ set history=500
 
 " Show an arrow with a space for line breaks.
 set showbreak=↳\ 
+set list
+set listchars=tab:↠\ 
 
 " Enable filetype plugins
 filetype plugin on
