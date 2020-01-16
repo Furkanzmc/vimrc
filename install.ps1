@@ -1,5 +1,9 @@
 Push-Location ~/.vim_runtime
 
+if (Test-Path ~/.vimrc) {
+    Copy-Item -Path ~/.vimrc -Destination ~/.vimrc.orig
+}
+
 echo 'set runtimepath+=~/.vim_runtime
 
 source ~/.vim_runtime/vimrcs/functions.vim
@@ -8,8 +12,8 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 
 ' > ~/.vimrc
 
-mkdir -p ~/.vim/pack/minpac/opt/
-mkdir -p ~/.vim/ftplugin
+New-Item -Force -ItemType Directory -Path ~/.vim/pack/minpac/opt/
+New-Item -Force -ItemType Directory -Path ~/.vim/ftplugin
 
 if ($IsWindows) {
     git clone https://github.com/k-takata/minpac.git $env:USERPROFILE/.vim/pack/minpac/opt/minpac
@@ -20,9 +24,8 @@ else {
 
 foreach ($file in Get-ChildItem -Path "~/.vim_runtime/vimrcs/filetypes/") {
     $fileName = Split-Path $file -Leaf
-    New-Item -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
+    New-Item -Force -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
 }
-
 
 if ($IsWindows) {
     New-Item -Force -ItemType SymbolicLink -Target $env:USERPROFILE/.vim_runtime/vimrcs/ginit.vim -Path $env:LOCALAPPDATA/nvim/ginit.vim
