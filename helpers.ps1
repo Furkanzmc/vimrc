@@ -1,5 +1,12 @@
 # Contains helper functions to configure the environment for Vim.
 
+function Vimrc-Status() {
+    Vimrc-Rust-Enabled
+    Vimrc-Snippet-Enabled
+    Vimrc-Virtual-Text-Enabled
+    Vimrc-Background
+}
+
 function Vimrc-Rust-Enabled() {
     Param(
         [Parameter(Mandatory=$false)]
@@ -21,6 +28,9 @@ function Vimrc-Rust-Enabled() {
         else {
             Write-Host "[vimrc] Rust support is disabled."
         }
+    }
+    else {
+        Write-Host "[vimrc] VIMRC_RUST_ENABLED environment variable is not used."
     }
 }
 
@@ -46,6 +56,9 @@ function Vimrc-Snippet-Enabled() {
             Write-Host "[vimrc] Snippet support is disabled."
         }
     }
+    else {
+        Write-Host "[vimrc] VIMRC_SNIPPET_ENABLED environment variable is not used."
+    }
 }
 
 function Vimrc-Virtual-Text-Enabled() {
@@ -70,6 +83,9 @@ function Vimrc-Virtual-Text-Enabled() {
             Write-Host "[vimrc] Virtual text support is disabled."
         }
     }
+    else {
+        Write-Host "[vimrc] VIMRC_USE_VIRTUAL_TEXT environment variable is not used."
+    }
 }
 
 function Vimrc-Background() {
@@ -87,6 +103,6 @@ function Vimrc-Background() {
         Write-Host "[vimrc] Background color is set to ${env:VIMRC_BACKGROUND}."
     }
     else {
-        Write-Host "[vimrc] Background color is set to default dark."
+        Write-Host "[vimrc] VIMRC_BACKGROUND environment variable is not used."
     }
 }
