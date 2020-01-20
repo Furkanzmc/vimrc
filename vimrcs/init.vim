@@ -496,8 +496,8 @@ if !exists("g:vimrc_loaded_spacehi")
     let g:vimrc_loaded_spacehi = v:true
 
     if !exists("g:spacehi_tabcolor")
-        let g:spacehi_tabcolor = "ctermbg=137 cterm=undercurl"
-        let g:spacehi_tabcolor = g:spacehi_tabcolor . " guifg=#b28761 guibg=#202a31 gui=undercurl"
+        let g:spacehi_tabcolor = "ctermfg=137 cterm=undercurl"
+        let g:spacehi_tabcolor = g:spacehi_tabcolor . " guifg=#b28761 gui=undercurl"
     endif
 
     if !exists("g:spacehi_spacecolor")
