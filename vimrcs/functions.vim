@@ -372,6 +372,26 @@ function! ReviewDiff()
     execute 'Gdiff ' . g:vimrc_review_base_branch
 endfunction
 
+" Toggles the quickfix window.
+function! ToggleQuickFix()
+    let tpbl = []
+    call extend(tpbl, tabpagebuflist(tabpagenr()))
+
+    let l:quickFixOpen = v:false
+    for idx in tpbl
+        if getbufvar(idx, "&buftype", "ERROR") == "quickfix"
+            let l:quickFixOpen = v:true
+            break
+        endif
+    endfor
+
+    if l:quickFixOpen
+        cclose
+    else
+        copen
+    endif
+endfunction
+
 function! ToggleColorColumn(col)
     let columns = split(&colorcolumn, ",")
     if a:col == -1
