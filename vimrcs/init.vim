@@ -484,6 +484,8 @@ function! ToggleQuickFix()
     endif
 endfunction
 nmap <leader>qt :call ToggleQuickFix()<CR>
+nmap <leader>cc :call ToggleColorColumn(col('.'))<CR>
+nmap <leader>ccc :call ToggleColorColumn(-1)<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmd

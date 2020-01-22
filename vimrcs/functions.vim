@@ -371,3 +371,19 @@ function! ReviewDiff()
 
     execute 'Gdiff ' . g:vimrc_review_base_branch
 endfunction
+
+function! ToggleColorColumn(col)
+    let columns = split(&colorcolumn, ",")
+    if a:col == -1
+        let columns = [columns[0]]
+    else
+        let found = index(columns, string(a:col))
+        if found > -1
+            call remove(columns, found)
+        else
+            call add(columns, a:col)
+        endif
+    endif
+
+    execute "set colorcolumn=" . join(columns, ",")
+endfunction
