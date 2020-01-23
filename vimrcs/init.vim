@@ -466,7 +466,7 @@ nmap <leader>p :echo "Line: " . line('.') . ", Column: " . col('.')<CR>
 
 nmap <leader>qt :call ToggleQuickFix()<CR>
 nmap <leader>cc :call ToggleColorColumn(col('.'))<CR>
-nmap <leader>ccc :call ToggleColorColumn(-1)<CR>
+nmap <leader>cax :call ToggleColorColumn(-1)<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmd
