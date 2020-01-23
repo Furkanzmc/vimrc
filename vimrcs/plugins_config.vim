@@ -35,7 +35,7 @@ function! PackInit()
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-fugitive')
 
-    call minpac#add('tpope/vim-surround')
+    call minpac#add('machakann/vim-sandwich')
     call minpac#add('octol/vim-cpp-enhanced-highlight')
     call minpac#add('w0rp/ale')
 
