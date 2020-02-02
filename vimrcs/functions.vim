@@ -322,6 +322,8 @@ function! SearchDocs(...)
         let helpLink = 'docs.python.org/3/'
     elseif (filetype == 'javascript')
         let helpLink = 'developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'
+    elseif (filetype == 'ps1')
+        let helpLink = 'https://docs.microsoft.com/en-us/powershell/'
     else
         let helpLink = ''
     endif
