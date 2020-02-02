@@ -389,8 +389,8 @@ function! ConfigureStatusline(winnum)
 
     if active && exists('*fugitive#head')
         let head = fugitive#head()
-        if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
-            call fugitive#detect(getcwd())
+        if empty(head) && exists('*FugitiveDetect') && !exists('b:git_dir')
+            call FugitiveDetect(expand("%"))
             let head = fugitive#head()
         endif
 
