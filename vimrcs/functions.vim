@@ -407,5 +407,5 @@ function! ToggleColorColumn(col)
         endif
     endif
 
-    execute "set colorcolumn=" . join(columns, ",")
+    execute "setlocal colorcolumn=" . join(columns, ",")
 endfunction
