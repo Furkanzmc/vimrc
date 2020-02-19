@@ -446,9 +446,6 @@ endif
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
-map <leader>nn :Lexplore .<cr>
-map <leader>nf :Lexplore %:h<cr>
-
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 

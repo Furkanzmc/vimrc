@@ -258,3 +258,15 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => nvim-gdb
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:nvimgdb_config_override = {
+            \ "key_step": "<leader>s",
+            \ "key_frameup": "<leader>u",
+            \ "key_framedown": "<leader>d",
+            \ "key_continue":   "<leader>c",
+            \ "key_next":       "<leader>n",
+            \ }
