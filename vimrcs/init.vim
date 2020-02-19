@@ -69,11 +69,17 @@ let maplocalleader = ' '
 
 if has("nvim")
     autocmd TermOpen * call SetUpTerminal()
+    autocmd TermEnter * call SetUpTerminal()
 
     function! SetUpTerminal()
         setlocal scrollback=-1
         setlocal nowrap
         setlocal scrolloff=0
+        setlocal nonumber
+        setlocal norelativenumber
+
+        " Press escape to exit terminal mode.
+        tnoremap <Esc> <C-\><C-n>
     endfunction
 endif
 
@@ -423,9 +429,6 @@ map 0 ^
 
 " Reselect text that was just pasted with ,v
 nnoremap <leader>v V`]
-
-" Press escape to exit terminal mode.
-tnoremap <Esc> <C-\><C-n>
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
