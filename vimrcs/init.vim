@@ -331,8 +331,8 @@ xnoremap p "_dP
 xnoremap <leader>c "_c
 
 " Mappings to [l]cd into the current file's directory.
-command Lcdc lcd %:p:h
-command Cdc cd %:p:h
+command! Lcdc lcd %:p:h
+command! Cdc cd %:p:h
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
