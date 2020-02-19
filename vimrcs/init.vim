@@ -73,6 +73,7 @@ if has("nvim")
     function! SetUpTerminal()
         setlocal scrollback=-1
         setlocal nowrap
+        setlocal scrolloff=0
     endfunction
 endif
 
