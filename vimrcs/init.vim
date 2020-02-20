@@ -77,6 +77,7 @@ if has("nvim")
         setlocal scrolloff=0
         setlocal nonumber
         setlocal norelativenumber
+        setlocal signcolumn=no
 
         " Press escape to exit terminal mode.
         tnoremap <Esc> <C-\><C-n>
