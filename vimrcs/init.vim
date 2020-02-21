@@ -407,6 +407,11 @@ function! ConfigureStatusline(winnum)
         endif
     endif
 
+    if active
+        let stat .= Color(active, "StatusLineNc", "TabLineFill")
+        let stat .= " %{strftime('%b %d, %H:%M')}"
+    endif
+
     return stat
 endfunction
 
