@@ -80,7 +80,7 @@ if has("nvim")
         setlocal signcolumn=no
 
         " Press escape to exit terminal mode.
-        tnoremap <Esc> <C-\><C-n>
+        tnoremap <C-w>q <C-\><C-n>
     endfunction
 endif
 
