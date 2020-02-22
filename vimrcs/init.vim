@@ -69,7 +69,6 @@ let maplocalleader = ' '
 
 if has("nvim")
     autocmd TermOpen * call SetUpTerminal()
-    autocmd TermEnter * call SetUpTerminal()
 
     function! SetUpTerminal()
         setlocal scrollback=-1
@@ -395,7 +394,7 @@ function! ConfigureStatusline(winnum)
     let stat .= '%=' " Switch to right side
     let stat .= Color(active, 'Visual', 'Comment')
 
-    if active && exists('*fugitive#head')
+    if active
         let head = fugitive#head()
         if empty(head) && exists('*FugitiveDetect') && !exists('b:git_dir')
             call FugitiveDetect(expand("%"))
@@ -407,7 +406,7 @@ function! ConfigureStatusline(winnum)
         endif
     endif
 
-    if active
+    if active && empty($TMUX)
         let stat .= Color(active, "StatusLineNc", "TabLineFill")
         let stat .= " %{strftime('%b %d, %H:%M')}"
     endif
