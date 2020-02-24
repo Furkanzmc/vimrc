@@ -69,6 +69,7 @@ let maplocalleader = ' '
 
 if has("nvim")
     autocmd TermOpen * call SetUpTerminal()
+    autocmd TermEnter * call SetUpTerminal()
 
     function! SetUpTerminal()
         setlocal scrollback=-1
