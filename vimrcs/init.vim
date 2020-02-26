@@ -70,6 +70,7 @@ let maplocalleader = ' '
 if has("nvim")
     autocmd TermOpen * call SetUpTerminal()
     autocmd TermEnter * call SetUpTerminal()
+    autocmd TermLeave * call CleanUpTerminal()
 
     function! SetUpTerminal()
         setlocal scrollback=-1
@@ -81,6 +82,10 @@ if has("nvim")
 
         " Press escape to exit terminal mode.
         tnoremap <C-w>q <C-\><C-n>
+    endfunction
+
+    function! CleanUpTerminal()
+        set scrolloff=3
     endfunction
 endif
 
