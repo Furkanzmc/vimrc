@@ -409,3 +409,10 @@ function! ToggleColorColumn(col)
 
     execute "setlocal colorcolumn=" . join(columns, ",")
 endfunction
+
+function! MarkScratchBuffer()
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+    setlocal buflisted
+endfunction

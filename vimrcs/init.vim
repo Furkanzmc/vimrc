@@ -105,6 +105,8 @@ endfunction
 command! Vterm call TerminalInSplit('vertical')
 command! Hterm call TerminalInSplit('horizontal')
 
+command! MarkScratch :call MarkScratchBuffer()
+
 " Keyboard Mappings
 " Use these to delete a line without cutting it.
 nnoremap <leader>d "_d
