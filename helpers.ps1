@@ -92,12 +92,34 @@ function Vimrc-Background() {
     Param(
             [Parameter(Mandatory=$false)]
             [ValidateSet("light", "dark")]
-            [String]$Change=""
+            [String]$Color="",
+            [Parameter(Mandatory=$false)]
+            [String]$MatchTheme=$false
          )
 
-        if ($Change -ne "") {
-            $env:VIMRC_BACKGROUND=$Change
+    if ($MatchTheme) {
+        if (Get-Command -Name Is-Dark-Mode -ErrorAction SilentlyContinue) {
+            $IsDarkMode = Is-Dark-Mode
+            if ($IsDarkMode) {
+                Write-Host "[vimrc] Setting dark theme."
+                nvr -s --nostart -c "set background=dark"
+            }
+            else {
+                Write-Host "[vimrc] Setting light theme."
+                nvr -s --nostart -c "set background=light"
+            }
+
+            return
         }
+        else {
+            Write-Error "Is-Dark-Mode script does not exist. Please see "
+                        "github/furkanzmc/dotfiles for the function."
+        }
+    }
+
+    if ($Color -ne "") {
+        $env:VIMRC_BACKGROUND=$Color
+    }
 
     if (Test-Path env:VIMRC_BACKGROUND) {
         Write-Host "[vimrc] Background color is set to ${env:VIMRC_BACKGROUND}."
