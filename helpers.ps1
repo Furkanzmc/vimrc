@@ -1,4 +1,8 @@
 # Contains helper functions to configure the environment for Vim.
+$VIM_RUNNING = $false
+if (Test-Path env:NVIM_LISTEN_ADDRESS -ErrorAction SilentlyContinue) {
+    $VIM_RUNNING = $true
+}
 
 function Vimrc-Status() {
     Vimrc-Rust-Enabled
@@ -94,7 +98,9 @@ function Vimrc-Background() {
             [ValidateSet("light", "dark")]
             [String]$Color="",
             [Parameter(Mandatory=$false)]
-            [String]$MatchTheme=$false
+            [Bool]$ChangeAllInstances=$false,
+            [Parameter(Mandatory=$false)]
+            [Bool]$MatchTheme=$false
          )
 
     if ($MatchTheme) {
@@ -115,6 +121,11 @@ function Vimrc-Background() {
             Write-Error "Is-Dark-Mode script does not exist. Please see "
                         "github/furkanzmc/dotfiles for the function."
         }
+    }
+
+    if ($ChangeAllInstances) {
+        Write-Host "[vimrc] Changing color in all instances."
+        Start-Process -NoNewWindow -Wait -FilePath python3 -ArgumentList "$HOME/.vim_runtime/nvim.py --change-background $Color"
     }
 
     if ($Color -ne "") {

@@ -534,3 +534,18 @@ command! -nargs=? StartReview :call StartReview(<f-args>)
 command! ReviewDiff :call ReviewDiff()
 
 command! ClearQuickFix :call setqflist([])
+function! CreateCustomNvimListenServer()
+    if has('win32')
+        return
+    endif
+
+    let pid = string(getpid())
+    let socket_name = '/tmp/nvim/nvim' . pid . '.sock'
+    call mkdir('/tmp/nvim', 'p')
+    call serverstart(socket_name)
+endfunction
+
+augroup StartUp
+    autocmd!
+    autocmd VimEnter * call CreateCustomNvimListenServer()
+augroup END
