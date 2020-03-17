@@ -29,5 +29,5 @@ if executable("black")
             execute "!black --line-length=80 %"
         endif
     endfunction
-    autocmd BufRead *.py command! Black :call ExecuteBlack()
+    command! Black :call ExecuteBlack()
 endif
