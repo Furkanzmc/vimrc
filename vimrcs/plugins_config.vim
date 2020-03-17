@@ -97,15 +97,19 @@ let g:ale_linters = {
             \   'qml': ['qmllint'],
             \}
 
+if executable("mypy") && get(g:, "vimrc_disable_mypy", 0)
+    let g:ale_linters["python"] = ["mypy"]
+endif
+
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_lint_delay = 1000
-let g:ale_sign_error = '!!'
-let g:ale_sign_warning = '--'
+let g:ale_sign_error = "!!"
+let g:ale_sign_info = "--"
+let g:ale_sign_warning = "++"
 
 " We don't need live linting.
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
 
 nmap <leader>ge  <Plug>(ale_detail)
 
@@ -171,48 +175,48 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr><c-f> pumvisible() ? deoplete#manual_complete() : "\<C-f>"
 
-let g:vimrc_cpp_linters = []
-let g:vimrc_python_linters = []
-let g:vimrc_rust_linters = []
+let g:vimrc_cpp_servers = []
+let g:vimrc_python_server = []
+let g:vimrc_rust_server = []
 
-if executable('ccls')
-    let g:vimrc_cpp_linters = ["ccls"]
-elseif executable('cquery')
-    let g:vimrc_cpp_linters = ["cquery"]
-elseif executable('clangd')
-    let g:vimrc_cpp_linters = ["clangd"]
+if executable("ccls")
+    call add(g:vimrc_cpp_servers, "ccls")
+elseif executable("cquery")
+    call add(g:vimrc_cpp_servers, "cquery")
+elseif executable("clangd")
+    call add(g:vimrc_cpp_servers, "clangd")
 else
     echomsg "No C++ linter is found."
 endif
 
-if executable('pyls')
-    let g:vimrc_python_linters = ["pyls"]
+if executable("pyls")
+    call add(g:vimrc_python_server, "pyls")
 else
     echomsg "No Python language server is found."
 endif
 
 if g:vimrc_rust_enabled
     if executable("rls")
-        let g:vimrc_rust_linters = ["rls"]
+        call add(g:vimrc_rust_server, "rls")
     elseif executable("rustup")
-        let g:vimrc_rust_linters = ["rustup", "run", "stable", "rls"]
+        let g:vimrc_rust_server = ["rustup", "run", "stable", "rls"]
     else
         echomsg "No Rust language server is found."
     endif
 endif
 
 let g:LanguageClient_serverCommands = {}
-if len(g:vimrc_cpp_linters) > 0
-    let g:LanguageClient_serverCommands["c"] = g:vimrc_cpp_linters
-    let g:LanguageClient_serverCommands["cpp"] = g:vimrc_cpp_linters
+if len(g:vimrc_cpp_servers) > 0
+    let g:LanguageClient_serverCommands["c"] = g:vimrc_cpp_servers
+    let g:LanguageClient_serverCommands["cpp"] = g:vimrc_cpp_servers
 endif
 
-if len(g:vimrc_python_linters) > 0
-    let g:LanguageClient_serverCommands["python"] = g:vimrc_python_linters
+if len(g:vimrc_python_server) > 0
+    let g:LanguageClient_serverCommands["python"] = g:vimrc_python_server
 endif
 
-if len(g:vimrc_rust_linters) > 0
-    let g:LanguageClient_serverCommands["rust"] = g:vimrc_rust_linters
+if len(g:vimrc_rust_server) > 0
+    let g:LanguageClient_serverCommands["rust"] = g:vimrc_rust_server
 endif
 
 command! Format :call LanguageClient#textDocument_formatting()<CR>
