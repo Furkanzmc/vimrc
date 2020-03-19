@@ -511,7 +511,6 @@ if !exists("g:vimrc_loaded_spacehi")
     endfunction
 
     autocmd BufWinEnter * call s:SpaceHi()
-    autocmd InsertEnter * call s:SpaceHi()
     autocmd InsertLeave * call s:SpaceHi()
     autocmd BufWinLeave * call s:SpaceHi()
 endif
