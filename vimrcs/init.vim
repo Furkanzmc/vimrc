@@ -80,8 +80,17 @@ if has("nvim")
         setlocal norelativenumber
         setlocal signcolumn=no
 
-        " Press escape to exit terminal mode.
         tnoremap <C-w>q <C-\><C-n>
+
+        " Search for the shell prompt
+        function! GoToPrompt(flags) abort
+            call search( "^=>", a:flags)
+        endfunction
+
+        " Jump to the previous shell prompt
+        noremap <buffer> <silent> [p :call GoToPrompt('eb')<cr>
+        " Jump to the next shell prompt
+        noremap <buffer> <silent> ]p :call GoToPrompt('e')<cr>
     endfunction
 
     function! CleanUpTerminal()
