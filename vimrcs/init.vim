@@ -512,6 +512,11 @@ if !exists("g:vimrc_loaded_spacehi")
     endif
 
     function! s:SpaceHi()
+        let bufferFileType = &filetype
+        if bufferFileType == "help"
+            return
+        endif
+
         syntax match spacehiTab /\t/ containedin=ALL
         execute("highlight spacehiTab " . g:spacehi_tabcolor)
 
