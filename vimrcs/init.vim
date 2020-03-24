@@ -367,6 +367,8 @@ set laststatus=2
 " supplied colorgroup number, e.g. num = 2 -> User2
 " it only colors the input if the window is the currently
 " focused one
+
+set noshowmode
 function! ConfigureStatusline(winnum)
     function! Color(active, activeColor, inactiveColor)
         if a:active
@@ -377,40 +379,89 @@ function! ConfigureStatusline(winnum)
     endfunction
 
     let active = a:winnum == winnr()
+    let g:currentmode={
+                \ 'n'      : 'Normal',
+                \ 'no'     : 'N.Operator Pending ',
+                \ 'v'      : 'V',
+                \ 'V'      : 'V.Line',
+                \ '\<C-V>' : 'V.Block',
+                \ 's'      : 'Select',
+                \ 'S'      : 'S.Line',
+                \ '\<C-S>' : 'S.Block',
+                \ 'i'      : 'Insert',
+                \ 'R'      : 'Replace',
+                \ 'Rv'     : 'V.Replace',
+                \ 'c'      : 'Command',
+                \ 'cv'     : 'Vim Ex',
+                \ 'ce'     : 'Ex',
+                \ 'r'      : 'Prompt',
+                \ 'rm'     : 'More',
+                \ 'r?'     : 'Confirm',
+                \ '!'      : 'Shell',
+                \ 't'      : 'Terminal'
+    \}
 
-    let stat = ''
+    let stat = ""
+    " {{ Mode sign
+    let excludedFileTypes = ["help", "qf"]
+    let stat .= Color(active, 'Visual', 'Comment')
+    if active && &filetype == "fugitive"
+        let stat .= " GIT "
+    elseif active && index(excludedFileTypes, &filetype) == -1
+        let stat .= " %{toupper(g:currentmode[mode()])} "
+    endif
+    " }}
+
     let stat .= Color(active, 'Error', 'ErrorMsg')
     let stat .= '%h' " Help sign
+    let stat .= '%q' " Help sign
     let stat .= '%w' " Preview sign
-    let stat .= Color(active, 'StatusLine', 'StatusLineNC')
-    let stat .= " %{IsFugitiveBuffer(expand('%')) ? expand('%:t') : expand('%')}" " Filename
 
+    " {{ File path
+    if &filetype != "fugitive"
+        let stat .= Color(active, 'Normal', 'Comment')
+        let stat .= " %{IsFugitiveBuffer(expand('%')) ? expand('%:t') : expand('%')}"
+endif
+    " }}
+
+    " {{ Diff file signs
     let stat .= Color(1, 'Type', 'Type')
     let bufferGitTag = " %{"
     let bufferGitTag .= "&diff && IsFugitiveBuffer(expand('%')) ? '[head]' : "
     let bufferGitTag .= "(&diff && !IsFugitiveBuffer(expand('%')) ? '[local]' : '')"
     let bufferGitTag .= "}"
-
     let stat .= bufferGitTag
+    " }}
 
     let stat .= Color(active, 'Identifier', 'Comment')
     let stat .= '%r' " Readonly sign
     if &spell
         let stat .= ' ☰'
     endif
+
+    " {{ Modified sign
     let stat .= Color(active, 'SpecialChar', 'Comment')
     let stat .= "%{&modified ? ' +' : ''}" " Modified sign
 
     if (active)
         let modifiedBufferCount = GetModifiedBufferCount()
         if (modifiedBufferCount > 0)
-            let stat .= ' [✎ ' . modifiedBufferCount . ']'
+            let stat .= ' [✎ ' . modifiedBufferCount . '] '
         endif
     endif
+    " }}
 
     let stat .= '%=' " Switch to right side
-    let stat .= Color(active, 'Visual', 'Comment')
 
+    " {{ Encoding and file format
+    if index(excludedFileTypes, &filetype) == -1
+        let stat .= Color(active, 'Normal', 'Comment')
+        let stat .= "%{(&fenc!=''?&fenc:&enc)} \[%{&ff}]\ "
+    endif
+    " }}
+
+    " {{ Branch name
+    let stat .= Color(active, 'Visual', 'Comment')
     if active
         let head = fugitive#head()
         if empty(head) && exists('*FugitiveDetect') && !exists('b:git_dir')
@@ -422,6 +473,7 @@ function! ConfigureStatusline(winnum)
             let stat .= ' ʯ ' . head . ' '
         endif
     endif
+    " }}
 
     if active && empty($TMUX)
         let stat .= Color(active, "StatusLineNc", "TabLineFill")
