@@ -453,13 +453,6 @@ endif
 
     let stat .= '%=' " Switch to right side
 
-    " {{ Encoding and file format
-    if index(excludedFileTypes, &filetype) == -1
-        let stat .= Color(active, 'Normal', 'Comment')
-        let stat .= "%{(&fenc!=''?&fenc:&enc)} \[%{&ff}]\ "
-    endif
-    " }}
-
     " {{ Branch name
     let stat .= Color(active, 'Visual', 'Comment')
     if active
@@ -537,7 +530,8 @@ command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "Compar
 
 vmap <leader>s :call VisualSelection('search', '')<CR>
 
-nmap <leader>p :echo "Line: " . line('.') . ", Column: " . col('.')<CR>
+nmap <leader>i :echo "Line: " . line('.') . ", Column: " . col('.') . ' File: '
+            \ . &filetype . ' - ' . &fileencoding . ' [' . &fileformat . ']'<CR>
 
 nmap <leader>qt :call ToggleQuickFix()<CR>
 nmap <leader>cc :call ToggleColorColumn(col('.'))<CR>
