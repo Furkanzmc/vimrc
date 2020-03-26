@@ -68,6 +68,14 @@ let mapleader = ' '
 let maplocalleader = ' '
 
 if has("nvim")
+    " Jump to the previous shell prompt
+    tnoremap <buffer> <silent> [p :call GoToPrompt('eb')<cr>
+    " Jump to the next shell prompt
+    tnoremap <buffer> <silent> ]p :call GoToPrompt('e')<cr>
+
+    tmap <C-d> <PageDown>
+    tmap <C-u> <PageUp>
+
     autocmd TermOpen * call SetUpTerminal()
     autocmd TermEnter * call SetUpTerminal()
     autocmd TermLeave * call CleanUpTerminal()
@@ -86,11 +94,6 @@ if has("nvim")
         function! GoToPrompt(flags) abort
             call search( "^=>", a:flags)
         endfunction
-
-        " Jump to the previous shell prompt
-        noremap <buffer> <silent> [p :call GoToPrompt('eb')<cr>
-        " Jump to the next shell prompt
-        noremap <buffer> <silent> ]p :call GoToPrompt('e')<cr>
     endfunction
 
     function! CleanUpTerminal()
@@ -100,19 +103,6 @@ endif
 
 " Enable project specific settings
 set exrc
-
-function! TerminalInSplit(split)
-  if a:split == 'vertical'
-      botright vsplit
-  else
-      botright split
-  endif
-
-  execute 'terminal'
-endfunction
-
-command! Vterm call TerminalInSplit('vertical')
-command! Hterm call TerminalInSplit('horizontal')
 
 command! MarkScratch :call MarkScratchBuffer()
 
