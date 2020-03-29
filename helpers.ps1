@@ -107,15 +107,13 @@ function Vimrc-Background() {
         if (Get-Command -Name Is-Dark-Mode -ErrorAction SilentlyContinue) {
             $IsDarkMode = Is-Dark-Mode
             if ($IsDarkMode) {
+                $Color = "dark"
                 Write-Host "[vimrc] Setting dark theme."
-                nvr -s --nostart -c "set background=dark"
             }
             else {
+                $Color = "light"
                 Write-Host "[vimrc] Setting light theme."
-                nvr -s --nostart -c "set background=light"
             }
-
-            return
         }
         else {
             Write-Error "Is-Dark-Mode script does not exist. Please see "
