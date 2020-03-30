@@ -469,11 +469,6 @@ endif
     endif
     " }}
 
-    if active && empty($TMUX)
-        let stat .= Color(active, "StatusLineNc", "TabLineFill")
-        let stat .= " %{strftime('%b %d, %H:%M')}"
-    endif
-
     return stat
 endfunction
 
@@ -530,9 +525,6 @@ cnoremap $q <C-\>eDeleteTillSlash()<cr>
 command! -range SortLength :call setline("'<", sort(getline("'<", "'>"), "CompareLength"))
 
 vmap <leader>s :call VisualSelection('search', '')<CR>
-
-nmap <leader>i :echo "Line: " . line('.') . ", Column: " . col('.') . ' File: '
-            \ . &filetype . ' - ' . &fileencoding . ' [' . &fileformat . ']'<CR>
 
 nmap <leader>qt :call ToggleQuickFix()<CR>
 nmap <leader>cc :call ToggleColorColumn(col('.'))<CR>

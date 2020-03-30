@@ -60,6 +60,8 @@ function! PackInit()
     call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next'})
     call minpac#add('Shougo/deoplete.nvim', {'do': 'UpdateRemotePlugins'})
 
+    call minpac#add('mcchrish/info-window.nvim')
+
     if g:vimrc_snippet_enabled
         call minpac#add('SirVer/ultisnips')
     endif
@@ -274,3 +276,28 @@ let g:nvimgdb_config_override = {
             \ "key_continue":   "<leader>c",
             \ "key_next":       "<leader>n",
             \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => information-window
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! ShowFileInfo()
+    let currentTime = strftime('%b %d, %H:%M')
+    let g:infowindow_lines = [
+        \ " Line: " . line('.') . ":" . col('.'),
+        \ " ----- ",
+        \ " Time: " . currentTime
+        \ ]
+
+    if len(&filetype) > 0
+        let fileTypeStr = " File: " . &filetype . ' - ' . &fileencoding .
+                    \ ' [' . &fileformat . '] '
+
+        call insert(g:infowindow_lines, fileTypeStr, 1)
+    endif
+
+    execute ":InfoWindowShow"
+endfunction
+
+
+nmap <leader>i :call ShowFileInfo()<CR>
