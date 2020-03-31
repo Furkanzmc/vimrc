@@ -243,8 +243,6 @@ set guioptions-=L
 " Enable syntax highlighting
 syntax enable
 
-autocmd VimEnter * colorscheme cosmic_latte
-
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -456,7 +454,7 @@ endif
 
     " {{ Branch name
     let stat .= Color(active, 'Visual', 'Comment')
-    if active
+    if exists("fugitive#head") && active
         let head = fugitive#head()
         if empty(head) && exists('*FugitiveDetect') && !exists('b:git_dir')
             call FugitiveDetect(expand("%"))
@@ -586,7 +584,8 @@ command! -nargs=? StartReview :call StartReview(<f-args>)
 command! ReviewDiff :call ReviewDiff()
 
 command! ClearQuickFix :call setqflist([])
-function! CreateCustomNvimListenServer()
+
+function! s:CreateCustomNvimListenServer()
     if has('win32')
         return
     endif
@@ -599,5 +598,5 @@ endfunction
 
 augroup StartUp
     autocmd!
-    autocmd VimEnter * call CreateCustomNvimListenServer()
+    autocmd VimEnter * call s:CreateCustomNvimListenServer()
 augroup END

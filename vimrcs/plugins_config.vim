@@ -20,7 +20,6 @@ let g:polyglot_disabled = ['markdown']
 
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
 let g:vimrc_rust_enabled = $VIMRC_RUST_ENABLED
-let g:vimrc_snippet_enabled = $VIMRC_SNIPPET_ENABLED
 if !empty($VIMRC_USE_VIRTUAL_TEXT)
     let g:vimrc_use_virtual_text = $VIMRC_USE_VIRTUAL_TEXT
 else
@@ -43,7 +42,6 @@ function! PackInit()
     call minpac#add('junegunn/fzf.vim')
     call minpac#add('junegunn/fzf')
 
-    call minpac#add('freitass/todo.txt-vim')
     call minpac#add('nightsense/cosmic_latte')
     call minpac#add('Vimjas/vim-python-pep8-indent')
 
@@ -62,10 +60,6 @@ function! PackInit()
 
     call minpac#add('mcchrish/info-window.nvim')
 
-    if g:vimrc_snippet_enabled
-        call minpac#add('SirVer/ultisnips')
-    endif
-
     if has('win32') == 0
         call minpac#add('sakhnik/nvim-gdb')
     endif
@@ -82,6 +76,10 @@ endif
 command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  call PackInit() | call minpac#clean()
 command! PackStatus call PackInit() | call minpac#status()
+
+
+autocmd VimEnter * colorscheme cosmic_latte
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale - Code Linting
@@ -247,19 +245,6 @@ let g:LanguageClient_useVirtualText = g:vimrc_use_virtual_text
 " let g:LanguageClient_virtualTextPrefix = '>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => UltiSnips
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if g:vimrc_snippet_enabled
-    let g:UltiSnipsExpandTrigger="<c-l>"
-    let g:UltiSnipsJumpForwardTrigger="<c-k>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-j>"
-
-    let g:UltiSnipsEnableSnipMate = 0
-    let g:UltiSnipsSnippetDirectories = [g:vim_runtime . '/default_snippets']
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => asyncrun.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -281,23 +266,35 @@ let g:nvimgdb_config_override = {
 " => information-window
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! ShowFileInfo()
+function! plugins_config#show_file_info(default_lines)
     let currentTime = strftime('%b %d, %H:%M')
-    let g:infowindow_lines = [
+    let l:lines = [
+        \ "",
         \ " Line: " . line('.') . ":" . col('.'),
-        \ " ----- ",
-        \ " Time: " . currentTime
+        \ " Time: " . currentTime . " "
         \ ]
 
     if len(&filetype) > 0
         let fileTypeStr = " File: " . &filetype . ' - ' . &fileencoding .
                     \ ' [' . &fileformat . '] '
 
-        call insert(g:infowindow_lines, fileTypeStr, 1)
+        call insert(l:lines, fileTypeStr, 2)
     endif
 
-    execute ":InfoWindowShow"
+    let l:Custom_lines_func = get(g:, "Vimrc_info_window_lines_func", v:null)
+    let l:custom_lines = l:Custom_lines_func()
+    if len(l:custom_lines) > 0
+        call add(l:lines, " -----")
+    endif
+
+    for line in l:custom_lines
+        call add(l:lines, line)
+    endfor
+
+    call add(l:lines, "")
+    return l:lines
 endfunction
 
 
-nmap <leader>i :call ShowFileInfo()<CR>
+nmap <silent> <leader>i :call infowindow#create(
+            \ {}, function("plugins_config#show_file_info"))<CR>
