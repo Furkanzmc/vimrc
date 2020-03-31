@@ -68,17 +68,17 @@ let mapleader = ' '
 let maplocalleader = ' '
 
 if has("nvim")
-    " Jump to the previous shell prompt
-    tnoremap <buffer> <silent> [p :call GoToPrompt('eb')<cr>
-    " Jump to the next shell prompt
-    tnoremap <buffer> <silent> ]p :call GoToPrompt('e')<cr>
-
     tmap <C-d> <PageDown>
     tmap <C-u> <PageUp>
 
     autocmd TermOpen * call SetUpTerminal()
     autocmd TermEnter * call SetUpTerminal()
     autocmd TermLeave * call CleanUpTerminal()
+
+    " Search for the shell prompt
+    function! GoToPrompt(flags) abort
+        call search( "^=>", a:flags)
+    endfunction
 
     function! SetUpTerminal()
         setlocal scrollback=-1
@@ -90,10 +90,10 @@ if has("nvim")
 
         tnoremap <C-w>q <C-\><C-n>
 
-        " Search for the shell prompt
-        function! GoToPrompt(flags) abort
-            call search( "^=>", a:flags)
-        endfunction
+        " Jump to the previous shell prompt
+        nmap <buffer> [p :call GoToPrompt('eb')<cr>
+        " Jump to the next shell prompt
+        nmap <buffer> ]p :call GoToPrompt('e')<cr>
     endfunction
 
     function! CleanUpTerminal()
