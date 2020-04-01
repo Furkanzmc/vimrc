@@ -454,7 +454,7 @@ endif
 
     " {{ Branch name
     let stat .= Color(active, 'Visual', 'Comment')
-    if exists("fugitive#head") && active
+    if exists("*fugitive#head") && active
         let head = fugitive#head()
         if empty(head) && exists('*FugitiveDetect') && !exists('b:git_dir')
             call FugitiveDetect(expand("%"))
