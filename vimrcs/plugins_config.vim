@@ -270,8 +270,8 @@ function! plugins_config#show_file_info(default_lines)
     let currentTime = strftime('%b %d, %H:%M')
     let l:lines = [
         \ "",
+        \ " [" . currentTime . "] ",
         \ " Line: " . line('.') . ":" . col('.'),
-        \ " Time: " . currentTime . " "
         \ ]
 
     if len(&filetype) > 0
