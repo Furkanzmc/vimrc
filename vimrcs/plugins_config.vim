@@ -282,14 +282,16 @@ function! plugins_config#show_file_info(default_lines)
     endif
 
     let l:Custom_lines_func = get(g:, "Vimrc_info_window_lines_func", v:null)
-    let l:custom_lines = l:Custom_lines_func()
-    if len(l:custom_lines) > 0
-        call add(l:lines, " -----")
-    endif
+    if l:Custom_lines_func != v:null
+        let l:custom_lines = l:Custom_lines_func()
+        if len(l:custom_lines) > 0
+            call add(l:lines, " -----")
+        endif
 
-    for line in l:custom_lines
-        call add(l:lines, line)
-    endfor
+        for line in l:custom_lines
+            call add(l:lines, line)
+        endfor
+    endif
 
     call add(l:lines, "")
     return l:lines
