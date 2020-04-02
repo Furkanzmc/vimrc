@@ -13,6 +13,7 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 ' > ~/.vimrc
 
 New-Item -Force -ItemType Directory -Path ~/.vim/pack/minpac/opt/
+New-Item -Force -ItemType Directory -Path ~/.vim/pack/minpac/start/
 New-Item -Force -ItemType Directory -Path ~/.vim/ftplugin
 
 if ($IsWindows) {
@@ -25,6 +26,11 @@ else {
 foreach ($file in Get-ChildItem -Path "~/.vim_runtime/vimrcs/filetypes/") {
     $fileName = Split-Path $file -Leaf
     New-Item -Force -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
+}
+
+foreach ($folder in Get-ChildItem -Path "~/.vim_runtime/vimrcs/plugins/" -Directory) {
+    $name = $folder.Name
+    New-Item -Force -ItemType SymbolicLink -Target $folder.FullName -Path ~/.vim/pack/minpac/start/$name
 }
 
 if ($IsWindows) {

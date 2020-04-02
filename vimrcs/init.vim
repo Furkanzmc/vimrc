@@ -25,7 +25,6 @@
 "    -> Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -66,51 +65,6 @@ set autoread
 " like <leader>w saves the current file
 let mapleader = ' '
 let maplocalleader = ' '
-
-if has("nvim")
-    tmap <C-d> <PageDown>
-    tmap <C-u> <PageUp>
-
-    autocmd TermOpen * call SetUpTerminal()
-    autocmd TermEnter * call SetUpTerminal()
-    autocmd TermLeave * call CleanUpTerminal()
-
-    " Search for the shell prompt
-    function! GoToPrompt(flags) abort
-        call search( "^=>", a:flags)
-    endfunction
-
-    function! SetUpTerminal()
-        setlocal scrollback=-1
-        setlocal nowrap
-        setlocal scrolloff=0
-        setlocal nonumber
-        setlocal norelativenumber
-        setlocal signcolumn=no
-
-        tnoremap <C-w>q <C-\><C-n>
-
-        " Jump to the previous shell prompt
-        nmap <buffer> [p :call GoToPrompt('eb')<cr>
-        " Jump to the next shell prompt
-        nmap <buffer> ]p :call GoToPrompt('e')<cr>
-    endfunction
-
-    function! CleanUpTerminal()
-        set scrolloff=3
-    endfunction
-
-    function! OpenTerminal(...)
-        let term = get(g:, "vimrc_shell", &shell)
-        if a:0 == 1
-            execute "e term://" . a:1
-        else
-            execute "e term://" . term
-        endif
-    endfunction
-
-    command! -nargs=? -complete=shellcmd Terminal :call OpenTerminal(<f-args>)
-endif
 
 " Enable project specific settings
 set exrc

@@ -12,7 +12,10 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 ' > ~/.vimrc
 
 mkdir -p ~/.vim/ftplugin
-ln -sf ~/.vim_runtime/vimrcs/* ~/.vim/ftplugin/
+mkdir -p ~/.vim/pack/minpac/start/
+
+ln -sf ~/.vim_runtime/vimrcs/filetypes/* ~/.vim/ftplugin/
+ln -sf ~/.vim_runtime/vimrcs/plugins/zmc ~/.vim/pack/minpac/start/
 
 git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 
