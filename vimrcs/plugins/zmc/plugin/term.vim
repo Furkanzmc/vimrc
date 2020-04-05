@@ -1,10 +1,5 @@
 let s:term_floating_buffer = v:null
 
-" Search for the shell prompt
-function! term#goto_prompt(flags) abort
-    call search( "^=>", a:flags)
-endfunction
-
 function! term#setup()
     setlocal scrollback=-1
     setlocal nowrap
@@ -16,9 +11,14 @@ function! term#setup()
     tnoremap <C-w>q <C-\><C-n>
 
     " Jump to the previous shell prompt
-    nmap <buffer> [p :call term#goto_prompt('eb')<cr>
+    nmap <buffer> <silent> [p ?^\(!!\ =>\\|=>\)<CR><leader><CR>
     " Jump to the next shell prompt
-    nmap <buffer> ]p :call term#goto_prompt('e')<cr>
+    nmap <buffer> <silent> ]p /^\(!!\ =>\\|=>\)<CR><leader><CR>
+
+    " Jump to the previous pytest error
+    nmap <buffer> <silent> [e ?^_\{10,\}\ \w\+.*\ _\{10,\}<CR><leader><CR>
+    " Jump to the next pytest error
+    nmap <buffer> <silent> ]e /^_\{10,\}\ \w\+.*\ _\{10,\}<CR><leader><CR>
 endfunction
 
 function! term#cleanup()
