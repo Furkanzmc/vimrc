@@ -176,8 +176,8 @@ inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ CheckBackSpace() ? "\<TAB>" :
             \ deoplete#manual_complete()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr><c-f> pumvisible() ? deoplete#manual_complete() : "\<C-f>"
+inoremap <silent> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent> <expr><c-f> pumvisible() ? deoplete#manual_complete() : "\<C-f>"
 
 let g:vimrc_cpp_servers = []
 let g:vimrc_python_server = []
