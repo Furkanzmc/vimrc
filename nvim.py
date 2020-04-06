@@ -44,11 +44,16 @@ def create_argparser() -> argparse.ArgumentParser:
         type=str,
         help="Change the background of all the NeoVim instances.",
     )
+    parser.add_argument(
+        "--command",
+        type=str,
+        help="Run a command in all instances.",
+    )
 
     return parser
 
 
-def change_background(mode: str):
+def run_command(command: str):
     processes = get_nvim_processes()
 
     process: Process
@@ -59,13 +64,19 @@ def change_background(mode: str):
         except FileNotFoundError:
             pass
         else:
-            nvim.command("set background={}".format(mode))
+            nvim.command(command)
+
+
+def change_background(mode: str):
+    run_command("set background={}".format(mode))
 
 
 def main():
     args = create_argparser().parse_args()
     if args.change_background:
         change_background(args.change_background)
+    if args.command:
+        run_command(args.command)
 
 
 if __name__ == "__main__":
