@@ -271,7 +271,7 @@ let g:nvimgdb_config_override = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! plugins_config#show_file_info(default_lines)
-    let currentTime = strftime('%b %d, %H:%M')
+    let currentTime = strftime('%b %d %A, %H:%M')
     let l:lines = [
         \ "",
         \ " [" . currentTime . "] ",
