@@ -6,18 +6,14 @@ setlocal cindent
 setlocal cinkeys-=0#
 setlocal indentkeys-=0#
 
-setlocal tabstop=4
-setlocal softtabstop=4
-setlocal shiftwidth=4
-setlocal textwidth=100
 setlocal expandtab
 setlocal autoindent
 setlocal foldmethod=indent
 setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
-nmap <leader>dh :call SearchDocs()<CR>
+nmap <buffer> <leader>dh :call SearchDocs()<CR>
 
-set wildignore+=*.pyc,__pycache__
+setlocal wildignore+=*.pyc,__pycache__
 
 if executable("black")
     function! ExecuteBlack()
@@ -29,5 +25,5 @@ if executable("black")
             execute "!black --line-length=80 %"
         endif
     endfunction
-    command! Black :call ExecuteBlack()
+    command! -buffer Black :call ExecuteBlack()
 endif

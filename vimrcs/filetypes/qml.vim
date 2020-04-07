@@ -1,7 +1,7 @@
-inoremap <c-s> <esc>Ion<esc>l~A: {<CR>}<ESC>O
-inoremap <c-d> <esc>Ion<esc>l~AChanged: {<CR>}<ESC>O
+inoremap <buffer> <c-s> <esc>Ion<esc>l~A: {<CR>}<ESC>O
+inoremap <buffer> <c-d> <esc>Ion<esc>l~AChanged: {<CR>}<ESC>O
 
-function! RunSelectedQMLCode()
+function! qml#run_selected()
     if executable('qmlscene')
         let lines = GetVisualSelection()
         let tempfile = tempname() . '.qml'
@@ -18,7 +18,7 @@ function! RunSelectedQMLCode()
     endif
 endfunction
 
-function! RunQMLScene()
+function! qml#run()
     if executable('qmlscene')
         execute 'AsyncRun qmlscene %'
     else
@@ -28,9 +28,8 @@ function! RunQMLScene()
     endif
 endfunction
 
-command! RunQML :call RunQMLScene()
-command! -range RunQMLSelected :call RunSelectedQMLCode()
+command! -buffer RunQML :call qml#run()
+command! -buffer -range RunQMLSelected :call qml#run_selected()
 
 setlocal foldmethod=indent
-nmap <leader>dh :call SearchDocs()<CR>
-
+nmap <buffer> <leader>dh :call SearchDocs()<CR>

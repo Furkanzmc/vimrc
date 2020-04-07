@@ -1,3 +1,3 @@
 setlocal foldmethod=indent
 
-nmap <leader>dh :call SearchDocs()<CR>
+nmap <buffer> <leader>dh :call SearchDocs()<CR>

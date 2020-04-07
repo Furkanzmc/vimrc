@@ -25,7 +25,7 @@ if get(g:, "swap_source_loaded", 0) == 0
     endfunction
 endif
 
-nnoremap <leader>gg :call SwapSourceHeader()<CR>
-nmap <leader>dh :call SearchDocs()<CR>
+nnoremap <buffer> <leader>gg :call SwapSourceHeader()<CR>
+nmap <buffer> <leader>dh :call SearchDocs()<CR>
 
 setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()

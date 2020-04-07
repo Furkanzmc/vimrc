@@ -1,3 +1,4 @@
 setlocal colorcolumn=120
 
-call SetIndentSize(2)
+autocmd BufRead *.html call SetIndentSize(2)
+autocmd BufNew *.html call SetIndentSize(2)
