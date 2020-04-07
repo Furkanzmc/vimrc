@@ -1,13 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important:
-"       This requries that you install https://github.com/amix/vimrc !
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""
-" => Load Plugins
-""""""""""""""""""""""""""""""
-
+" Pre-configuration {{{
 " Needs to be called before the plugin is enabled.
 let g:ale_completion_enabled = 0
 
@@ -26,6 +17,9 @@ else
     let g:vimrc_use_virtual_text = "No"
 endif
 
+" }}}
+
+" minpack {{{
 function! PackInit()
     packadd minpac
     call minpac#init()
@@ -77,13 +71,9 @@ command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac
 command! PackClean  call PackInit() | call minpac#clean()
 command! PackStatus call PackInit() | call minpac#status()
 
+" }}}
 
-autocmd VimEnter * colorscheme cosmic_latte
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ale - Code Linting
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ale {{{
 
 " Only run linters named in ale_linters settings.
 let g:ale_linters_explicit = 1
@@ -111,18 +101,15 @@ let g:ale_sign_warning = "++"
 " We don't need live linting.
 let g:ale_lint_on_text_changed = 'never'
 
-nmap <leader>ge  <Plug>(ale_detail)
+" }}}
 
-"""""""""""""""""""""""""""""""
-" => vim-cpp-enhanced-highlight
-"""""""""""""""""""""""""""""""
+" vim-cpp-enhanced-highlight {{{
 
 let g:cpp_member_variable_highlight = 1
 
+" }}}
 
-""""""""""""""""""""""""""""""
-" => fzf plugin
-""""""""""""""""""""""""""""""
+" fzf {{{
 
 map <leader>o :Files<cr>
 map <leader>b :Buffers<cr>
@@ -134,24 +121,18 @@ let g:fzf_preview_window = ''
 " [[B]Commits] Customize the options used by 'git log':
 let g:fzf_commits_log_options = "--graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color=always"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => TagBar
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" TagBar {{{
 
 let g:tagbar_show_linenumbers = 1
 
 map <leader>tb  :Tagbar<CR>
 map <leader>tbs  :TagbarShowTag<CR>
 
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
+" }}}
 
-" always show signcolumns
-set signcolumn=yes
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Completion {{{
 
 let g:deoplete#enable_at_startup = 1
 augroup Doplete
@@ -248,15 +229,15 @@ let g:LanguageClient_useVirtualText = g:vimrc_use_virtual_text
 
 " let g:LanguageClient_virtualTextPrefix = '>'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => asyncrun.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" asyncrun.vim {{{
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => nvim-gdb
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" nvim-gdb {{{
 
 let g:nvimgdb_config_override = {
             \ "key_step": "<leader>s",
@@ -266,10 +247,9 @@ let g:nvimgdb_config_override = {
             \ "key_next":       "<leader>n",
             \ }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => information-window
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
 
+" information-window {{{
 function! plugins_config#show_file_info(default_lines)
     let currentTime = strftime('%b %d %A, %H:%M')
     let l:lines = [
@@ -301,6 +281,9 @@ function! plugins_config#show_file_info(default_lines)
     return l:lines
 endfunction
 
-
 nmap <silent> <leader>i :call infowindow#create(
             \ {}, function("plugins_config#show_file_info"))<CR>
+
+" }}}
+
+autocmd VimEnter * colorscheme cosmic_latte

@@ -15,6 +15,7 @@ source ~/.vim_runtime/vimrcs/plugins_config.vim
 New-Item -Force -ItemType Directory -Path ~/.vim/pack/minpac/opt/
 New-Item -Force -ItemType Directory -Path ~/.vim/pack/minpac/start/
 New-Item -Force -ItemType Directory -Path ~/.vim/ftplugin
+New-Item -Force -ItemType Directory -Path ~/.vim/ftdetect
 
 if ($IsWindows) {
     git clone https://github.com/k-takata/minpac.git $env:USERPROFILE/.vim/pack/minpac/opt/minpac
@@ -23,7 +24,12 @@ else {
     git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 }
 
-foreach ($file in Get-ChildItem -Path "~/.vim_runtime/vimrcs/filetypes/") {
+foreach ($file in Get-ChildItem -Path "~/.vim_runtime/ftplugin/") {
+    $fileName = Split-Path $file -Leaf
+    New-Item -Force -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
+}
+
+foreach ($file in Get-ChildItem -Path "~/.vim_runtime/ftdetect/") {
     $fileName = Split-Path $file -Leaf
     New-Item -Force -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
 }

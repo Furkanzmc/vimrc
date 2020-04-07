@@ -1,30 +1,5 @@
 let s:term_floating_buffer = v:null
 
-function! term#setup()
-    setlocal scrollback=-1
-    setlocal nowrap
-    setlocal scrolloff=0
-    setlocal nonumber
-    setlocal norelativenumber
-    setlocal signcolumn=no
-
-    tnoremap <C-w>q <C-\><C-n>
-
-    " Jump to the previous shell prompt
-    nmap <buffer> <silent> [p ?^\(!!\ =>\\|=>\)<CR><leader><CR>
-    " Jump to the next shell prompt
-    nmap <buffer> <silent> ]p /^\(!!\ =>\\|=>\)<CR><leader><CR>
-
-    " Jump to the previous pytest error
-    nmap <buffer> <silent> [e ?^_\{10,\}\ \w\+.*\ _\{10,\}<CR><leader><CR>
-    " Jump to the next pytest error
-    nmap <buffer> <silent> ]e /^_\{10,\}\ \w\+.*\ _\{10,\}<CR><leader><CR>
-endfunction
-
-function! term#cleanup()
-    set scrolloff=3
-endfunction
-
 function! term#close(code) abort
     if a:code == 0
         let current_window = winnr()
@@ -68,13 +43,6 @@ function! term#open(is_floating, ...)
 
     call feedkeys("i")
 endfunction
-
-tmap <C-d> <PageDown>
-tmap <C-u> <PageUp>
-
-autocmd TermOpen * call term#setup()
-autocmd TermEnter * call term#setup()
-autocmd TermLeave * call term#cleanup()
 
 command! -nargs=? -complete=shellcmd Terminal
             \ :call term#open(v:false, <f-args>)

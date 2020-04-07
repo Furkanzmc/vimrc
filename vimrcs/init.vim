@@ -1,46 +1,18 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       Amir Salihefendic — @amix3k (Original Author)
-"       Furkan Uzumcu - @Furkanzmc
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc (Original Repo)
-"           https://github.com/furkanzmc/vimrc
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Mappings
-"    -> Autocmd
-"    -> Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" General {{{
 " which commands trigger auto-unfold
 set foldopen=block,hor,jump,mark,percent,quickfix,search,tag
 set complete-=i
+set noshowmode
+
 set termguicolors
 set nofoldenable
-
 set colorcolumn=81
 
 set completeopt-=preview
-
 set splitbelow
 set splitright
+
+set signcolumn=yes
 
 " Reduces the number of lines that are above the curser when I do zt.
 set scrolloff=3
@@ -69,22 +41,8 @@ let maplocalleader = ' '
 " Enable project specific settings
 set exrc
 
-command! MarkScratch :call MarkScratchBuffer()
-
-" Keyboard Mappings
-" Use these to delete a line without cutting it.
-nnoremap <leader>d "_d
-xnoremap <leader>d "_d
-xnoremap <leader>p "_dP
-xnoremap <leader>c "_c
-
-nnoremap <leader>qn :next<CR>
-nnoremap <leader>qp :previous<CR>
-nnoremap <leader>ln :lnext<CR>
-nnoremap <leader>lp :lprevious<CR>
-
 " Use ripgrep over grep, if possible
-if executable('rg')
+if executable("rg")
    " Use rg over grep
    set grepprg=rg\ --vimgrep\ $*
    set grepformat=%f:%l:%c:%m
@@ -97,9 +55,30 @@ try
 catch
 endtry
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indent
+" }}}
+
+" User Interface {{{
 
 if $VIMRC_BACKGROUND == "dark"
     set background=dark
@@ -178,11 +157,6 @@ set novisualbell
 set t_vb=
 set tm=300
 
-" Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
-
 " Disable scrollbars (real hackers don't use scrollbars for navigation!)
 set guioptions-=r
 set guioptions-=R
@@ -190,9 +164,7 @@ set guioptions-=l
 set guioptions-=L
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors and Fonts {{{
 
 " Enable syntax highlighting
 syntax enable
@@ -215,51 +187,19 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
-set noswapfile
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Use spaces instead of tabs
-set expandtab
-
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-
-
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
+" Visual Mode {{{
 
 " Visual mode pressing ~~*~~ or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Moving around, tabs, windows and buffers {{{
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -267,22 +207,14 @@ map <silent> <leader><cr> :noh<cr>
 " Close the current buffer
 map <leader>bd :Bclose<cr>
 
-" Close all the buffers
-map <leader>ba :Bdeletes *<cr>
-
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
-
 
 " Specify the behavior when switching between buffers
 try
@@ -305,23 +237,22 @@ command! Lcdc lcd %:p:h
 command! Cdc cd %:p:h
 
 " Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au BufReadPost *
+            \ if line("'\"") > 1 && line("'\"") <= line("$")
+            \ | exe "normal! g'\"" | endif
 
+" }}}
 
-""""""""""""""""""""""""""""""
-" => Status line
+" Status line {{{
 " Initial config from: https://jip.dev/posts/a-simpler-vim-statusline/
-""""""""""""""""""""""""""""""
 
 " Always show the status line
 set laststatus=2
 
-" this function just outputs the content colored by the
+" This function just outputs the content colored by the
 " supplied colorgroup number, e.g. num = 2 -> User2
 " it only colors the input if the window is the currently
 " focused one
-
-set noshowmode
 function! ConfigureStatusline(winnum)
     function! Color(active, activeColor, inactiveColor)
         if a:active
@@ -355,36 +286,41 @@ function! ConfigureStatusline(winnum)
     \}
 
     let stat = ""
-    " {{ Mode sign
-    let excludedFileTypes = ["help", "qf"]
+
+    " Mode sign {{{
+    let excludedFileTypes = ["help", "qf", "terminal"]
     let stat .= Color(active, 'Visual', 'Comment')
     if active && &filetype == "fugitive"
         let stat .= " GIT "
+    elseif active && &filetype == "terminal"
+        let stat .= " Terminal "
     elseif active && index(excludedFileTypes, &filetype) == -1
         let stat .= " %{toupper(g:currentmode[mode()])} "
     endif
-    " }}
+    " }}}
 
     let stat .= Color(active, 'Error', 'ErrorMsg')
     let stat .= '%h' " Help sign
     let stat .= '%q' " Help sign
     let stat .= '%w' " Preview sign
 
-    " {{ File path
+    " File path {{{
     if &filetype != "fugitive"
         let stat .= Color(active, 'Normal', 'Comment')
         let stat .= " %{IsFugitiveBuffer(expand('%')) ? expand('%:t') : expand('%')}"
 endif
-    " }}
+    " }}}
 
-    " {{ Diff file signs
+    " Diff file signs {{{
+
     let stat .= Color(1, 'Type', 'Type')
     let bufferGitTag = " %{"
     let bufferGitTag .= "&diff && IsFugitiveBuffer(expand('%')) ? '[head]' : "
     let bufferGitTag .= "(&diff && !IsFugitiveBuffer(expand('%')) ? '[local]' : '')"
     let bufferGitTag .= "}"
     let stat .= bufferGitTag
-    " }}
+
+    " }}}
 
     let stat .= Color(active, 'Identifier', 'Comment')
     let stat .= '%r' " Readonly sign
@@ -392,7 +328,8 @@ endif
         let stat .= ' ☰'
     endif
 
-    " {{ Modified sign
+    " Modified sign {{{
+
     let stat .= Color(active, 'SpecialChar', 'Comment')
     let stat .= "%{&modified ? ' +' : ''}" " Modified sign
 
@@ -402,11 +339,12 @@ endif
             let stat .= ' [✎ ' . modifiedBufferCount . '] '
         endif
     endif
-    " }}
+
+    " }}}
 
     let stat .= '%=' " Switch to right side
 
-    " {{ Branch name
+    " Branch name {{{
     let stat .= Color(active, 'Visual', 'Comment')
     if exists("*fugitive#head") && active
         let head = fugitive#head()
@@ -419,7 +357,7 @@ endif
             let stat .= ' ʯ ' . head . ' '
         endif
     endif
-    " }}
+    " }}}
 
     return stat
 endfunction
@@ -435,9 +373,16 @@ augroup Status
     autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" Mappings {{{
+
+command! MarkScratch :call MarkScratchBuffer()
+
+nnoremap <leader>qn :next<CR>
+nnoremap <leader>qp :previous<CR>
+nnoremap <leader>ln :lnext<CR>
+nnoremap <leader>lp :lprevious<CR>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -482,9 +427,9 @@ nmap <leader>qt :call ToggleQuickFix()<CR>
 nmap <leader>cc :call ToggleColorColumn(col('.'))<CR>
 nmap <leader>cax :call ToggleColorColumn(-1)<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Autocmd
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" Autocmd {{{
 
 autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 
@@ -520,9 +465,9 @@ if !exists("g:vimrc_loaded_spacehi")
     autocmd BufWinLeave * call s:SpaceHi()
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" Misc {{{
 
 command! Date :echo strftime("%b %d %a %I:%M %p")
 
@@ -554,3 +499,5 @@ augroup StartUp
     autocmd!
     autocmd VimEnter * call s:CreateCustomNvimListenServer()
 augroup END
+
+" }}}
