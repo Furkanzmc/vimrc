@@ -1,6 +1,6 @@
 setlocal scrollback=-1
 setlocal nowrap
-setlocal scrolloff=0
+set scrolloff=0
 setlocal nonumber
 setlocal norelativenumber
 setlocal signcolumn=no
@@ -20,6 +20,7 @@ function! terminal#cleanup()
 endfunction
 
 autocmd TermLeave * call terminal#cleanup()
+autocmd TermEnter * set scrolloff=0
 
 tmap <C-d> <PageDown>
 tmap <C-u> <PageUp>
