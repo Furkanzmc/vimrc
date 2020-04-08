@@ -10,7 +10,7 @@ let loaded_netrwPlugin = 1
 let g:polyglot_disabled = ['markdown']
 
 let g:vim_runtime = expand('<sfile>:p:h')."/.."
-let g:vimrc_rust_enabled = empty($VIMRC_RUST_ENABLED)
+let g:vimrc_rust_enabled = !empty($VIMRC_RUST_ENABLED)
 if !empty($VIMRC_USE_VIRTUAL_TEXT)
     let g:vimrc_use_virtual_text = $VIMRC_USE_VIRTUAL_TEXT
 else

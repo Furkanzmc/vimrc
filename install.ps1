@@ -34,7 +34,7 @@ foreach ($file in Get-ChildItem -Path "~/.vim_runtime/ftdetect/") {
     New-Item -Force -ItemType SymbolicLink -Target $file -Path ~/.vim/ftplugin/$fileName
 }
 
-foreach ($folder in Get-ChildItem -Path "~/.vim_runtime/vimrcs/plugins/" -Directory) {
+foreach ($folder in Get-ChildItem -Path "~/.vim_runtime/plugins/" -Directory) {
     $name = $folder.Name
     New-Item -Force -ItemType SymbolicLink -Target $folder.FullName -Path ~/.vim/pack/minpac/start/$name
 }
