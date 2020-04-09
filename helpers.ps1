@@ -1,12 +1,5 @@
-# Contains helper functions to configure the environment for Vim.
-$VIM_RUNNING = $false
-if (Test-Path env:NVIM_LISTEN_ADDRESS -ErrorAction SilentlyContinue) {
-    $VIM_RUNNING = $true
-}
-
 function Vimrc-Status() {
     Vimrc-Rust-Enabled
-    Vimrc-Snippet-Enabled
     Vimrc-Virtual-Text-Enabled
     Vimrc-Background
 }
@@ -38,33 +31,6 @@ function Vimrc-Rust-Enabled() {
     }
 }
 
-function Vimrc-Snippet-Enabled() {
-    Param(
-        [Parameter(Mandatory=$false)]
-        [ValidateSet("true", "false")]
-        [String]$Enabled=""
-     )
-
-    if ($Enabled -eq "true") {
-        $env:VIMRC_SNIPPET_ENABLED=1
-    }
-    elseif ($Enabled -eq "false") {
-        $env:VIMRC_SNIPPET_ENABLED=0
-    }
-
-    if (Test-Path env:VIMRC_SNIPPET_ENABLED) {
-        if ($env:VIMRC_SNIPPET_ENABLED -eq 1) {
-            Write-Host "[vimrc] Snippet support is enabled."
-        }
-        else {
-            Write-Host "[vimrc] Snippet support is disabled."
-        }
-    }
-    else {
-        Write-Host "[vimrc] VIMRC_SNIPPET_ENABLED environment variable is not used."
-    }
-}
-
 function Vimrc-Virtual-Text-Enabled() {
     Param(
         [Parameter(Mandatory=$false)]
@@ -92,48 +58,3 @@ function Vimrc-Virtual-Text-Enabled() {
     }
 }
 
-function Vimrc-Background() {
-    Param(
-            [Parameter(Mandatory=$false)]
-            [ValidateSet("light", "dark")]
-            [String]$Color="",
-            [Parameter(Mandatory=$false)]
-            [Bool]$ChangeAllInstances=$false,
-            [Parameter(Mandatory=$false)]
-            [Bool]$MatchTheme=$false
-         )
-
-    if ($MatchTheme) {
-        if (Get-Command -Name Is-Dark-Mode -ErrorAction SilentlyContinue) {
-            $IsDarkMode = Is-Dark-Mode
-            if ($IsDarkMode) {
-                $Color = "dark"
-                Write-Host "[vimrc] Setting dark theme."
-            }
-            else {
-                $Color = "light"
-                Write-Host "[vimrc] Setting light theme."
-            }
-        }
-        else {
-            Write-Error "Is-Dark-Mode script does not exist. Please see "
-                        "github/furkanzmc/dotfiles for the function."
-        }
-    }
-
-    if ($ChangeAllInstances) {
-        Write-Host "[vimrc] Changing color in all instances."
-        Start-Process -NoNewWindow -Wait -FilePath python3 -ArgumentList "$HOME/.vim_runtime/nvim.py --change-background $Color"
-    }
-
-    if ($Color -ne "") {
-        $env:VIMRC_BACKGROUND=$Color
-    }
-
-    if (Test-Path env:VIMRC_BACKGROUND) {
-        Write-Host "[vimrc] Background color is set to ${env:VIMRC_BACKGROUND}."
-    }
-    else {
-        Write-Host "[vimrc] VIMRC_BACKGROUND environment variable is not used."
-    }
-}
