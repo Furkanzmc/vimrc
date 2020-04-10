@@ -8,5 +8,5 @@ function! markdown#enable_highlight()
     call SyntaxRange#Include('```python', '```', 'python', 'NonText')
 endfunction
 
-autocmd BufRead *.markdown :call markdown#enable_highlight()
-autocmd BufEnter *.markdown :call markdown#enable_highlight()
+autocmd BufRead *.md :call markdown#enable_highlight()
+autocmd BufEnter *.md :call markdown#enable_highlight()
