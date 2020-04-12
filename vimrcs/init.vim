@@ -490,8 +490,7 @@ function! s:CreateCustomNvimListenServer()
     endif
 
     let pid = string(getpid())
-    let socket_name = '/tmp/nvim/nvim' . pid . '.sock'
-    call mkdir('/tmp/nvim', 'p')
+    let socket_name = expand('~/.vim_runtime/temp_dirs/servers/nvim') . pid . '.sock'
     call serverstart(socket_name)
 endfunction
 
